@@ -15,13 +15,11 @@ const Product = db.define('product', {
     allowNull: false
   },
   imageUrl: {
-    type: Sequelize.STRING
-  },
-  categoryId: {
-    type: Sequelize.INTEGER
+    type: Sequelize.TEXT
   },
   inventory: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    allowNull: false
   }
 })
 
