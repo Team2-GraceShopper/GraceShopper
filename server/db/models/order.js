@@ -2,10 +2,10 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Order = db.define('order', {
-  userId: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
+  // userId: {
+  //   type: Sequelize.INTEGER,
+  //   allowNull: false
+  // },
   email: {
     type: Sequelize.STRING,
     allowNull: false
@@ -17,6 +17,9 @@ const Order = db.define('order', {
   subtotal: {
     type: Sequelize.DECIMAL,
     allowNull: false
+  },
+  tax: {
+    type: Sequelize.DECIMAL
   },
   total: {
     type: Sequelize.DECIMAL,

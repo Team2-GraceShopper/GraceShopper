@@ -39,7 +39,7 @@ const User = db.define('user', {
     type: Sequelize.STRING
   },
   cardNumber: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.BIGINT,
     validate: {
       isCreditCard: true,
       len: [16]
@@ -80,7 +80,6 @@ const User = db.define('user', {
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,
-    allowNull: false,
     default: false
   }
 })
