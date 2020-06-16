@@ -2,10 +2,6 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Order = db.define('order', {
-  // userId: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull: false
-  // },
   email: {
     type: Sequelize.STRING,
     allowNull: false
@@ -47,6 +43,31 @@ const Order = db.define('order', {
       isCreditCard: true,
       len: [16]
     }
+  },
+  cardExpiration: {
+    type: Sequelize.DATEONLY
+  },
+  cvvCode: {
+    type: Sequelize.INTEGER,
+    validate: {
+      len: [3, 4]
+    }
+  },
+  billStreet: {
+    type: Sequelize.STRING
+  },
+  billCity: {
+    type: Sequelize.STRING
+  },
+  billState: {
+    type: Sequelize.STRING
+  },
+  billZip: {
+    type: Sequelize.INTEGER
+  },
+  status: {
+    type: Sequelize.ENUM('active', 'complete'),
+    default: 'active'
   }
 })
 
