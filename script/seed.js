@@ -144,6 +144,38 @@ async function seedOrders() {
     orders.push(order)
   }
 
+  let user3 = await User.create({
+    firstName: 'Jake',
+    lastName: 'Smith',
+    email: 'jake@jake.com',
+    password: '123',
+    cardNumber: 4916776723833984,
+    cardExpiration: '2030-01-01',
+    cvvCode: 123,
+    billStreet: '1 Fullstack Street',
+    billCity: 'Brooklyn',
+    billState: 'NY',
+    billZip: 11111
+  })
+
+  await Order.create({
+    userId: user3.id,
+    email: user3.email,
+    orderDate: faker.date.past(),
+    subtotal: faker.commerce.price(),
+    tax: 3,
+    total: faker.commerce.price(),
+    shipStreet: faker.address.streetAddress(),
+    billStreet: faker.address.streetAddress(),
+    shipCity: faker.address.city(),
+    billCity: faker.address.city(),
+    shipState: faker.address.state(),
+    billState: faker.address.state(),
+    shipZip: faker.address.zipCode().slice(0, 5),
+    billZip: faker.address.zipCode().slice(0, 5),
+    status: 'active'
+  })
+
   console.log(`seeded ${orders.length} orders`)
   return orders
 }
@@ -151,7 +183,7 @@ async function seedOrders() {
 //seed order details
 async function seedOrderDetails() {
   let count = 0
-  for (let i = 1; i <= 100; i++) {
+  for (let i = 1; i <= 101; i++) {
     let numProducts = Math.floor(Math.random() * 10) + 1
     let products = [1, 5, 3, 7, 2, 66, 33, 11, 55, 43, 77, 93, 72]
     for (let j = 0; j < numProducts; j++) {
@@ -167,6 +199,7 @@ async function seedOrderDetails() {
       count++
     }
   }
+
   console.log(`seeded ${count} order details`)
 }
 
