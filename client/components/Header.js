@@ -93,7 +93,7 @@ export default function Header(props) {
   )
 }
 
-Header.propTypes = {
-  sections: PropTypes.array,
-  title: PropTypes.string
-}
+// Header.propTypes = {
+//   sections: PropTypes.array,
+//   title: PropTypes.string
+// }
