@@ -137,10 +137,13 @@ async function seedOrders() {
       billStreet,
       billCity,
       billState,
-      billZip
+      billZip,
+      status: 'complete',
+      userId
     })
     orders.push(order)
   }
+
   console.log(`seeded ${orders.length} orders`)
   return orders
 }
