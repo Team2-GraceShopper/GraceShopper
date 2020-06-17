@@ -3,9 +3,13 @@ import axios from 'axios'
 const UPDATE_DATA = 'UPDATE_DATA'
 
 const updatedData = (newShipment, newBilling) => {
-  let toUpdate = 0
-  if (newShipment && newBilling) toUpdate = 3
-  else if (newShipment) toUpdate = 2
+  let toUpdate = 3
+  if (newShipment === null) toUpdate = 2
+  else if (newBilling === null) toUpdate = 1
+  return {
+    type: UPDATE_DATA,
+    toUpdate
+  }
 }
 
 const gotProducts = products => ({type: GET_PRODUCTS, products})
