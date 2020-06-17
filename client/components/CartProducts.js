@@ -12,6 +12,9 @@ import Grid from '@material-ui/core/Grid'
 // import GridListTile from '@material-ui/core/GridListTile';
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import Select from '@material-ui/core/Select'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
 
 import {connect} from 'react-redux'
 
@@ -104,6 +107,10 @@ const useStyles = makeStyles(theme => ({
     height: 150,
     width: 200,
     marginRight: 10
+  },
+  qty: {
+    paddingRight: 30,
+    textAlign: 'center'
   }
 }))
 
@@ -126,6 +133,13 @@ export default function CartProducts() {
               primary={product.name}
               secondary={product.description}
             />
+            <InputLabel id="quantity">Quantity</InputLabel>
+            <div className={classes.qty}>
+              <Select labelId="quantity" id="select" value="1">
+                <MenuItem value="1">1</MenuItem>
+                <MenuItem value="22">2</MenuItem>
+              </Select>
+            </div>
             <Typography variant="body2">{product.price}</Typography>
           </ListItem>
         ))}
