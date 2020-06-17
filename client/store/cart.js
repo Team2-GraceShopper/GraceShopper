@@ -1,7 +1,7 @@
 // import axios from 'axios'
 
 //ACTION TYPE
-const GET_CART = 'GET_CART'
+const SET_CART = 'SET_CART'
 const UPDATE_QTY = 'UPDATE_QTY'
 
 //ACTION CREATORS
@@ -25,7 +25,14 @@ const UPDATE_QTY = 'UPDATE_QTY'
 const initialCart = {}
 
 //REDUCER
-// export default
+export default function(state = initialCart, action) {
+  switch (action.type) {
+    case SET_CART:
+      return state
+    default:
+      return state
+  }
+}
 
 //EXAMPLE OUTPUT FROM AXIOS GET REQUEST
 // {

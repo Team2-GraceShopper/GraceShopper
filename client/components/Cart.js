@@ -30,7 +30,8 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 700
   },
   title: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
+    textAlign: 'center'
   }
 }))
 
@@ -39,8 +40,8 @@ export default function Cart() {
 
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Cart
+      <Typography variant="h6" gutterBottom className={classes.title}>
+        Shopping Cart
       </Typography>
       <List disablePadding>
         {products.map(product => (
