@@ -1,24 +1,18 @@
 const router = require('express').Router()
 const {Order, Product, User} = require('../db/models')
 
-//serve product info (from db for logged in user)
+//route: /api/checkout
 
+//serve product info (from db for logged in user)
+//for guests, pull from local storage
+
+//pull product information from cart api
 router.get('/', async (req, res, next) => {
   try {
     if (req.user) {
-      const order = await Order.findOne({
-        where: {
-          userId: req.user.id,
-          status: 'active'
-        },
-        include: {
-          model: Product
-        }
-      })
-      if (!order)
-        res.status(404).send(`Nothing in cart for user ${req.user.id}`)
-      else res.json(order)
-    } else res.status(404).send('Nothing in cart')
+      const user = await User.findById(req.user.id)
+      res.json(user)
+    }
   } catch (err) {
     next(err)
   }
