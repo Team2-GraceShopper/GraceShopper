@@ -7,8 +7,7 @@ const Order = db.define('order', {
     allowNull: false
   },
   orderDate: {
-    type: Sequelize.DATE,
-    allowNull: false
+    type: Sequelize.DATE
   },
   subtotal: {
     type: Sequelize.DECIMAL,
@@ -18,24 +17,19 @@ const Order = db.define('order', {
     type: Sequelize.DECIMAL
   },
   total: {
-    type: Sequelize.DECIMAL,
-    allowNull: false
+    type: Sequelize.DECIMAL
   },
   shipStreet: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: Sequelize.STRING
   },
   shipCity: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: Sequelize.STRING
   },
   shipState: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: Sequelize.STRING
   },
   shipZip: {
-    type: Sequelize.INTEGER,
-    allowNull: false
+    type: Sequelize.INTEGER
   },
   cardNumber: {
     type: Sequelize.INTEGER,

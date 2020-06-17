@@ -9,3 +9,4 @@ export {Login, Signup} from './auth-form'
 
 export {default as Header} from './Header'
 export {default as AllProducts} from './AllProducts'
+export {default as Cart} from './Cart'

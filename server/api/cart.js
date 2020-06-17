@@ -17,7 +17,7 @@ router.get('/', async (req, res, next) => {
       })
       if (!order)
         res.status(404).send(`Nothing in cart for user ${req.user.id}`)
-      else res.json(order)
+      else res.json(order.products)
     } else res.status(404).send('Nothing in cart')
   } catch (err) {
     next(err)
