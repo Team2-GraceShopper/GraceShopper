@@ -13,7 +13,8 @@ describe('Checkout', () => {
     checkout = shallow(<Checkout />)
   })
 
-  it('checks out', () => {
-    expect()
+  it('populates default shipment address information', () => {
+    let firstNameBox = document.getElementById('firstname')
+    expect(firstNameBox)
   })
 })
