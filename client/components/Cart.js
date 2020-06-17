@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import CartProducts from './CartProducts'
 
-export default class Cart extends React.Component {
+export class Cart extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -10,12 +10,14 @@ export default class Cart extends React.Component {
   componentDidMount() {}
 
   render() {
-    return <CartProducts />
+    return <CartProducts cart={this.props.cart} />
   }
 }
 
-const mapState = state => ({})
+const mapState = state => ({
+  cart: state.cart.cart
+})
 
 const mapDispatch = dispatch => ({})
 
-connect(mapState, mapDispatch)(Cart)
+export default connect(mapState, mapDispatch)(Cart)
