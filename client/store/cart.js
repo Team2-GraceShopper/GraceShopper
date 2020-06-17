@@ -18,10 +18,18 @@ export const getCart = user => {
       if (state.user.id) {
         //get user's cart from DB
         const {data} = await axios.get('/api/cart')
+        window.localStorage.setItem('cart', JSON.stringify(data))
         //set to local storage
         // and pass to dispatch
         dispatch(setCart(data))
-      } //else if  cart is set on local storage
+      } else {
+        const data = window.localStorage.getItem('cart')
+          ? JSON.parse(window.localStorage.getItem('cart'))
+          : {}
+        dispatch(setCart(data))
+      }
+
+      //else if  cart is set on local storage
       //pass to dispatch
       //else send empty cart to dispatch
     } catch (err) {
