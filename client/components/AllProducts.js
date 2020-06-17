@@ -5,11 +5,17 @@ import {connect} from 'react-redux'
 
 export class AllProducts extends React.Component {
   componentDidMount() {
-    this.props.getProducts()
+    if (process.env.NODE_ENV !== 'test') {
+      this.props.getProducts()
+    }
   }
 
   render() {
-    return <AllProductsRender products={this.props.products} />
+    return (
+      <AllProductsRender
+        products={this.props.products ? this.props.products : []}
+      />
+    )
   }
 }
 
@@ -24,4 +30,5 @@ const mapDispatch = dispatch => {
     getProducts: () => dispatch(getProducts())
   }
 }
+
 export default connect(mapState, mapDispatch)(AllProducts)

@@ -2,15 +2,17 @@ import React from 'react'
 import {connect} from 'react-redux'
 import SingleProductRender from './SingleProductRender'
 import {fetchSingleProduct} from '../store/singleProduct'
+import {withRouter} from 'react-router-dom'
 
 export class SingleProduct extends React.Component {
+  constructor(props) {
+    super(props)
+  }
   componentDidMount() {
     this.props.fetchSingleProduct(this.props.match.params.productId)
   }
 
   render() {
-    console.log('HIIIIIIIIIII')
-
     return <SingleProductRender product={this.props.product} />
   }
 }
@@ -27,4 +29,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
+)

@@ -1,15 +1,16 @@
 import React from 'react'
 // import SingleProductView from './components/SingleProductView'
-import {Navbar, Header} from './components'
+import {Navbar, Header, SingleProduct, AllProducts} from './components'
 import Routes from './routes'
 
 const App = () => {
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
+      <SingleProduct />
       {/* <AllProducts /> */}
-      {/* <Navbar /> */}
-      {/* <Routes /> */}
+      <Navbar />
+      <Routes />
     </div>
   )
 }

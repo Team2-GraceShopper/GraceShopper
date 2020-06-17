@@ -1,6 +1,7 @@
 import React from 'react'
 // import {makeStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
+import Select from '@material-ui/core/Select'
 
 // const useStyles = makeStyles(theme => ({
 //     toolbar: {
@@ -24,6 +25,7 @@ import Button from '@material-ui/core/Button'
 export default function SingleProductView(props) {
   // const classes = useStyles()
   let {product} = props
+  console.log('props', props.product)
   return product.name ? (
     <div className="single-product">
       <h1>{product.name}</h1>
