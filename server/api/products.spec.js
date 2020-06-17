@@ -35,7 +35,9 @@ describe('Product routes', () => {
         .expect(200)
 
       expect(res.body).to.be.an('array')
-      expect(res.body[0])
+      expect(res.body[0].name).to.be.equal(products[0].name)
+      expect(res.body[3].description).to.be.equal(products[3].description)
+      expect(res.body[9].price).to.be.equal(products[9].price)
     })
   })
 })
