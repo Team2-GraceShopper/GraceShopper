@@ -4,6 +4,7 @@ const {Order, Product} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
+  console.log('user', req.user)
   try {
     if (req.user) {
       const order = await Order.findOne({
@@ -30,7 +31,7 @@ router.get('/', async (req, res, next) => {
           }
         })
         // res.json(order.products)
-        res.json({orderId: order.id, cart})
+        res.json(cart)
       }
     } else res.status(404).send('Nothing in cart')
   } catch (err) {

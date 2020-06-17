@@ -65,7 +65,9 @@ export default function Header() {
           {title}
         </Typography>
         <IconButton>
-          <SearchIcon />
+          <Link href="/cart">
+            <SearchIcon />
+          </Link>
         </IconButton>
         <Button variant="outlined" size="small">
           Sign up

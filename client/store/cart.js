@@ -1,25 +1,34 @@
-// import axios from 'axios'
+import axios from 'axios'
 
 //ACTION TYPE
 const SET_CART = 'SET_CART'
 const UPDATE_QTY = 'UPDATE_QTY'
 
 //ACTION CREATORS
+const setCart = cart => ({
+  type: SET_CART,
+  cart
+})
 
 // //THUNKS
-// export const getCart = () => {
-//   return async (dispatch, getState) => {
-//     const state = getState();
-//     if (state.user.id) {
-//       const {data} = axios.get('/api/cart')
-//       //get user's cart from DB
-//       //set to local storage
-//       // and pass to dispatch
-//     } else if //if cart is set on local storage
-//       //pass to dispatch
-//     //else send empty cart to dispatch
-//   }
-// }
+export const getCart = user => {
+  return async (dispatch, getState) => {
+    try {
+      const state = getState()
+      if (state.user.id) {
+        //get user's cart from DB
+        const {data} = await axios.get('/api/cart')
+        //set to local storage
+        // and pass to dispatch
+        dispatch(setCart(data))
+      } //else if  cart is set on local storage
+      //pass to dispatch
+      //else send empty cart to dispatch
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
 
 //EXAMPLE CART FOR DEV
 const exampleCart = {
@@ -84,13 +93,13 @@ const exampleCart = {
 }
 
 //INITIAL STATE
-const initialCart = exampleCart
+const initialCart = []
 
 //REDUCER
 export default function(state = initialCart, action) {
   switch (action.type) {
     case SET_CART:
-      return state
+      return action.cart
     default:
       return state
   }
