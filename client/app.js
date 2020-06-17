@@ -6,10 +6,10 @@ import Routes from './routes'
 const App = () => {
   return (
     <div>
-      <Header />
-      <AllProducts />
+      {/* <Header /> */}
+      {/* <AllProducts /> */}
       {/* <Navbar /> */}
-      {/* <Routes /> */}
+      <Routes />
     </div>
   )
 }

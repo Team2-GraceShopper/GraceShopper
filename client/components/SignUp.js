@@ -1,4 +1,6 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {auth} from '../store'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -34,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function SignUp() {
+export function Signup(props) {
   const classes = useStyles()
 
   return (
@@ -47,7 +49,11 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form
+          className={classes.form}
+          name="signup"
+          onSubmit={props.handleSubmit}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -126,3 +132,19 @@ export default function SignUp() {
     </Container>
   )
 }
+
+const mapDispatch = dispatch => {
+  return {
+    handleSubmit(evt) {
+      evt.preventDefault()
+      const formName = evt.target.name
+      const email = evt.target.email.value
+      const password = evt.target.password.value
+      const firstName = evt.target.firstName
+      const lastName = evt.target.lastName
+      dispatch(auth(formName, email, password, firstName, lastName))
+    }
+  }
+}
+
+export default connect(null, mapDispatch)(Signup)
