@@ -1,22 +1,7 @@
 const router = require('express').Router()
 const {Order, Product, User} = require('../db/models')
 
-//route: /api/checkout
-
-//serve product info (from db for logged in user)
-//for guests, pull from local storage
-
-//pull product information from cart api
-router.get('/', async (req, res, next) => {
-  try {
-    if (req.user) {
-      const user = await User.findById(req.user.id)
-      res.json(user)
-    }
-  } catch (err) {
-    next(err)
-  }
-})
+//api/checkout
 
 //UPON COMPLETION OF CHECKOUT --> update user's default info, toggle order status, update inventory
 //send all updated info (depending on whether user checked 'remember for next time')
