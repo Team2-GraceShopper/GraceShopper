@@ -27,11 +27,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function Header(props) {
+export default function Header() {
   const classes = useStyles()
   // const { sections, title } = props;
   const title = 'Website Title'
-  const sections = [
+  const categories = [
     {
       title: 'Category1',
       url: 'http://www.google.com'
@@ -76,16 +76,17 @@ export default function Header(props) {
         variant="dense"
         className={classes.toolbarSecondary}
       >
-        {sections.map((section, idx) => (
+        {categories.map(category => (
           <Link
             color="inherit"
             noWrap
-            key={section.title}
+            key={category.title}
             variant="body2"
-            href={section.url}
+            // href={category.url}
+            href={`/${category.title}`}
             className={classes.toolbarLink}
           >
-            {section.title}
+            {category.title}
           </Link>
         ))}
       </Toolbar>
@@ -93,7 +94,7 @@ export default function Header(props) {
   )
 }
 
-Header.propTypes = {
-  sections: PropTypes.array,
-  title: PropTypes.string
-}
+// Header.propTypes = {
+//   sections: PropTypes.array,
+//   title: PropTypes.string
+// }
