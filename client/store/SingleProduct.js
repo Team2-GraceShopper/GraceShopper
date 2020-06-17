@@ -13,13 +13,11 @@ export const fetchSingleProduct = id => async dispatch => {
 
 const initialState = {}
 
-const singleProductReducer = (state = initialState, action) => {
+export default function(state = initialState, action) {
   switch (action.type) {
     case SET_SINGLE_PRODUCT:
-      return {...state, product: action.product}
+      return action.product
     default:
       return state
   }
 }
-
-export default singleProductReducer
