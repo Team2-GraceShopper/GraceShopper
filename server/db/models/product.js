@@ -31,7 +31,7 @@ Product.updateProduct = async function(id, data) {
     },
     returning: true
   })
-  if (updatedCount) return [200, updatedProducts[0]]
+  if (updatedCount) return [201, updatedProducts[0]]
   else return [404, `No product found with id ${id}`]
 }
 

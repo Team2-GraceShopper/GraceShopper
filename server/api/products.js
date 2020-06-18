@@ -49,3 +49,21 @@ router.put('/:id', async (req, res, next) => {
     next(error)
   }
 })
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    if (isAdmin(req.user)) {
+      const deletedCount = await Product.destroy({
+        where: {
+          id: req.params.id
+        }
+      })
+      if (deletedCount) res.status(200).send(`Product ${req.params.id} deleted`)
+      else res.status(404).send(`Product ${req.params.id} not found`)
+    } else {
+      res.status(401).send('Unauthorized to delete product')
+    }
+  } catch (error) {
+    next(error)
+  }
+})
