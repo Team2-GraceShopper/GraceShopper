@@ -33,3 +33,19 @@ router.post('/', async (req, res, next) => {
     next(error)
   }
 })
+
+router.put('/:id', async (req, res, next) => {
+  try {
+    if (isAdmin(req.user)) {
+      const updatedProduct = await Product.updateProduct(
+        req.params.id,
+        req.body
+      )
+      res.status(updatedProduct[0]).send(updatedProduct[1])
+    } else {
+      res.status(401).send('Unauthorized to edit product')
+    }
+  } catch (error) {
+    next(error)
+  }
+})

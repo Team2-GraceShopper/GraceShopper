@@ -23,4 +23,16 @@ const Product = db.define('product', {
   }
 })
 
+//CLASS METHODS
+Product.updateProduct = async function(id, data) {
+  const [updatedCount, updatedProducts] = await this.update(data, {
+    where: {
+      id: id
+    },
+    returning: true
+  })
+  if (updatedCount) return [200, updatedProducts[0]]
+  else return [404, `No product found with id ${id}`]
+}
+
 module.exports = Product
