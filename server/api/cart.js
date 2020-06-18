@@ -20,6 +20,7 @@ router.get('/', async (req, res, next) => {
 
 router.delete('/:order/:product', async (req, res, next) => {
   try {
+    console.log('-----------Request Body-------', req.body)
     if (req.user && req.user.id === req.body.userId) {
       const deleteCount = await OrderDetail.destroy({
         where: {

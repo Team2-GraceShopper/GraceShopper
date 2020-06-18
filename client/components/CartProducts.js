@@ -51,6 +51,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function CartProducts(props) {
   const classes = useStyles()
+  const removeItem = props.removeItem
   const products = props.cart || []
   const cartSubtotal = products.reduce((total, currentProduct) => {
     return total + currentProduct.subtotal
@@ -85,7 +86,9 @@ export default function CartProducts(props) {
               </Select>
             </div>
             <Typography variant="body2">{`${product.subtotal}.00`}</Typography>
-            <IconButton>
+            <IconButton
+              onClick={() => removeItem(product.orderId, product.productId)}
+            >
               <ClearIcon />
             </IconButton>
           </ListItem>

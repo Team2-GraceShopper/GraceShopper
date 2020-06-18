@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import CartProducts from './CartProducts'
-import {getCart} from '../store/cart'
+import {getCart, removeItem} from '../store/cart'
 import {me} from '../store/user'
 
 export class Cart extends React.Component {
@@ -11,7 +11,9 @@ export class Cart extends React.Component {
   }
 
   render() {
-    return <CartProducts cart={this.props.cart} />
+    return (
+      <CartProducts cart={this.props.cart} removeItem={this.props.removeItem} />
+    )
   }
 }
 
@@ -21,7 +23,8 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getCart: () => dispatch(getCart()),
-  getUser: () => dispatch(me())
+  getUser: () => dispatch(me()),
+  removeItem: (orderId, productId) => dispatch(removeItem(orderId, productId))
 })
 
 export default connect(mapState, mapDispatch)(Cart)
