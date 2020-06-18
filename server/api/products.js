@@ -23,7 +23,7 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    if (isAdmin(req.user)) {
+    if (req.user && isAdmin(req.user)) {
       const product = await Product.create(req.body)
       res.json(product)
     } else {
