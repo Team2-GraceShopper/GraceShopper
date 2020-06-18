@@ -11,7 +11,6 @@ export class Checkout extends React.Component {
         firstName: '',
         lastName: '',
         email: '',
-        password: '',
         shipStreet: '',
         shipCity: '',
         shipState: '',

@@ -16,6 +16,7 @@ export const getProducts = () => async dispatch => {
 }
 
 //updateProducts thunk creator (inventory)
+export const updateInventory = () => {}
 
 export default function(state = defaultProducts, action) {
   switch (action.type) {
