@@ -53,7 +53,6 @@ export default function CartProducts(props) {
   const cartSubtotal = products.reduce((total, currentProduct) => {
     return total + currentProduct.subtotal
   }, 0)
-  console.log(products)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom className={classes.title}>
