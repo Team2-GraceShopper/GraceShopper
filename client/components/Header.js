@@ -88,7 +88,6 @@ export function Header(props) {
             noWrap
             key={category.title}
             variant="body2"
-            // href={category.url}
             href={`/${category.title}`}
             className={classes.toolbarLink}
           >
