@@ -22,6 +22,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="given-name"
             onChange={handleChange}
+            value={props.user.firstName ? props.user.firstName : ''}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -32,6 +33,19 @@ export default function AddressForm(props) {
             label="Last name"
             fullWidth
             autoComplete="family-name"
+            value={props.user.lastName ? props.user.lastName : ''}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="email"
+            name="email"
+            label="Email"
+            fullWidth
+            autoComplete="email"
+            value={props.user.email ? props.user.email : ''}
             onChange={handleChange}
           />
         </Grid>
@@ -42,17 +56,9 @@ export default function AddressForm(props) {
             name="shipStreet"
             label="Address line 1"
             fullWidth
-            autoComplete="shipping address-line1"
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
             autoComplete="shipping address-line2"
+            value={props.user.shipStreet ? props.user.shipStreet : ''}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -63,14 +69,17 @@ export default function AddressForm(props) {
             label="City"
             fullWidth
             autoComplete="shipping address-level2"
+            value={props.user.shipCity ? props.user.shipCity : ''}
             onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            required
             id="state"
             name="shipState"
             label="State/Province/Region"
+            value={props.user.shipState ? props.user.shipState : ''}
             onChange={handleChange}
             fullWidth
           />
@@ -83,25 +92,21 @@ export default function AddressForm(props) {
             label="Zip / Postal code"
             fullWidth
             autoComplete="shipping postal-code"
+            value={props.user.shipZip ? props.user.shipZip : ''}
             onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            autoComplete="shipping country"
           />
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
             control={
-              <Checkbox color="secondary" name="saveAddress" value="yes" />
+              <Checkbox
+                color="secondary"
+                name="saveAddress"
+                value="yes"
+                onChange={console.log('checked')}
+              />
             }
-            label="Use this address for payment details"
+            label="Remember shipping details for next time"
           />
         </Grid>
       </Grid>

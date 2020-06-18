@@ -6,7 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 
 export default function PaymentForm(props) {
-  const {handleChange} = props
+  const {handleChange, user} = props
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -16,20 +16,12 @@ export default function PaymentForm(props) {
         <Grid item xs={12} md={6}>
           <TextField
             required
-            id="cardName"
-            label="Name on card"
-            fullWidth
-            autoComplete="cc-name"
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
             id="cardNumber"
             name="cardNumber"
             label="Card number"
             fullWidth
             autoComplete="cc-number"
+            value={user.cardNumber ? user.cardNumber : ''}
             onChange={handleChange}
           />
         </Grid>
@@ -38,9 +30,10 @@ export default function PaymentForm(props) {
             required
             id="expDate"
             name="cardExpiration"
-            label="Expiry date"
+            label="Expiration date (YYYY-MM-DD)"
             fullWidth
             autoComplete="cc-exp"
+            value={user.cardExpiration ? user.cardExpiration : ''}
             onChange={handleChange}
           />
         </Grid>
@@ -53,6 +46,7 @@ export default function PaymentForm(props) {
             helperText="Last three digits on signature strip"
             fullWidth
             autoComplete="cc-csc"
+            value={user.cvvCode ? user.cvvCode : ''}
             onChange={handleChange}
           />
         </Grid>

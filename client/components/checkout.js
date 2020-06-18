@@ -8,35 +8,30 @@ export class Checkout extends React.Component {
   constructor() {
     super()
     this.state = {
-      user: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        shipStreet: '',
-        shipCity: '',
-        shipState: '',
-        shipZip: '',
-        cardNumber: 0,
-        cardExpiration: '',
-        cvvCode: 0
-      }
+      firstName: '',
+      lastName: '',
+      email: '',
+      shipStreet: '',
+      shipCity: '',
+      shipState: '',
+      shipZip: '',
+      cardNumber: 0,
+      cardExpiration: '',
+      cvvCode: 0,
+      dataToUpdate: {ship: false, bill: false}
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   async componentDidMount() {
-    // this.props.getUser()
-    this.setState({user: this.props.user})
+    await this.props.getUser()
+    this.setState(this.props.user)
     await this.props.getCart()
-
-    console.log('products in cart:', this.props.cart)
-    //load cart info to pass down to checkout-review
   }
 
   handleChange(evt) {
     this.setState({[evt.target.name]: evt.target.value})
-    console.log(this.state)
   }
 
   handleSubmit(evt) {

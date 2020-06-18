@@ -68,9 +68,9 @@ const steps = ['Shipping address', 'Payment details', 'Review your order']
 function getStepContent(step, handleChange, cart, user) {
   switch (step) {
     case 0:
-      return <AddressForm handleChange={handleChange} />
+      return <AddressForm handleChange={handleChange} user={user} />
     case 1:
-      return <PaymentForm handleChange={handleChange} />
+      return <PaymentForm handleChange={handleChange} user={user} />
     case 2:
       return <Review cart={cart} user={user} />
     default:

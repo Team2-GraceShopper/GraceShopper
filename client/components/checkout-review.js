@@ -6,12 +6,6 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Grid from '@material-ui/core/Grid'
 
-// const payments = [
-//   {name: 'Card holder', detail: props.user.firstName + ' ' + props.user.lastName},
-//   {name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234'},
-//   {name: 'Expiry date', detail: '04/2024'}
-// ]
-
 const useStyles = makeStyles(theme => ({
   listItem: {
     padding: theme.spacing(1, 0)
@@ -59,7 +53,11 @@ export default function Review(props) {
             Shipping
           </Typography>
           <Typography gutterBottom>
-            {props.user.firstName + ' ' + props.user.lastName}
+            {props.user.firstName +
+              ' ' +
+              props.user.lastName +
+              ' - ' +
+              props.user.email}
           </Typography>
           <Typography gutterBottom>
             {props.user.shipStreet +
