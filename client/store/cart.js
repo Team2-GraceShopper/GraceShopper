@@ -3,11 +3,17 @@ import axios from 'axios'
 //ACTION TYPE
 const SET_CART = 'SET_CART'
 const UPDATE_QTY = 'UPDATE_QTY'
+const REMOVE_ITEM = 'REMOVE_ITEM'
 
 //ACTION CREATORS
 const setCart = cart => ({
   type: SET_CART,
   cart
+})
+
+const removedItem = id => ({
+  type: REMOVE_ITEM,
+  id
 })
 
 // //THUNKS
@@ -32,6 +38,22 @@ export const getCart = user => {
       //else if  cart is set on local storage
       //pass to dispatch
       //else send empty cart to dispatch
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export const removeItem = id => {
+  return async (dispatch, getState) => {
+    try {
+      const state = getState()
+      // const newCart = state.cart.filter
+      if (state.user.id) {
+        //remove item from DB cart
+      }
+      //remove item from local storage
+      //remove item from store
     } catch (err) {
       console.error(err)
     }

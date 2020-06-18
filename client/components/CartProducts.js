@@ -8,6 +8,8 @@ import Grid from '@material-ui/core/Grid'
 import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
+import ClearIcon from '@material-ui/icons/Clear'
+import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -83,6 +85,9 @@ export default function CartProducts(props) {
               </Select>
             </div>
             <Typography variant="body2">{`${product.subtotal}.00`}</Typography>
+            <IconButton>
+              <ClearIcon />
+            </IconButton>
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
