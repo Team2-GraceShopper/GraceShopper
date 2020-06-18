@@ -119,7 +119,7 @@ export function Signup(props) {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
@@ -140,8 +140,8 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      const firstName = evt.target.firstName
-      const lastName = evt.target.lastName
+      const firstName = evt.target.firstName.value
+      const lastName = evt.target.lastName.value
       dispatch(auth(formName, email, password, firstName, lastName))
     }
   }

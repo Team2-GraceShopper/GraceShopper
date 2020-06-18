@@ -52,6 +52,7 @@ export const auth = (
   try {
     dispatch(getUser(res.data))
     history.push('/home')
+    // ^change it to '/', add "Hello [user]" on navbar
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
