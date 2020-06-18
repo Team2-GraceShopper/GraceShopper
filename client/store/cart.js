@@ -25,7 +25,7 @@ export const getCart = user => {
       } else {
         const data = window.localStorage.getItem('cart')
           ? JSON.parse(window.localStorage.getItem('cart'))
-          : {}
+          : []
         dispatch(setCart(data))
       }
 
