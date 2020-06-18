@@ -43,14 +43,16 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-evenly'
   },
   quantity: {
-    paddingRight: 60
+    paddingRight: 70
   }
 }))
 
 export default function CartProducts(props) {
   const classes = useStyles()
   const products = props.cart || []
-
+  const cartSubtotal = products.reduce((total, currentProduct) => {
+    return total + currentProduct.subtotal
+  }, 0)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom className={classes.title}>
@@ -85,36 +87,21 @@ export default function CartProducts(props) {
         ))}
         <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />
-          <Typography variant="subtitle1" className={classes.total}>
-            $34.06
+          <Typography variant="h6" className={classes.total}>
+            Total
+          </Typography>
+          <Typography variant="h6" className={classes.total}>
+            {`$${cartSubtotal}.00`}
           </Typography>
         </ListItem>
       </List>
       <Grid container spacing={2}>
-        {/* <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            Shipping
-          </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
-        </Grid>
+        <Grid item xs={12} sm={6} />
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Payment details
+            {`Total $${cartSubtotal}.00`}
           </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
-        </Grid> */}
+        </Grid>
       </Grid>
     </React.Fragment>
   )

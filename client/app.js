@@ -1,6 +1,6 @@
 import React from 'react'
-
-import {Navbar, Header, AllProducts} from './components'
+// import SingleProductView from './components/SingleProductView'
+import {Navbar, Header, SingleProduct, AllProducts} from './components'
 import Routes from './routes'
 
 const App = () => {

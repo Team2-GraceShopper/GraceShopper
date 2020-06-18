@@ -20,6 +20,11 @@ form div {
   display: inline-block;
 }
 
+.single-product {
+  height: 1000px;
+  width: 1000px;
+  background-color: rgb(252, 232, 245);
+}
 .pointer {
   cursor: pointer;
 }

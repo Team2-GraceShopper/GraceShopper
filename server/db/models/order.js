@@ -69,10 +69,9 @@ const Order = db.define('order', {
   }
 })
 
-//CLASS METHODS
+//DEFINE CLASS METHODS
 Order.getCart = async function(id) {
-  console.log(typeof this)
-  const order = await this.findOne({
+  const order = await Order.findOne({
     where: {
       userId: id,
       status: 'active'
@@ -81,24 +80,21 @@ Order.getCart = async function(id) {
       model: Product
     }
   })
-  if (!order) {
-    return 0
-  } else {
-    const cart = order.products.map(product => {
-      const subtotal = product.price * product.OrderDetail.quantity
-      return {
-        productId: product.id,
-        name: product.name,
-        price: product.price,
-        description: product.description,
-        imageUrl: product.imageUrl,
-        inventory: product.inventory,
-        quantity: product.OrderDetail.quantity,
-        subtotal
-      }
-    })
-    return cart
-  }
+  if (!order) return 0
+  const cart = order.products.map(product => {
+    const subtotal = product.price * product.OrderDetail.quantity
+    return {
+      productId: product.id,
+      name: product.name,
+      price: product.price,
+      description: product.description,
+      imageUrl: product.imageUrl,
+      inventory: product.inventory,
+      quantity: product.OrderDetail.quantity,
+      subtotal
+    }
+  })
+  return cart
 }
 
 module.exports = Order
