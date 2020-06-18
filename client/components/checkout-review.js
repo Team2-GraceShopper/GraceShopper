@@ -6,12 +6,11 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Grid from '@material-ui/core/Grid'
 
-const payments = [
-  {name: 'Card type', detail: 'Visa'},
-  {name: 'Card holder', detail: 'Mr John Smith'},
-  {name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234'},
-  {name: 'Expiry date', detail: '04/2024'}
-]
+// const payments = [
+//   {name: 'Card holder', detail: props.user.firstName + ' ' + props.user.lastName},
+//   {name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234'},
+//   {name: 'Expiry date', detail: '04/2024'}
+// ]
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -77,7 +76,7 @@ export default function Review(props) {
             Payment details
           </Typography>
           <Grid container>
-            {payments.map(payment => (
+            {/* {payments.map(payment => (
               <React.Fragment key={payment.name}>
                 <Grid item xs={6}>
                   <Typography gutterBottom>{payment.name}</Typography>
@@ -86,7 +85,27 @@ export default function Review(props) {
                   <Typography gutterBottom>{payment.detail}</Typography>
                 </Grid>
               </React.Fragment>
-            ))}
+            ))} */}
+            <Grid item xs={6}>
+              <Typography gutterBottom>Name on Card: </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography gutterBottom>
+                {props.user.firstName + ' ' + props.user.lastName}
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography gutterBottom>Card Number: </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography gutterBottom>{props.user.cardNumber}</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography gutterBottom>Expiration Date: </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography gutterBottom>{props.user.cardExpiration}</Typography>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

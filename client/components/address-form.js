@@ -71,6 +71,7 @@ export default function AddressForm(props) {
             id="state"
             name="shipState"
             label="State/Province/Region"
+            onChange={handleChange}
             fullWidth
           />
         </Grid>
