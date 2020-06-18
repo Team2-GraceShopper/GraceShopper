@@ -7,31 +7,11 @@ router.get('/', async (req, res, next) => {
   console.log('user', req.user)
   try {
     if (req.user) {
-      const order = await Order.findOne({
-        where: {
-          userId: req.user.id,
-          status: 'active'
-        },
-        include: {
-          model: Product
-        }
-      })
+      const order = await Order.getCart(req.user.id)
       if (!order)
         res.status(404).send(`Nothing in cart for user ${req.user.id}`)
       else {
-        const cart = order.products.map(product => {
-          return {
-            productId: product.id,
-            name: product.name,
-            price: product.price,
-            description: product.description,
-            imageUrl: product.imageUrl,
-            inventory: product.inventory,
-            quantity: product.OrderDetail.quantity
-          }
-        })
-        // res.json(order.products)
-        res.json(cart)
+        res.json(order)
       }
     } else res.status(404).send('Nothing in cart')
   } catch (err) {
