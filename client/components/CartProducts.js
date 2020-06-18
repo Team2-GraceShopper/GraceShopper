@@ -27,8 +27,23 @@ const useStyles = makeStyles(theme => ({
     marginRight: 10
   },
   qty: {
-    paddingRight: 30,
+    paddingRight: 70,
     textAlign: 'center'
+  },
+  heading: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignContent: 'space-evenly',
+    flexDirection: 'row',
+    marginTop: 20
+  },
+  productPrice: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
+  quantity: {
+    paddingRight: 60
   }
 }))
 
@@ -41,25 +56,31 @@ export default function CartProducts(props) {
       <Typography variant="h6" gutterBottom className={classes.title}>
         Shopping Cart
       </Typography>
+      <List>
+        <ListItem className={classes.heading}>
+          <ListItemText primary="Product" />
+          <div className={classes.productPrice}>
+            <ListItemText primary="Quantity" className={classes.quantity} />
+            <ListItemText primary="Total" />
+          </div>
+        </ListItem>
+      </List>
       <List disablePadding>
         {products.map(product => (
           <ListItem className={classes.listItem} key={product.name}>
             <img src={product.imageUrl} className={classes.image} />
-            {/* <ListItemAvatar className={classes.image}>
-               <img src={product.imageUrl} />
-            </ListItemAvatar> */}
             <ListItemText
               primary={product.name}
-              secondary={product.description}
+              // secondary={product.description}
             />
-            <InputLabel id="quantity">Quantity</InputLabel>
+            {/* <InputLabel id="quantity" className={classes.listItem}>Quantity</InputLabel> */}
             <div className={classes.qty}>
               <Select labelId="quantity" id="select" value="1">
                 <MenuItem value="1">1</MenuItem>
                 <MenuItem value="22">2</MenuItem>
               </Select>
             </div>
-            <Typography variant="body2">{product.price}</Typography>
+            <Typography variant="body2">{`${product.subtotal}.00`}</Typography>
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>

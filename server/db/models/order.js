@@ -69,7 +69,7 @@ const Order = db.define('order', {
   }
 })
 
-//Class Methods
+//CLASS METHODS
 Order.getCart = async function(id) {
   console.log(typeof this)
   const order = await this.findOne({
@@ -85,6 +85,7 @@ Order.getCart = async function(id) {
     return 0
   } else {
     const cart = order.products.map(product => {
+      const subtotal = product.price * product.OrderDetail.quantity
       return {
         productId: product.id,
         name: product.name,
@@ -92,7 +93,8 @@ Order.getCart = async function(id) {
         description: product.description,
         imageUrl: product.imageUrl,
         inventory: product.inventory,
-        quantity: product.OrderDetail.quantity
+        quantity: product.OrderDetail.quantity,
+        subtotal
       }
     })
     return cart
