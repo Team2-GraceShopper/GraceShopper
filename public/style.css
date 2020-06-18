@@ -21,9 +21,9 @@ form div {
 }
 
 .single-product {
-  height: 100px;
-  width: 100px;
-  background-color: hotpink;
+  height: 1000px;
+  width: 1000px;
+  background-color: rgb(252, 232, 245);
 }
 .pointer {
   cursor: pointer;
