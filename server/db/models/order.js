@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const Product = require('./product')
 
 const Order = db.define('order', {
   email: {
@@ -67,5 +68,33 @@ const Order = db.define('order', {
     default: 'active'
   }
 })
+
+//DEFINE CLASS METHODS
+Order.getCart = async function(id) {
+  const order = await Order.findOne({
+    where: {
+      userId: id,
+      status: 'active'
+    },
+    include: {
+      model: Product
+    }
+  })
+  if (!order) return 0
+  const cart = order.products.map(product => {
+    const subtotal = product.price * product.OrderDetail.quantity
+    return {
+      productId: product.id,
+      name: product.name,
+      price: product.price,
+      description: product.description,
+      imageUrl: product.imageUrl,
+      inventory: product.inventory,
+      quantity: product.OrderDetail.quantity,
+      subtotal
+    }
+  })
+  return cart
+}
 
 module.exports = Order
