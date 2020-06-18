@@ -18,3 +18,18 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    if (req.user && isAdmin(req.user)) {
+      const user = await User.findByPk(req.params.id, {
+        attributes: ['id', 'email']
+      })
+      user
+        ? res.json(user)
+        : res.status(404).send(`User ${req.params.id} not found`)
+    } else res.status(401).send('Unauthorized access to users')
+  } catch (error) {
+    next(error)
+  }
+})
