@@ -9,8 +9,8 @@ const {Order, Product, User} = require('../db/models')
 router.put('/user', async (req, res, next) => {
   try {
     let user = User.findById(req.user.id)
-    for (let key in req.body) {
-      if (req.body[key]) await user.update({key: req.body[key]})
+    for (let key in req.body.user) {
+      if (req.body.user[key]) await user.update({key: req.body.user[key]})
     }
     res.json(user)
   } catch (err) {
@@ -26,10 +26,10 @@ router.put('/product', async (req, res, next) => {
         where: {id: req.body.products[i].productId}
       })
       Product.update(
+        {inventory: thisProduct.inventory - req.body.products[i].quantity},
         {
-          inventory: thisProduct.inventory - req.body.products[i].quantity
-        },
-        {where: {id: req.body.products[i].productId}}
+          where: {id: req.body.products[i].productId}
+        }
       )
     }
   } catch (error) {
