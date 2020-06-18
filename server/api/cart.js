@@ -20,6 +20,7 @@ router.get('/', async (req, res, next) => {
         res.status(404).send(`Nothing in cart for user ${req.user.id}`)
       else {
         const cart = order.products.map(product => {
+          const subtotal = product.price * product.OrderDetail.quantity
           return {
             productId: product.id,
             name: product.name,
@@ -27,7 +28,8 @@ router.get('/', async (req, res, next) => {
             description: product.description,
             imageUrl: product.imageUrl,
             inventory: product.inventory,
-            quantity: product.OrderDetail.quantity
+            quantity: product.OrderDetail.quantity,
+            subtotal
           }
         })
         // res.json(order.products)
