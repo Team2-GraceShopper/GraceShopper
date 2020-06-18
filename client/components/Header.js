@@ -31,7 +31,7 @@ export default function Header(props) {
   const classes = useStyles()
   // const { sections, title } = props;
   const title = 'Website Title'
-  const sections = [
+  const categories = [
     {
       title: 'Category1',
       url: 'http://www.google.com'
@@ -76,16 +76,16 @@ export default function Header(props) {
         variant="dense"
         className={classes.toolbarSecondary}
       >
-        {sections.map((section, idx) => (
+        {categories.map((category, idx) => (
           <Link
             color="inherit"
             noWrap
-            key={section.title}
+            key={category.title}
             variant="body2"
-            href={section.url}
+            href={category.url}
             className={classes.toolbarLink}
           >
-            {section.title}
+            {category.title}
           </Link>
         ))}
       </Toolbar>
