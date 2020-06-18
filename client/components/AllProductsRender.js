@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Link from '@material-ui/core/Link'
+import ToggleHeart from './ToggleHeart'
 
 function Copyright() {
   return (
@@ -56,11 +57,8 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-// replace it with all products
-
 export default function AllProductsRender(props) {
-  // const { products } = props
+  const {products} = props
   const classes = useStyles()
 
   return (
@@ -106,21 +104,20 @@ export default function AllProductsRender(props) {
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map(card => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {products.map(product => (
+              <Grid item key={product.id} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
+                    image={product.imageUrl}
+                    // alt="alt description"
                   />
                   <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                    <Typography gutterBottom component="h6">
+                      {product.name}
                     </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
+                    <Typography gutterBottom component="h6">
+                      ${product.price}
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -130,6 +127,7 @@ export default function AllProductsRender(props) {
                     <Button size="small" color="primary">
                       Add To Cart
                     </Button>
+                    <ToggleHeart />
                   </CardActions>
                 </Card>
               </Grid>
