@@ -82,13 +82,13 @@ export function Header(props) {
         variant="dense"
         className={classes.toolbarSecondary}
       >
-        {categories.map((category, idx) => (
+        {categories.map(category => (
           <Link
             color="inherit"
             noWrap
             key={category.title}
             variant="body2"
-            href={category.url}
+            href={`/${category.title}`}
             className={classes.toolbarLink}
           >
             {category.title}
