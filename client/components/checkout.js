@@ -25,19 +25,21 @@ export class Checkout extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getUser()
+    // this.props.getUser()
     this.setState({user: this.props.user})
+    //load cart info to pass down to checkout-review
   }
 
   handleChange(evt) {
     this.setState({[evt.target.name]: evt.target.value})
+    console.log(this.state)
   }
 
   handleSubmit(evt) {
     evt.preventDefault()
-    //pass new data into updateData thunk creator to update User
-    //update Order with new data and toggle status
+    //pass new data into thunk creator to update models
     updateUser(this.state.user)
+    console.log('state on submit', this.state)
   }
 
   render() {
