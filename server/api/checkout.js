@@ -8,35 +8,11 @@ const {Order, Product, User} = require('../db/models')
 
 router.put('/user', async (req, res, next) => {
   try {
-    //update user's info
-    if (req.body.newShipment) {
-      await User.update(
-        {
-          shipStreet: req.body.newShipment.shipStreet,
-          shipCity: req.body.newShipment.shipCity,
-          shipState: req.body.newShipment.shipState,
-          shipZip: req.body.newShipment.shipZip
-        },
-        {where: {id: req.body.userId}}
-      )
+    let user = User.findById(req.user.id)
+    for (let key in req.body) {
+      if (req.body[key]) await user.update({key: req.body[key]})
     }
-
-    if (req.body.newBilling) {
-      await User.update(
-        {
-          cardNumber: req.body.newBilling.cardNumber,
-          cardExpiration: req.body.newBilling.cardExpiration,
-          cvvCode: req.body.newBilling.cvvCode,
-          billStreet: req.body.newBilling.billStreet,
-          billCity: req.body.newBilling.billCity,
-          billState: req.body.newBilling.billState,
-          billZip: req.body.newBilling.billZip
-        },
-        {where: {id: req.params.id}}
-      )
-    }
-
-    //res.json data
+    res.json(user)
   } catch (err) {
     next(err)
   }
