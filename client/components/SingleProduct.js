@@ -5,9 +5,6 @@ import {fetchSingleProduct} from '../store/singleProduct'
 import {withRouter} from 'react-router-dom'
 
 export class SingleProduct extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   componentDidMount() {
     this.props.fetchSingleProduct(this.props.match.params.productId)
   }
