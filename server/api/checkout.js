@@ -5,47 +5,45 @@ const {Order, Product, User} = require('../db/models')
 
 //UPON COMPLETION OF CHECKOUT --> update user's default info, toggle order status, update inventory
 //send all updated info (depending on whether user checked 'remember for next time')
-//along with the details of which information they want to save to db (req.body.update)
-//1: ONLY update shipping addr; 2: ONLY update cc info; 3: update both
 
-router.put('/', async (req, res, next) => {
+router.put('/user', async (req, res, next) => {
   try {
     //update user's info
-    if (req.update === 1 || req.update === 3) {
+    if (req.body.newShipment) {
       await User.update(
         {
-          shipStreet: req.body.shipStreet,
-          shipCity: req.body.shipCity,
-          shipState: req.body.shipState,
-          shipZip: req.body.shipZip
+          shipStreet: req.body.newShipment.shipStreet,
+          shipCity: req.body.newShipment.shipCity,
+          shipState: req.body.newShipment.shipState,
+          shipZip: req.body.newShipment.shipZip
         },
         {where: {id: req.body.userId}}
       )
     }
-    if (req.update === 2 || req.update === 3) {
+
+    if (req.body.newBilling) {
       await User.update(
         {
-          cardNumber: req.body.cardNumber,
-          cardExpiration: req.body.cardExpiration,
-          cvvCode: req.body.cvvCode,
-          billStreet: req.body.billStreet,
-          billCity: req.body.billCity,
-          billState: req.body.billState,
-          billZip: req.body.billZip
+          cardNumber: req.body.newBilling.cardNumber,
+          cardExpiration: req.body.newBilling.cardExpiration,
+          cvvCode: req.body.newBilling.cvvCode,
+          billStreet: req.body.newBilling.billStreet,
+          billCity: req.body.newBilling.billCity,
+          billState: req.body.newBilling.billState,
+          billZip: req.body.newBilling.billZip
         },
         {where: {id: req.params.id}}
       )
     }
 
-    //update order status
-    await Order.update(
-      {status: 'complete'},
-      {
-        where: {id: req.body.orderId}
-      }
-    )
+    //res.json data
+  } catch (err) {
+    next(err)
+  }
+})
 
-    //update inventory amount
+router.put('/product', async (req, res, next) => {
+  try {
     let thisProduct
     for (let i = 0; i < req.body.products.length; i++) {
       thisProduct = await Product.findOne({
@@ -58,11 +56,24 @@ router.put('/', async (req, res, next) => {
         {where: {id: req.body.products[i].productId}}
       )
     }
-  } catch (err) {
-    next(err)
+  } catch (error) {
+    next(error)
   }
 })
 
-router.post('/')
+router.put('/order', async (req, res, next) => {
+  try {
+    await Order.update(
+      {
+        status: 'complete'
+      },
+      {
+        where: {id: req.body.orderId}
+      }
+    )
+  } catch (error) {
+    next(error)
+  }
+})
 
 module.exports = router

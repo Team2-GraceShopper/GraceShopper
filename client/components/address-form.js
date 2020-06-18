@@ -5,7 +5,8 @@ import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 
-export default function AddressForm() {
+export default function AddressForm(props) {
+  const {handleChange} = props
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -20,6 +21,7 @@ export default function AddressForm() {
             label="First name"
             fullWidth
             autoComplete="given-name"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -30,16 +32,18 @@ export default function AddressForm() {
             label="Last name"
             fullWidth
             autoComplete="family-name"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             required
             id="address1"
-            name="address1"
+            name="shipStreet"
             label="Address line 1"
             fullWidth
             autoComplete="shipping address-line1"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -55,16 +59,17 @@ export default function AddressForm() {
           <TextField
             required
             id="city"
-            name="city"
+            name="shipCity"
             label="City"
             fullWidth
             autoComplete="shipping address-level2"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             id="state"
-            name="state"
+            name="shipState"
             label="State/Province/Region"
             fullWidth
           />
@@ -73,10 +78,11 @@ export default function AddressForm() {
           <TextField
             required
             id="zip"
-            name="zip"
+            name="shipZip"
             label="Zip / Postal code"
             fullWidth
             autoComplete="shipping postal-code"
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>

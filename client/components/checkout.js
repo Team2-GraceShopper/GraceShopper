@@ -1,154 +1,65 @@
 import React from 'react'
-import {makeStyles} from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Paper from '@material-ui/core/Paper'
-import Stepper from '@material-ui/core/Stepper'
-import Step from '@material-ui/core/Step'
-import StepLabel from '@material-ui/core/StepLabel'
-import Button from '@material-ui/core/Button'
-import Link from '@material-ui/core/Link'
-import Typography from '@material-ui/core/Typography'
-import AddressForm from './address-form'
-import PaymentForm from './payment-form'
-import Review from './checkout-review'
+import CheckoutRender from './checkout-render'
+import {connect} from 'react-redux'
+import {me, updateUser} from '../store/user'
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
-
-const useStyles = makeStyles(theme => ({
-  appBar: {
-    position: 'relative'
-  },
-  layout: {
-    width: 'auto',
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-      width: 600,
-      marginLeft: 'auto',
-      marginRight: 'auto'
+export class Checkout extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      user: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        shipStreet: '',
+        shipCity: '',
+        shipState: '',
+        shipZip: '',
+        cardNumber: 0,
+        cardExpiration: '',
+        cvvCode: 0
+      }
     }
-  },
-  paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3)
-    }
-  },
-  stepper: {
-    padding: theme.spacing(3, 0, 5)
-  },
-  buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end'
-  },
-  button: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
-}))
 
-const steps = ['Shipping address', 'Payment details', 'Review your order']
+  componentDidMount() {
+    this.props.getUser()
+    this.setState({user: this.props.user})
+  }
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />
-    case 1:
-      return <PaymentForm />
-    case 2:
-      return <Review />
-    default:
-      throw new Error('Unknown step')
+  handleChange(evt) {
+    this.setState({[evt.target.name]: evt.target.value})
+  }
+
+  handleSubmit(evt) {
+    evt.preventDefault()
+    //pass new data into updateData thunk creator to update User
+    //update Order with new data and toggle status
+    updateUser(this.state.user)
+  }
+
+  render() {
+    return (
+      <CheckoutRender
+        handleChange={this.handleChange}
+        handleSubmit={this.handleSubmit}
+      />
+    )
   }
 }
 
-export default function Checkout() {
-  const classes = useStyles()
-  const [activeStep, setActiveStep] = React.useState(0)
-
-  const handleNext = () => {
-    setActiveStep(activeStep + 1)
-  }
-
-  const handleBack = () => {
-    setActiveStep(activeStep - 1)
-  }
-
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <AppBar position="absolute" color="default" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Company name
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="center">
-            Checkout
-          </Typography>
-          <Stepper activeStep={activeStep} className={classes.stepper}>
-            {steps.map(label => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          <React.Fragment>
-            {activeStep === steps.length ? (
-              <React.Fragment>
-                <Typography variant="h5" gutterBottom>
-                  Thank you for your order!!
-                </Typography>
-                <Typography variant="subtitle1">
-                  Your order number is xxxxx. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
-                </Typography>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                {getStepContent(activeStep)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
-                      Back
-                    </Button>
-                  )}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                  </Button>
-                </div>
-              </React.Fragment>
-            )}
-          </React.Fragment>
-        </Paper>
-        <Copyright />
-      </main>
-    </React.Fragment>
-  )
+const mapState = state => {
+  return {user: state.user}
 }
+
+const mapDispatch = dispatch => {
+  return {
+    getUser: () => dispatch(me()),
+    updateUser: user => dispatch(updateUser(user))
+  }
+}
+
+export default connect(mapState, mapDispatch)(Checkout)

@@ -8,6 +8,9 @@ import SearchIcon from '@material-ui/icons/Search'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 
+import {logout} from '../store/user'
+import {connect} from 'react-redux'
+
 const useStyles = makeStyles(theme => ({
   toolbar: {
     borderBottom: `1px solid ${theme.palette.divider}`
@@ -27,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function Header() {
+export function Header(props) {
   const classes = useStyles()
   // const { sections, title } = props;
   const title = 'Website Title'
@@ -64,8 +67,11 @@ export default function Header() {
         >
           {title}
         </Typography>
+        <IconButton onClick={() => props.logout()}>Logout</IconButton>
         <IconButton>
-          <SearchIcon />
+          <Link href="/cart">
+            <SearchIcon />
+          </Link>
         </IconButton>
         <Button variant="outlined" size="small">
           Sign up
@@ -93,6 +99,12 @@ export default function Header() {
     </React.Fragment>
   )
 }
+
+const mapDispatch = dispatch => ({
+  logout: () => dispatch(logout())
+})
+
+export default connect(null, mapDispatch)(Header)
 
 // Header.propTypes = {
 //   sections: PropTypes.array,
