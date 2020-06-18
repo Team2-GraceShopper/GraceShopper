@@ -65,21 +65,21 @@ const useStyles = makeStyles(theme => ({
 
 const steps = ['Shipping address', 'Payment details', 'Review your order']
 
-function getStepContent(step, handleChange) {
+function getStepContent(step, handleChange, cart, user) {
   switch (step) {
     case 0:
       return <AddressForm handleChange={handleChange} />
     case 1:
       return <PaymentForm handleChange={handleChange} />
     case 2:
-      return <Review />
+      return <Review cart={cart} user={user} />
     default:
       throw new Error('Unknown step')
   }
 }
 
 export default function Checkout(props) {
-  const {handleSubmit, handleChange} = props
+  const {handleSubmit, handleChange, cart, user} = props
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
 
@@ -122,7 +122,7 @@ export default function Checkout(props) {
             ) : (
               <React.Fragment>
                 <form onSubmit={handleSubmit}>
-                  {getStepContent(activeStep, handleChange)}
+                  {getStepContent(activeStep, handleChange, cart, user)}
                   <div className={classes.buttons}>
                     {activeStep !== 0 && (
                       <Button onClick={handleBack} className={classes.button}>

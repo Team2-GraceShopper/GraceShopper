@@ -2,6 +2,7 @@ import React from 'react'
 import CheckoutRender from './checkout-render'
 import {connect} from 'react-redux'
 import {me, updateUser} from '../store/user'
+import {getCart} from '../store/cart'
 
 export class Checkout extends React.Component {
   constructor() {
@@ -24,9 +25,12 @@ export class Checkout extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // this.props.getUser()
     this.setState({user: this.props.user})
+    await this.props.getCart()
+
+    console.log('products in cart:', this.props.cart)
     //load cart info to pass down to checkout-review
   }
 
@@ -47,19 +51,22 @@ export class Checkout extends React.Component {
       <CheckoutRender
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
+        cart={this.props.cart}
+        user={this.state}
       />
     )
   }
 }
 
 const mapState = state => {
-  return {user: state.user}
+  return {user: state.user, cart: state.cart}
 }
 
 const mapDispatch = dispatch => {
   return {
     getUser: () => dispatch(me()),
-    updateUser: user => dispatch(updateUser(user))
+    updateUser: user => dispatch(updateUser(user)),
+    getCart: () => dispatch(getCart())
   }
 }
 
