@@ -4,6 +4,7 @@ const db = require('../db')
 const app = require('../index')
 const Product = db.model('product')
 const faker = require('faker')
+const User = db.model('user')
 
 describe('Product routes', () => {
   beforeEach(() => {

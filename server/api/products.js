@@ -36,7 +36,7 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
-    if (isAdmin(req.user)) {
+    if (req.user && isAdmin(req.user)) {
       const updatedProduct = await Product.updateProduct(
         req.params.id,
         req.body
@@ -52,7 +52,7 @@ router.put('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
   try {
-    if (isAdmin(req.user)) {
+    if (req.user && isAdmin(req.user)) {
       const deletedCount = await Product.destroy({
         where: {
           id: req.params.id
