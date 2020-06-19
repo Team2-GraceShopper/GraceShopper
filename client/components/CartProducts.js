@@ -10,20 +10,26 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import ClearIcon from '@material-ui/icons/Clear'
 import IconButton from '@material-ui/core/IconButton'
+import RemoveCircle from '@material-ui/icons/RemoveCircle'
 
 import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles(theme => ({
   listItem: {
-    padding: theme.spacing(1, 1)
-    // border: "1px solid black",
+    padding: theme.spacing(1, 1),
+    // border: '2px solid black',
+    borderRadius: 5,
+    marginBottom: 20
   },
   total: {
     fontWeight: 700
   },
   title: {
     marginTop: theme.spacing(2),
-    textAlign: 'center'
+    textAlign: 'center',
+    fontWeight: 700
+    // marginTop: 60
   },
   image: {
     height: 150,
@@ -39,7 +45,8 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-between',
     alignContent: 'space-evenly',
     flexDirection: 'row',
-    marginTop: 20
+    marginTop: 20,
+    fontWeight: 700
   },
   productPrice: {
     display: 'flex',
@@ -47,10 +54,11 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-evenly'
   },
   quantity: {
-    paddingRight: 100
+    paddingRight: 80
   },
   container: {
-    padding: 75
+    paddingRight: 100,
+    paddingLeft: 100
   },
   priceHead: {
     paddingRight: 75
@@ -65,7 +73,18 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-end'
   },
   subTotalPrice: {
+    marginRight: 10
+  },
+  subTotalQty: {
     marginRight: 50
+  },
+  checkout: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    marginTop: 20,
+    paddingBottom: 50,
+    marginRight: 10
   }
 }))
 
@@ -78,16 +97,33 @@ export default function CartProducts(props) {
   }, 0)
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom className={classes.title}>
+      <Typography variant="h5" gutterBottom className={classes.title}>
         Shopping Cart
       </Typography>
       <Box className={classes.container}>
         <List>
           <ListItem className={classes.heading}>
-            <ListItemText primary="Product" />
+            {/* <ListItemText primary="Product"/> */}
+            <Typography variant="h6" gutterBottom>
+              Product
+            </Typography>
             <div className={classes.productPrice}>
-              <ListItemText primary="Quantity" className={classes.quantity} />
-              <ListItemText primary="Total" className={classes.priceHead} />
+              <Typography
+                variant="h6"
+                gutterBottom
+                className={classes.quantity}
+              >
+                Quantity
+              </Typography>
+              <Typography
+                variant="h6"
+                gutterBottom
+                className={classes.priceHead}
+              >
+                Price
+              </Typography>
+              {/* <ListItemText primary="Quantity" className={classes.quantity} />
+              <ListItemText primary="Total" className={classes.priceHead} /> */}
             </div>
           </ListItem>
         </List>
@@ -95,11 +131,7 @@ export default function CartProducts(props) {
           {products.map(product => (
             <ListItem className={classes.listItem} key={product.name}>
               <img src={product.imageUrl} className={classes.image} />
-              <ListItemText
-                primary={product.name}
-                // secondary={product.description}
-              />
-              {/* <InputLabel id="quantity" className={classes.listItem}>Quantity</InputLabel> */}
+              <ListItemText primary={product.name} />
               <div className={classes.qty}>
                 <Select labelId="quantity" id="select" value="1">
                   <MenuItem value="1">1</MenuItem>
@@ -112,7 +144,7 @@ export default function CartProducts(props) {
               <IconButton
                 onClick={() => removeItem(product.orderId, product.productId)}
               >
-                <ClearIcon />
+                <RemoveCircle />
               </IconButton>
             </ListItem>
           ))}
@@ -121,7 +153,7 @@ export default function CartProducts(props) {
           <Box className={classes.subTotal}>
             <Typography
               variant="h6"
-              className={`${classes.total} ${classes.quantity}`}
+              className={`${classes.total} ${classes.subTotalQty}`}
             >
               Total
             </Typography>
@@ -134,14 +166,11 @@ export default function CartProducts(props) {
           </Box>
           {/* </ListItem> */}
         </List>
-        {/* <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} />
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            {`Total $${cartSubtotal}.00`}
-          </Typography>
-        </Grid>
-      </Grid> */}
+        <Box className={classes.checkout}>
+          <Button variant="contained" color="primary" size="large">
+            Checkout Cart
+          </Button>
+        </Box>
       </Box>
     </React.Fragment>
   )
