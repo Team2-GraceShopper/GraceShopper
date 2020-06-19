@@ -9,8 +9,9 @@ export class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
     this.state = {
-      quantity: 0
+      quantity: 1
     }
   }
 
@@ -20,9 +21,10 @@ export class SingleProduct extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    this.setState({
-      quantity: e.target.value
-    })
+  }
+
+  handleChange(e) {
+    this.setState({[e.target.name]: e.target.value})
   }
 
   render() {
@@ -31,6 +33,8 @@ export class SingleProduct extends React.Component {
         product={this.props.product}
         addItem={this.props.addItem}
         quantity={this.state.quantity}
+        handleSubmit={this.handleSubmit}
+        handleChange={this.handleChange}
       />
     )
   }

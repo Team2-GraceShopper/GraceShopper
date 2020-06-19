@@ -56,8 +56,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function SingleProductView(props) {
   const classes = useStyles()
-  let {product, addItem, handleSubmit, quantity} = props
-  console.log(addItem)
+  let {product, addItem, handleSubmit, handleChange, quantity} = props
+
   return product.name ? (
     <div className="single-product">
       <h1> {product.name}</h1>
@@ -68,7 +68,13 @@ export default function SingleProductView(props) {
       <h4> Only a few left!</h4>
 
       <form onSubmit={handleSubmit}>
-        <select variant="outlined" color="primary">
+        <select
+          variant="outlined"
+          name="quantity"
+          color="primary"
+          onChange={handleChange}
+          value={quantity}
+        >
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -80,7 +86,7 @@ export default function SingleProductView(props) {
         type="submit"
         variant="contained"
         color="primary"
-        onClick={() => addItem(product, 1)}
+        onClick={() => addItem(product, quantity)}
       >
         ADD TO CART
       </Button>
