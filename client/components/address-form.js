@@ -6,7 +6,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 
 export default function AddressForm(props) {
-  const {handleChange} = props
+  const {handleChange, handleCheck, user} = props
+  //   const {dataToUpdate} = user
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -22,7 +23,7 @@ export default function AddressForm(props) {
             fullWidth
             autoComplete="given-name"
             onChange={handleChange}
-            value={props.user.firstName ? props.user.firstName : ''}
+            value={user.firstName ? props.user.firstName : ''}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -33,7 +34,7 @@ export default function AddressForm(props) {
             label="Last name"
             fullWidth
             autoComplete="family-name"
-            value={props.user.lastName ? props.user.lastName : ''}
+            value={user.lastName ? props.user.lastName : ''}
             onChange={handleChange}
           />
         </Grid>
@@ -45,7 +46,7 @@ export default function AddressForm(props) {
             label="Email"
             fullWidth
             autoComplete="email"
-            value={props.user.email ? props.user.email : ''}
+            value={user.email ? props.user.email : ''}
             onChange={handleChange}
           />
         </Grid>
@@ -57,7 +58,7 @@ export default function AddressForm(props) {
             label="Address line 1"
             fullWidth
             autoComplete="shipping address-line2"
-            value={props.user.shipStreet ? props.user.shipStreet : ''}
+            value={user.shipStreet ? props.user.shipStreet : ''}
             onChange={handleChange}
           />
         </Grid>
@@ -69,7 +70,7 @@ export default function AddressForm(props) {
             label="City"
             fullWidth
             autoComplete="shipping address-level2"
-            value={props.user.shipCity ? props.user.shipCity : ''}
+            value={user.shipCity ? props.user.shipCity : ''}
             onChange={handleChange}
           />
         </Grid>
@@ -79,7 +80,7 @@ export default function AddressForm(props) {
             id="state"
             name="shipState"
             label="State/Province/Region"
-            value={props.user.shipState ? props.user.shipState : ''}
+            value={user.shipState ? props.user.shipState : ''}
             onChange={handleChange}
             fullWidth
           />
@@ -92,7 +93,7 @@ export default function AddressForm(props) {
             label="Zip / Postal code"
             fullWidth
             autoComplete="shipping postal-code"
-            value={props.user.shipZip ? props.user.shipZip : ''}
+            value={user.shipZip ? props.user.shipZip : ''}
             onChange={handleChange}
           />
         </Grid>
@@ -102,8 +103,8 @@ export default function AddressForm(props) {
               <Checkbox
                 color="secondary"
                 name="saveAddress"
-                value="yes"
-                onChange={console.log('checked')}
+                value={user.saveAddress ? 'yes' : 'no'}
+                onChange={evt => handleCheck(evt)}
               />
             }
             label="Remember shipping details for next time"

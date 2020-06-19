@@ -65,12 +65,24 @@ const useStyles = makeStyles(theme => ({
 
 const steps = ['Shipping address', 'Payment details', 'Review your order']
 
-function getStepContent(step, handleChange, cart, user) {
+function getStepContent(step, handleChange, cart, user, handleCheck) {
   switch (step) {
     case 0:
-      return <AddressForm handleChange={handleChange} user={user} />
+      return (
+        <AddressForm
+          handleCheck={handleCheck}
+          handleChange={handleChange}
+          user={user}
+        />
+      )
     case 1:
-      return <PaymentForm handleChange={handleChange} user={user} />
+      return (
+        <PaymentForm
+          handleCheck={handleCheck}
+          handleChange={handleChange}
+          user={user}
+        />
+      )
     case 2:
       return <Review cart={cart} user={user} />
     default:
@@ -79,7 +91,7 @@ function getStepContent(step, handleChange, cart, user) {
 }
 
 export default function Checkout(props) {
-  const {handleSubmit, handleChange, cart, user} = props
+  const {handleSubmit, handleCheck, handleChange, cart, user} = props
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
 
@@ -122,7 +134,13 @@ export default function Checkout(props) {
             ) : (
               <React.Fragment>
                 <form onSubmit={handleSubmit}>
-                  {getStepContent(activeStep, handleChange, cart, user)}
+                  {getStepContent(
+                    activeStep,
+                    handleCheck,
+                    handleChange,
+                    cart,
+                    user
+                  )}
                   <div className={classes.buttons}>
                     {activeStep !== 0 && (
                       <Button onClick={handleBack} className={classes.button}>

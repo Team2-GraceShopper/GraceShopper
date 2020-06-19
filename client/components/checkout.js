@@ -18,16 +18,24 @@ export class Checkout extends React.Component {
       cardNumber: 0,
       cardExpiration: '',
       cvvCode: 0,
-      dataToUpdate: {ship: false, bill: false}
+      saveAddress: false,
+      saveBilling: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleCheck = this.handleCheck.bind(this)
   }
 
   async componentDidMount() {
     await this.props.getUser()
     this.setState(this.props.user)
     await this.props.getCart()
+  }
+
+  handleCheck(evt) {
+    //when box is clicked, toggle this.state[evt.target.name]
+    if (evt.target.value === 'yes') this.setState({[evt.target.name]: true})
+    else this.setState({[evt.target.name]: false})
   }
 
   handleChange(evt) {
@@ -44,6 +52,7 @@ export class Checkout extends React.Component {
   render() {
     return (
       <CheckoutRender
+        handleCheck={this.handleCheck}
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
         cart={this.props.cart}

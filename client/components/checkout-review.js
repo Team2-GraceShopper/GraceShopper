@@ -19,7 +19,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function Review(props) {
-  console.log('user', props.user)
   const classes = useStyles()
 
   return (
@@ -74,16 +73,6 @@ export default function Review(props) {
             Payment details
           </Typography>
           <Grid container>
-            {/* {payments.map(payment => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))} */}
             <Grid item xs={6}>
               <Typography gutterBottom>Name on Card: </Typography>
             </Grid>
