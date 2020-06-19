@@ -14,8 +14,8 @@ const Order = db.define('order', {
     type: Sequelize.DATE
   },
   subtotal: {
-    type: Sequelize.DECIMAL,
-    allowNull: false
+    type: Sequelize.DECIMAL
+    // allowNull: false
   },
   tax: {
     type: Sequelize.DECIMAL
