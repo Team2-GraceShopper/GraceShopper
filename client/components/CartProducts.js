@@ -11,6 +11,9 @@ import MenuItem from '@material-ui/core/MenuItem'
 import ClearIcon from '@material-ui/icons/Clear'
 import IconButton from '@material-ui/core/IconButton'
 import RemoveCircle from '@material-ui/icons/RemoveCircle'
+import AddIcon from '@material-ui/icons/Add'
+import RemoveIcon from '@material-ui/icons/Remove'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
 
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
@@ -36,8 +39,10 @@ const useStyles = makeStyles(theme => ({
     marginRight: 10
   },
   qty: {
-    paddingRight: 100,
-    textAlign: 'right'
+    paddingRight: 120,
+    textAlign: 'right',
+    display: 'flex',
+    flexDirection: 'row'
   },
   heading: {
     display: 'flex',
@@ -53,14 +58,17 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-evenly'
   },
   quantity: {
-    paddingRight: 80
+    paddingRight: 150
+  },
+  productQty: {
+    paddingRight: 50
   },
   container: {
     paddingRight: 100,
     paddingLeft: 100
   },
   priceHead: {
-    paddingRight: 75
+    paddingRight: 73
   },
   price: {
     width: 30,
@@ -132,10 +140,23 @@ export default function CartProducts(props) {
               <img src={product.imageUrl} className={classes.image} />
               <ListItemText primary={product.name} />
               <div className={classes.qty}>
-                <Select labelId="quantity" id="select" value="1">
+                <ListItemText
+                  primary={product.quantity}
+                  className={classes.productQty}
+                />
+                <ButtonGroup>
+                  <Button variant="contained" size="small">
+                    <RemoveIcon fontSize="small" />
+                  </Button>
+                  <Button variant="contained" size="small">
+                    <AddIcon fontSize="small" />
+                  </Button>
+                </ButtonGroup>
+
+                {/* <Select labelId="quantity" id="select" value="1">
                   <MenuItem value="1">1</MenuItem>
                   <MenuItem value="22">2</MenuItem>
-                </Select>
+                </Select> */}
               </div>
               <Typography variant="body2" className={classes.price}>{`${
                 product.subtotal
