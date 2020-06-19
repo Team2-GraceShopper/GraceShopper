@@ -18,10 +18,8 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-
 router.delete('/:order/:product', async (req, res, next) => {
   try {
-    console.log('-----------Request Body-------', req.body)
     if (req.user && req.user.id === req.body.userId) {
       const deleteCount = await OrderDetail.destroy({
         where: {
@@ -71,7 +69,7 @@ router.post('/', async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-  
+
   try {
     let products = []
     req.body.cart.forEach(product => {
@@ -91,7 +89,7 @@ router.post('/', async (req, res, next) => {
 
 router.post('/item', async (req, res, next) => {
   let order, wasCreated
-  
+
   try {
     if (req.user) {
       ;[order, wasCreated] = await Order.findOrCreate({
@@ -114,9 +112,26 @@ router.post('/item', async (req, res, next) => {
       price: req.body.price
     })
     res.status(201).json(newOrder)
-
   } catch (err) {
     next(err)
   }
 })
 
+router.put('/:orderId/:productId', async (req, res, next) => {
+  try {
+    const order = await Order.findByPk(req.params.orderId)
+    if (req.user.id === order.userId) {
+      const [updatedCount, updatedOrder] = await OrderDetail.update(req.body, {
+        where: {
+          orderId: req.params.orderId,
+          productId: req.params.productId
+        },
+        returning: true
+      })
+      if (updatedCount) res.json(updatedOrder)
+      else res.status(404).send(`Could not update order ${req.params.orderId}`)
+    } else res.sendStatus(401)
+  } catch (err) {
+    next(err)
+  }
+})
