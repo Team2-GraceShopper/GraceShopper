@@ -4,7 +4,6 @@ const {Order, Product, OrderDetail} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
-  console.log('user', req.user)
   try {
     if (req.user) {
       const order = await Order.getCart(req.user.id)

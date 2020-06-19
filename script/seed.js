@@ -155,7 +155,8 @@ async function seedOrders() {
     billStreet: '1 Fullstack Street',
     billCity: 'Brooklyn',
     billState: 'NY',
-    billZip: 11111
+    billZip: 11111,
+    isAdmin: true
   })
 
   await Order.create({
