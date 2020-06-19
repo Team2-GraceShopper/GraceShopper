@@ -44,7 +44,6 @@ export const addItem = (id, quantity, price) => {
         let cart = window.localStorage.getItem('cart')
           ? JSON.parse(window.localStorage.getItem('cart'))
           : []
-        console.log('cart', cart, 'product', product)
         cart.push(product)
         window.localStorage.setItem('cart', JSON.stringify(cart))
       }
