@@ -23,6 +23,7 @@ const removeUser = () => ({type: REMOVE_USER})
  */
 
 export const updateUser = user => {
+  //if saveAddress & saveBilling, remove all unnecessary keys and pass info if one/both = true
   return async dispatch => {
     const updated = await axios.put('/api/checkout/user', {user: user})
     dispatch(getUser(updated))

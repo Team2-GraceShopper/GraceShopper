@@ -6,7 +6,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 
 export default function AddressForm(props) {
-  const {handleChange, handleCheck, user} = props
+  const {handleChange, handleClick, user} = props
+  //   console.log('handleClick', handleClick)
+  // console.log('in address-form', user)
   //   const {dataToUpdate} = user
   return (
     <React.Fragment>
@@ -93,7 +95,7 @@ export default function AddressForm(props) {
             label="Zip / Postal code"
             fullWidth
             autoComplete="shipping postal-code"
-            value={user.shipZip ? props.user.shipZip : ''}
+            // value={user.shipZip ? props.user.shipZip : ''}
             onChange={handleChange}
           />
         </Grid>
@@ -103,8 +105,8 @@ export default function AddressForm(props) {
               <Checkbox
                 color="secondary"
                 name="saveAddress"
-                value={user.saveAddress ? 'yes' : 'no'}
-                onChange={evt => handleCheck(evt)}
+                value={user.saveAddress}
+                onChange={handleClick}
               />
             }
             label="Remember shipping details for next time"

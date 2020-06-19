@@ -65,12 +65,12 @@ const useStyles = makeStyles(theme => ({
 
 const steps = ['Shipping address', 'Payment details', 'Review your order']
 
-function getStepContent(step, handleChange, cart, user, handleCheck) {
+function getStepContent(step, handleClick, handleChange, cart, user) {
   switch (step) {
     case 0:
       return (
         <AddressForm
-          handleCheck={handleCheck}
+          handleClick={handleClick}
           handleChange={handleChange}
           user={user}
         />
@@ -78,7 +78,7 @@ function getStepContent(step, handleChange, cart, user, handleCheck) {
     case 1:
       return (
         <PaymentForm
-          handleCheck={handleCheck}
+          handleClick={handleClick}
           handleChange={handleChange}
           user={user}
         />
@@ -91,7 +91,9 @@ function getStepContent(step, handleChange, cart, user, handleCheck) {
 }
 
 export default function Checkout(props) {
-  const {handleSubmit, handleCheck, handleChange, cart, user} = props
+  const {handleSubmit, handleClick, handleChange, cart, user} = props
+  //   console.log('handleClick in checkout-render', handleClick)
+  // console.log(user)
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
 
@@ -136,7 +138,7 @@ export default function Checkout(props) {
                 <form onSubmit={handleSubmit}>
                   {getStepContent(
                     activeStep,
-                    handleCheck,
+                    handleClick,
                     handleChange,
                     cart,
                     user

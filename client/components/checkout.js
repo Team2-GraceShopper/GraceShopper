@@ -23,19 +23,26 @@ export class Checkout extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleCheck = this.handleCheck.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
   async componentDidMount() {
     await this.props.getUser()
     this.setState(this.props.user)
+    // console.log('in checkout', this.state)
     await this.props.getCart()
   }
 
-  handleCheck(evt) {
+  handleClick(evt) {
     //when box is clicked, toggle this.state[evt.target.name]
-    if (evt.target.value === 'yes') this.setState({[evt.target.name]: true})
-    else this.setState({[evt.target.name]: false})
+    console.log('name', this.state[evt.target.name])
+    const key = evt.target.name
+    this.setState(({key}) => ({
+      [evt.target.name]: !prevState[evt.target.name]
+    }))
+
+    console.log('box clicked', this.state)
+    console.log('yes or no?', evt.target.value)
   }
 
   handleChange(evt) {
@@ -46,13 +53,13 @@ export class Checkout extends React.Component {
     evt.preventDefault()
     //pass new data into thunk creator to update models
     updateUser(this.state.user)
-    console.log('state on submit', this.state)
+    // console.log('state on submit', this.state)
   }
 
   render() {
     return (
       <CheckoutRender
-        handleCheck={this.handleCheck}
+        handleClick={this.handleClick}
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
         cart={this.props.cart}

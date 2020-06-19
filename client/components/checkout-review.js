@@ -19,15 +19,16 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function Review(props) {
+  const {cart, user} = props
   const classes = useStyles()
-
+  console.log('in checkout-review', cart)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-        {props.cart.map(product => (
+        {cart.map(product => (
           <ListItem className={classes.listItem} key={product.productId}>
             <ListItemText
               primary={product.name}
@@ -39,10 +40,7 @@ export default function Review(props) {
         <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" className={classes.total}>
-            {props.cart.reduce(
-              (accum, product) => accum + Number(product.price),
-              0
-            )}
+            {cart.reduce((accum, product) => accum + Number(product.price), 0)}
           </Typography>
         </ListItem>
       </List>
@@ -52,20 +50,16 @@ export default function Review(props) {
             Shipping
           </Typography>
           <Typography gutterBottom>
-            {props.user.firstName +
-              ' ' +
-              props.user.lastName +
-              ' - ' +
-              props.user.email}
+            {user.firstName + ' ' + user.lastName + ' - ' + user.email}
           </Typography>
           <Typography gutterBottom>
-            {props.user.shipStreet +
+            {user.shipStreet +
               ', ' +
-              props.user.shipCity +
+              user.shipCity +
               ', ' +
-              props.user.shipState +
+              user.shipState +
               ', ' +
-              props.user.shipZip}
+              user.shipZip}
           </Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
@@ -78,20 +72,20 @@ export default function Review(props) {
             </Grid>
             <Grid item xs={6}>
               <Typography gutterBottom>
-                {props.user.firstName + ' ' + props.user.lastName}
+                {user.firstName + ' ' + user.lastName}
               </Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography gutterBottom>Card Number: </Typography>
             </Grid>
             <Grid item xs={6}>
-              <Typography gutterBottom>{props.user.cardNumber}</Typography>
+              <Typography gutterBottom>{user.cardNumber}</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography gutterBottom>Expiration Date: </Typography>
             </Grid>
             <Grid item xs={6}>
-              <Typography gutterBottom>{props.user.cardExpiration}</Typography>
+              <Typography gutterBottom>{user.cardExpiration}</Typography>
             </Grid>
           </Grid>
         </Grid>
