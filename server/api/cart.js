@@ -18,6 +18,24 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+
+router.delete('/:order/:product', async (req, res, next) => {
+  try {
+    console.log('-----------Request Body-------', req.body)
+    if (req.user && req.user.id === req.body.userId) {
+      const deleteCount = await OrderDetail.destroy({
+        where: {
+          productId: req.params.product,
+          orderId: req.params.order
+        }
+      })
+      res.sendStatus(204)
+    } else res.status(401).send('Unauthorized access to cart')
+  } catch (err) {
+    next(err)
+  }
+})
+
 // TODO: GET past orders
 // router.get('/history', async (req, res, next) => {
 //   try {
@@ -96,8 +114,9 @@ router.post('/item', async (req, res, next) => {
       price: req.body.price
     })
     res.status(201).json(newOrder)
+
   } catch (err) {
     next(err)
   }
 })
-  
+
