@@ -53,7 +53,7 @@ router.post('/', async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-
+  
   try {
     let products = []
     req.body.cart.forEach(product => {
@@ -70,3 +70,34 @@ router.post('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/item', async (req, res, next) => {
+  let order, wasCreated
+  
+  try {
+    if (req.user) {
+      ;[order, wasCreated] = await Order.findOrCreate({
+        where: {
+          userId: req.user.id,
+          email: req.user.email,
+          status: 'active'
+        }
+      })
+    }
+  } catch (err) {
+    next(err)
+  }
+
+  try {
+    const newOrder = await OrderDetail.create({
+      orderId: order.id,
+      productId: req.body.id,
+      quantity: req.body.quantity,
+      price: req.body.price
+    })
+    res.status(201).json(newOrder)
+  } catch (err) {
+    next(err)
+  }
+})
+  
