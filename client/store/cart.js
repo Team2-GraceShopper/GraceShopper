@@ -3,6 +3,9 @@ import axios from 'axios'
 //ACTION TYPE
 const SET_CART = 'SET_CART'
 const UPDATE_QTY = 'UPDATE_QTY'
+const ADD_TO_CART = 'ADD_TO_CART'
+const ADD_QTY = 'ADD_QTY'
+const SUB_QTY = 'SUB_QTY'
 
 //ACTION CREATORS
 const setCart = cart => ({
@@ -10,7 +13,46 @@ const setCart = cart => ({
   cart
 })
 
+const addedItem = product => ({
+  type: ADD_TO_CART,
+  product
+})
+
+// const addQty= quantity =>({
+//   type:ADD_QTY,
+//   quantity
+// })
+
+// const subQty= quantity =>({
+//   type:SUB_QTY,
+//   quantity
+// })
+
 // //THUNKS
+
+export const addItem = (id, quantity, price) => {
+  return async (dispatch, getState) => {
+    try {
+      const state = getState()
+      let product
+      if (state.user.id) {
+        const res = await axios.get(`/api/products/${id}`)
+        product = res.data
+        dispatch(addedItem(product))
+        await axios.post('/api/cart/item', {id, quantity, price})
+      } else {
+        let cart = window.localStorage.getItem('cart')
+          ? JSON.parse(window.localStorage.getItem('cart'))
+          : []
+        cart.push(product)
+        window.localStorage.setItem('cart', JSON.stringify(cart))
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
 export const getCart = user => {
   return async (dispatch, getState) => {
     try {
@@ -25,7 +67,7 @@ export const getCart = user => {
       } else {
         const data = window.localStorage.getItem('cart')
           ? JSON.parse(window.localStorage.getItem('cart'))
-          : {}
+          : []
         dispatch(setCart(data))
       }
 
@@ -108,10 +150,71 @@ export default function(state = initialCart, action) {
   switch (action.type) {
     case SET_CART:
       return action.cart
+    case ADD_TO_CART:
+      return [...state, action.product]
     default:
       return state
   }
 }
+
+// const cartReducer= (state = initState,action)=>{
+
+//   //INSIDE SINGLE COMPONENT
+//   if(action.type === ADD_TO_CART){
+//       let addedItem = state.cart.find(product=> productId === action.id)
+//       let existed_item= state.cart.find(product=> action.id === productId)
+//        if(existed_item)
+//        {
+//           addedItem.quantity += 1
+//            return{
+//               ...state,
+//                total: state.total + addedItem.price
+//                 }
+//       }
+//        else{
+//           addedItem.quantity = 1;
+//           let newTotal = state.total + addedItem.price
+
+//           return{
+//               ...state,
+//               cart: [...state.cart, addedItem],
+//               total : newTotal
+//           }
+
+//       }
+//   }
+
+//   if(action.type=== ADD_QTY){
+//       let addedItem = state.cart.find(product=> productId === action.id)
+//         addedItem.quantity += 1
+//         let newTotal = state.total + addedItem.price
+//         return{
+//             ...state,
+//             total: newTotal
+//         }
+//   }
+//   if(action.type=== SUB_QUANTITY){
+//       let addedItem = state.cart.find(product=> productId === action.id)
+//       if(addedItem.quantity === 1){
+//           let new_items = state.cart.filter(product=>productId !== action.id)
+//           let newTotal = state.total - addedItem.price
+//           return{
+//               ...state,
+//               cart: new_items,
+//               total: newTotal
+//           }
+//       }
+//       else {
+//           addedItem.quantity -= 1
+//           let newTotal = state.total - addedItem.price
+//           return{
+//               ...state,
+//               total: newTotal
+//           }
+//       }
+//   }
+//   return state
+// }
 
 //EXAMPLE OUTPUT FROM AXIOS GET REQUEST
 // {
