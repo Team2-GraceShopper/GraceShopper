@@ -97,7 +97,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function CartProducts(props) {
   const classes = useStyles()
-  const removeItem = props.removeItem
+  const {removeItem, updateQty} = props
   const products = props.cart || []
   const cartSubtotal = products.reduce((total, currentProduct) => {
     return total + currentProduct.subtotal
@@ -145,10 +145,32 @@ export default function CartProducts(props) {
                   className={classes.productQty}
                 />
                 <ButtonGroup>
-                  <Button variant="contained" size="small" color="secondary">
+                  <Button
+                    variant="contained"
+                    size="small"
+                    color="secondary"
+                    onClick={() =>
+                      updateQty(
+                        product.orderId,
+                        product.productId,
+                        product.quantity - 1
+                      )
+                    }
+                  >
                     <RemoveIcon fontSize="small" />
                   </Button>
-                  <Button variant="contained" size="small" color="secondary">
+                  <Button
+                    variant="contained"
+                    size="small"
+                    color="secondary"
+                    onClick={() =>
+                      updateQty(
+                        product.orderId,
+                        product.productId,
+                        product.quantity + 1
+                      )
+                    }
+                  >
                     <AddIcon fontSize="small" />
                   </Button>
                 </ButtonGroup>
