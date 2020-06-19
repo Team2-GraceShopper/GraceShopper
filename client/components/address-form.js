@@ -8,7 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 export default function AddressForm(props) {
   const {handleChange, handleClick, user} = props
   //   console.log('handleClick', handleClick)
-  // console.log('in address-form', user)
+  console.log('in address-form', user.saveAddress)
   //   const {dataToUpdate} = user
   return (
     <React.Fragment>
@@ -105,8 +105,9 @@ export default function AddressForm(props) {
               <Checkbox
                 color="secondary"
                 name="saveAddress"
-                value={user.saveAddress}
                 onChange={handleClick}
+                value={user.saveAddress}
+                // checked={user.saveAddress}
               />
             }
             label="Remember shipping details for next time"

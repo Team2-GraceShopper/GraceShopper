@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 export default function Review(props) {
   const {cart, user} = props
   const classes = useStyles()
-  console.log('in checkout-review', cart)
+  //   console.log('in checkout-review', cart)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>

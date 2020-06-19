@@ -34,15 +34,10 @@ export class Checkout extends React.Component {
   }
 
   handleClick(evt) {
-    //when box is clicked, toggle this.state[evt.target.name]
-    console.log('name', this.state[evt.target.name])
-    const key = evt.target.name
-    this.setState(({key}) => ({
-      [evt.target.name]: !prevState[evt.target.name]
-    }))
-
-    console.log('box clicked', this.state)
-    console.log('yes or no?', evt.target.value)
+    evt.persist()
+    const name = evt.target.name
+    const toggle = this.state[name]
+    this.setState({[name]: !toggle})
   }
 
   handleChange(evt) {
@@ -52,8 +47,9 @@ export class Checkout extends React.Component {
   handleSubmit(evt) {
     evt.preventDefault()
     //pass new data into thunk creator to update models
-    updateUser(this.state.user)
-    // console.log('state on submit', this.state)
+    if (this.state.saveAddress || this.state.saveBilling)
+      updateUser(this.state.user)
+    console.log('state on submit', this.state)
   }
 
   render() {

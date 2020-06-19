@@ -7,6 +7,7 @@ router.put('/user', async (req, res, next) => {
   try {
     let updatedUser
     let userToUpdate = User.findById(req.user.id)
+    console.log('user in api', req.body.user)
     const {
       firstName,
       lastName,

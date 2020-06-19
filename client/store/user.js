@@ -25,6 +25,19 @@ const removeUser = () => ({type: REMOVE_USER})
 export const updateUser = user => {
   //if saveAddress & saveBilling, remove all unnecessary keys and pass info if one/both = true
   return async dispatch => {
+    console.log('inside updateUser thunk creator', user)
+    if (!user.saveAddress) {
+      delete user.shipStreet
+      delete user.shipCity
+      delete user.shipZip
+    }
+    if (!user.saveBilling) {
+      delete user.cardNumber
+      delete user.cardExpiration
+      delete user.cvvCode
+    }
+    delete user.saveAddress
+    delete user.saveBilling
     const updated = await axios.put('/api/checkout/user', {user: user})
     dispatch(getUser(updated))
   }

@@ -150,7 +150,8 @@ export default function Checkout(props) {
                       </Button>
                     )}
                     <Button
-                      type={activeStep === steps.length - 1 ? 'submit' : ''}
+                      type={activeStep === 2 ? 'submit' : 'button'}
+                      // type="button"
                       variant="contained"
                       color="primary"
                       onClick={handleNext}
