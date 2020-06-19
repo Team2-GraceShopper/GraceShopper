@@ -10,6 +10,12 @@ const setCart = cart => ({
   cart
 })
 
+const updatedQty = (productId, quantity) => ({
+  type: UPDATE_QTY,
+  productId,
+  quantity
+})
+
 // //THUNKS
 export const getCart = user => {
   return async (dispatch, getState) => {
@@ -28,10 +34,6 @@ export const getCart = user => {
           : []
         dispatch(setCart(data))
       }
-
-      //else if  cart is set on local storage
-      //pass to dispatch
-      //else send empty cart to dispatch
     } catch (err) {
       console.error(err)
     }
@@ -55,6 +57,18 @@ export const removeItem = (orderId, productId) => {
       window.localStorage.setItem('cart', JSON.stringify(newCart))
       //remove item from store
       dispatch(setCart(newCart))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export const updateQty = (orderId, productId, quantity) => {
+  return async (dispatch, getState) => {
+    try {
+      //if user is logged in, update in DB
+      //update on local storage
+      //update in store
     } catch (err) {
       console.error(err)
     }

@@ -145,18 +145,13 @@ export default function CartProducts(props) {
                   className={classes.productQty}
                 />
                 <ButtonGroup>
-                  <Button variant="contained" size="small">
+                  <Button variant="contained" size="small" color="secondary">
                     <RemoveIcon fontSize="small" />
                   </Button>
-                  <Button variant="contained" size="small">
+                  <Button variant="contained" size="small" color="secondary">
                     <AddIcon fontSize="small" />
                   </Button>
                 </ButtonGroup>
-
-                {/* <Select labelId="quantity" id="select" value="1">
-                  <MenuItem value="1">1</MenuItem>
-                  <MenuItem value="22">2</MenuItem>
-                </Select> */}
               </div>
               <Typography variant="body2" className={classes.price}>{`${
                 product.subtotal
