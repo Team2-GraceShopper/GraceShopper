@@ -13,7 +13,6 @@ const setCart = cart => ({
   cart
 })
 
-
 const updatedQty = (productId, quantity) => ({
   type: UPDATE_QTY,
   productId,
@@ -24,7 +23,6 @@ const addedItem = product => ({
   type: ADD_TO_CART,
   product
 })
-
 
 // //THUNKS
 
@@ -100,7 +98,13 @@ export const removeItem = (orderId, productId) => {
 export const updateQty = (orderId, productId, quantity) => {
   return async (dispatch, getState) => {
     try {
+      const state = getState()
+      const newCart = state.cart.map(product => {
+        if (product.productId === productId) product.quantity = quantity
+        return product
+      })
       //if user is logged in, update in DB
+
       //update on local storage
       //update in store
     } catch (err) {
@@ -208,4 +212,3 @@ export default function(state = initialCart, action) {
 //   }
 //   return state
 // }
-
