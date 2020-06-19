@@ -80,7 +80,7 @@ export default function SingleProductView(props) {
         type="submit"
         variant="contained"
         color="primary"
-        onClick={() => addItem(product.id, quantity, product.price)}
+        onClick={() => addItem(product, 1)}
       >
         ADD TO CART
       </Button>
