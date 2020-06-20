@@ -7,7 +7,17 @@ const OrderDetail = db.define('OrderDetail', {
     allowNull: false
   },
   price: {
-    type: Sequelize.DECIMAL
+    type: Sequelize.INTEGER,
+    validate: {
+      isInt: true
+    },
+    set(value) {
+      this.setDataValue('price', parseInt(value * 100, 10))
+    },
+    get() {
+      const price = this.getDataValue('price')
+      return (price / 100).toFixed(2)
+    }
   }
 })
 

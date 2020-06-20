@@ -4,11 +4,24 @@ const db = require('../db')
 const Product = db.define('product', {
   name: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   price: {
-    type: Sequelize.DECIMAL,
-    allowNull: false
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    validate: {
+      isInt: true
+    },
+    set(value) {
+      this.setDataValue('price', parseInt(value * 100, 10))
+    },
+    get() {
+      const price = this.getDataValue('price')
+      return (price / 100).toFixed(2)
+    }
   },
   description: {
     type: Sequelize.TEXT,
@@ -34,5 +47,13 @@ Product.updateProduct = async function(id, data) {
   if (updatedCount) return [201, updatedProducts[0]]
   else return [404, `No product found with id ${id}`]
 }
+
+//VALIDATOR
+// Product.beforeValidate((product) => {
+//   let inputPrice = product.price()
+//   console.log(inputPrice, 'inputprice')
+//   product.price = inputPrice * 100
+//   console.log('after', product.price())
+// })
 
 module.exports = Product

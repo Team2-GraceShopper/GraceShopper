@@ -57,7 +57,6 @@ const useStyles = makeStyles(theme => ({
 export default function SingleProductView(props) {
   const classes = useStyles()
   let {product, addItem, handleSubmit, quantity} = props
-  console.log(addItem)
   return product.name ? (
     <div className="single-product">
       <h1> {product.name}</h1>

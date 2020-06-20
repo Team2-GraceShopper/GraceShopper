@@ -100,8 +100,9 @@ export default function CartProducts(props) {
   const {removeItem, updateQty} = props
   const products = props.cart || []
   const cartSubtotal = products.reduce((total, currentProduct) => {
-    return total + currentProduct.subtotal
+    return total + parseFloat(currentProduct.subtotal)
   }, 0)
+
   return (
     <React.Fragment>
       <Typography variant="h5" gutterBottom className={classes.title}>
@@ -175,9 +176,9 @@ export default function CartProducts(props) {
                   </Button>
                 </ButtonGroup>
               </div>
-              <Typography variant="body2" className={classes.price}>{`${
-                product.subtotal
-              }.00`}</Typography>
+              <Typography variant="body2" className={classes.price}>
+                {product.subtotal}
+              </Typography>
               <IconButton
                 onClick={() => removeItem(product.orderId, product.productId)}
               >
@@ -198,7 +199,7 @@ export default function CartProducts(props) {
               variant="h6"
               className={`${classes.total} ${classes.subTotalPrice}`}
             >
-              {`$${cartSubtotal}.00`}
+              {cartSubtotal}
             </Typography>
           </Box>
           {/* </ListItem> */}

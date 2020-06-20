@@ -11,17 +11,45 @@ const Order = db.define('order', {
     }
   },
   orderDate: {
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
+    validate: {
+      isDate: true
+    }
   },
   subtotal: {
-    type: Sequelize.DECIMAL
-    // allowNull: false
+    type: Sequelize.INTEGER,
+    validate: {
+      isInt: true
+    },
+    set(value) {
+      this.setDataValue('subtotal', parseInt(value * 100, 10))
+    },
+    get() {
+      const subtotal = this.getDataValue('subtotal')
+      return (subtotal / 100).toFixed(2)
+    }
   },
   tax: {
-    type: Sequelize.DECIMAL
+    type: Sequelize.INTEGER,
+    validate: {
+      isInt: true
+    }
   },
   total: {
-    type: Sequelize.DECIMAL
+    type: Sequelize.INTEGER,
+    validate: {
+      isInt: true
+    },
+    set() {
+      let subtotal = this.getDataValue('subtotal')
+      let tax = this.getDataValue('tax') / 100
+      let finaltotal = subtotal + subtotal * tax
+      this.setDataValue('total', finaltotal)
+    },
+    get() {
+      const total = this.getDataValue('total')
+      return (total / 100).toFixed(2)
+    }
   },
   shipStreet: {
     type: Sequelize.STRING
@@ -48,7 +76,8 @@ const Order = db.define('order', {
   cvvCode: {
     type: Sequelize.INTEGER,
     validate: {
-      len: [3, 4]
+      len: [3, 4],
+      isInt: true
     }
   },
   billStreet: {
@@ -61,7 +90,10 @@ const Order = db.define('order', {
     type: Sequelize.STRING
   },
   billZip: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    validate: {
+      isInt: true
+    }
   },
   status: {
     type: Sequelize.ENUM('active', 'complete'),
@@ -82,7 +114,7 @@ Order.getCart = async function(id) {
   })
   if (!order) return 0
   const cart = order.products.map(product => {
-    const subtotal = product.price * product.OrderDetail.quantity
+    const subtotal = (product.price * product.OrderDetail.quantity).toFixed(2)
     return {
       orderId: product.OrderDetail.orderId,
       productId: product.id,
