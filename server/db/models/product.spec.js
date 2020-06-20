@@ -5,7 +5,7 @@ const Product = require('./product')
 describe('Product model', () => {
   before(() => db.sync({force: true}))
 
-  let product = {
+  const product = {
     name: 'some product',
     price: 12.34,
     description: 'some description',
