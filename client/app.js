@@ -1,6 +1,11 @@
 import React from 'react'
-// import SingleProductView from './components/SingleProductView'
-import {Navbar, Header, SingleProduct, AllProducts} from './components'
+import {
+  Navbar,
+  Header,
+  StickyFooter,
+  SingleProduct,
+  AllProducts
+} from './components'
 import Routes from './routes'
 
 const App = () => {
@@ -9,6 +14,7 @@ const App = () => {
       <Header />
       {/* <Navbar /> */}
       <Routes />
+      <StickyFooter />
     </div>
   )
 }
