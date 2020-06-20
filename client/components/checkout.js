@@ -47,6 +47,7 @@ export class Checkout extends React.Component {
   handleSubmit(evt) {
     evt.preventDefault()
     //pass new data into thunk creator to update models
+    console.log('button', evt)
     if (this.state.saveAddress || this.state.saveBilling)
       updateUser(this.state.user)
     console.log('state on submit', this.state)

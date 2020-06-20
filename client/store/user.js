@@ -24,6 +24,7 @@ const removeUser = () => ({type: REMOVE_USER})
 
 export const updateUser = user => {
   //if saveAddress & saveBilling, remove all unnecessary keys and pass info if one/both = true
+  console.log('updateUser line 27')
   return async dispatch => {
     console.log('inside updateUser thunk creator', user)
     if (!user.saveAddress) {

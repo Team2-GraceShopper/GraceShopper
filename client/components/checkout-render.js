@@ -93,7 +93,7 @@ function getStepContent(step, handleClick, handleChange, cart, user) {
 export default function Checkout(props) {
   const {handleSubmit, handleClick, handleChange, cart, user} = props
   //   console.log('handleClick in checkout-render', handleClick)
-  // console.log(user)
+  //   console.log(user)
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
 
@@ -150,15 +150,36 @@ export default function Checkout(props) {
                       </Button>
                     )}
                     <Button
-                      type={activeStep === 2 ? 'submit' : 'button'}
-                      // type="button"
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      type={activeStep === 3 ? 'submit' : 'button'}
+                      className={classes.button}
+                    >
+                      {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    </Button>
+                    <p>{activeStep}</p>
+                    {/* {activeStep  === steps.length - 1 ? 
+                    (<Button
+                      type='submit'
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                      onSubmit={handleSubmit}
+                    >
+                      Place Order
+                    </Button>) :
+                    (<Button
+                      type='button'
                       variant="contained"
                       color="primary"
                       onClick={handleNext}
                       className={classes.button}
                     >
-                      {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                    </Button>
+                      Next
+                    </Button>)
+                    } */}
                   </div>
                 </form>
               </React.Fragment>
