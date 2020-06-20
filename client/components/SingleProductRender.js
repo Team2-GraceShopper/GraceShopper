@@ -5,6 +5,11 @@ import Select from '@material-ui/core/Select'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
+import AddIcon from '@material-ui/icons/Add'
+import RemoveIcon from '@material-ui/icons/Remove'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
+import Box from '@material-ui/core/Box'
+
 // import CardActions from '@material-ui/core/CardActions'
 // import CardContent from '@material-ui/core/CardContent'
 // import CardMedia from '@material-ui/core/CardMedia'
@@ -51,12 +56,34 @@ const useStyles = makeStyles(theme => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6)
+  },
+  quantityField: {
+    border: '1px solid black',
+    fontSize: '16px',
+    marginRight: 50,
+    padding: 10,
+    fontFamily: 'Roboto'
+  },
+  quantity: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginRight: 40
   }
 }))
 
 export default function SingleProductView(props) {
   const classes = useStyles()
-  let {product, addItem, handleSubmit, handleChange, quantity} = props
+  let {
+    product,
+    addItem,
+    handleSubmit,
+    handleChange,
+    quantity,
+    cartItem,
+    updateQty
+  } = props
+
+  console.log(cartItem)
 
   return product.name ? (
     <div className="single-product">
@@ -67,8 +94,36 @@ export default function SingleProductView(props) {
       {product.description}
       <h4> Only a few left!</h4>
 
-      <form onSubmit={handleSubmit}>
-        <select
+      <div className={classes.quantity}>
+        {/* <form onSubmit={handleSubmit}> */}
+        {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" shrink="true" value="1" className={classes.quantityField}/> */}
+        <Box className={classes.quantity}>
+          <div className={classes.quantityField}>{quantity}</div>
+          <ButtonGroup>
+            <Button
+              variant="contained"
+              size="small"
+              color="secondary"
+              onClick={() =>
+                handleChange({target: {name: 'quantity', value: quantity - 1}})
+              }
+            >
+              <RemoveIcon fontSize="small" />
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              color="secondary"
+              onClick={() =>
+                handleChange({target: {name: 'quantity', value: quantity + 1}})
+              }
+            >
+              <AddIcon fontSize="small" />
+            </Button>
+          </ButtonGroup>
+        </Box>
+
+        {/* <select
           variant="outlined"
           name="quantity"
           color="primary"
@@ -80,16 +135,30 @@ export default function SingleProductView(props) {
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
-        </select>
-      </form>
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        onClick={() => addItem(product, quantity)}
-      >
-        ADD TO CART
-      </Button>
+        </select> */}
+
+        {/* </form> */}
+        {cartItem ? (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() =>
+              updateQty(cartItem.orderId, cartItem.productId, quantity)
+            }
+          >
+            UPDATE QUANTITY
+          </Button>
+        ) : (
+          <Button
+            // type="submit"
+            variant="contained"
+            color="primary"
+            onClick={() => addItem(product, quantity)}
+          >
+            ADD TO CART
+          </Button>
+        )}
+      </div>
     </div>
   ) : (
     ''

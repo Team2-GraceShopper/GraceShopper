@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import SingleProductRender from './SingleProductRender'
 import {fetchSingleProduct} from '../store/singleProduct'
-import {addItem} from '../store/cart'
+import {addItem, updateQty, getCart} from '../store/cart'
 import {withRouter} from 'react-router-dom'
 
 export class SingleProduct extends React.Component {
@@ -15,8 +15,11 @@ export class SingleProduct extends React.Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.fetchSingleProduct(this.props.match.params.productId)
+    await this.props.getCart()
+    if (this.props.cartProduct)
+      this.setState({quantity: this.props.cartProduct.quantity})
   }
 
   handleSubmit(e) {
@@ -31,7 +34,9 @@ export class SingleProduct extends React.Component {
     return (
       <SingleProductRender
         product={this.props.product}
+        cartItem={this.props.cartProduct}
         addItem={this.props.addItem}
+        updateQty={this.props.updateQty}
         quantity={this.state.quantity}
         handleSubmit={this.handleSubmit}
         handleChange={this.handleChange}
@@ -42,14 +47,20 @@ export class SingleProduct extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    product: state.product
+    product: state.product,
+    cartProduct: state.cart.filter(
+      product => product.productId === state.product.id
+    )[0]
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchSingleProduct: id => dispatch(fetchSingleProduct(id)),
-    addItem: (id, quantity, price) => dispatch(addItem(id, quantity, price))
+    addItem: (id, quantity, price) => dispatch(addItem(id, quantity, price)),
+    updateQty: (orderId, productId, quantity) =>
+      dispatch(updateQty(orderId, productId, quantity)),
+    getCart: () => dispatch(getCart())
   }
 }
 
