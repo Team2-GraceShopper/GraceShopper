@@ -11,7 +11,7 @@ const Product = db.define('product', {
   },
   price: {
     type: Sequelize.INTEGER,
-    allowNull: false,
+    // allowNull: false,
     validate: {
       isInt: true
     },
@@ -47,13 +47,5 @@ Product.updateProduct = async function(id, data) {
   if (updatedCount) return [201, updatedProducts[0]]
   else return [404, `No product found with id ${id}`]
 }
-
-//VALIDATOR
-// Product.beforeValidate((product) => {
-//   let inputPrice = product.price()
-//   console.log(inputPrice, 'inputprice')
-//   product.price = inputPrice * 100
-//   console.log('after', product.price())
-// })
 
 module.exports = Product
