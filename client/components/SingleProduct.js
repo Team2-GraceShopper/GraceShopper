@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import SingleProductRender from './SingleProductRender'
 import {fetchSingleProduct} from '../store/singleProduct'
 import {addItem, updateQty, getCart} from '../store/cart'
+import {me} from '../store/user'
 import {withRouter} from 'react-router-dom'
 
 export class SingleProduct extends React.Component {
@@ -17,7 +18,11 @@ export class SingleProduct extends React.Component {
 
   async componentDidMount() {
     this.props.fetchSingleProduct(this.props.match.params.productId)
+    await this.props.getUser()
     await this.props.getCart()
+
+    // console.log("getCart from single product", this.props)
+
     if (this.props.cartProduct)
       this.setState({quantity: this.props.cartProduct.quantity})
   }
@@ -31,6 +36,8 @@ export class SingleProduct extends React.Component {
   }
 
   render() {
+    console.log('cart product from single product', this.state.cart)
+
     return (
       <SingleProductRender
         product={this.props.product}
@@ -50,7 +57,8 @@ const mapStateToProps = state => {
     product: state.product,
     cartProduct: state.cart.filter(
       product => product.productId === state.product.id
-    )[0]
+    )[0],
+    cart: state.cart
   }
 }
 
@@ -60,7 +68,8 @@ const mapDispatchToProps = dispatch => {
     addItem: (id, quantity, price) => dispatch(addItem(id, quantity, price)),
     updateQty: (orderId, productId, quantity) =>
       dispatch(updateQty(orderId, productId, quantity)),
-    getCart: () => dispatch(getCart())
+    getCart: () => dispatch(getCart()),
+    getUser: () => dispatch(me())
   }
 }
 

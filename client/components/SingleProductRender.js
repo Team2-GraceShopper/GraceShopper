@@ -83,7 +83,7 @@ export default function SingleProductView(props) {
     updateQty
   } = props
 
-  console.log(cartItem)
+  // console.log("cartItem from single render", cartItem)
 
   return product.name ? (
     <div className="single-product">
