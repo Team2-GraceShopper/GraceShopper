@@ -20,7 +20,7 @@ describe('Product model', () => {
       const savedProduct = await Product.create(product)
 
       expect(savedProduct.name).to.equal('some product')
-      expect(savedProduct.price).to.equal('12.34')
+      expect(savedProduct.price).to.equal(12.34)
       expect(savedProduct.description).to.equal('some description')
       expect(savedProduct.imageUrl).to.equal(
         'http://lorempixel.com/640/480/abstract'
@@ -62,18 +62,6 @@ describe('Product model', () => {
           )
         }
       )
-    })
-
-    it('`price` takes in a float and returns a string', async () => {
-      const savedProduct = await Product.create(product)
-
-      expect(savedProduct.price).to.be.an('string')
-
-      await savedProduct.update({
-        price: 0.99
-      })
-
-      expect(savedProduct.price).to.be.an('string')
     })
 
     it('`description` is required', async () => {

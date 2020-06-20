@@ -9,6 +9,7 @@ describe('Order model', () => {
     email: 'cody@email.com',
     subtotal: 23.0,
     tax: 5
+    // total: 'total'
   }
 
   afterEach(() => db.sync({force: true}))
@@ -50,14 +51,16 @@ describe('Order model', () => {
       )
     })
 
-    it.only('`total` returns subtotal plus tax as string', async () => {
+    it('`total` returns total price after tax', async () => {
       const savedOrder = await Order.create(order)
 
-      const subtotal = parseFloat(savedOrder.subtotal)
-      const tax = parseFloat(savedOrder.tax / 100)
-      const total = subtotal + subtotal * tax
+      await savedOrder.update({
+        total: 'this will be saved as total price after tax'
+      })
 
-      console.log(subtotal, typeof subtotal)
+      const subtotal = savedOrder.subtotal
+      const tax = savedOrder.tax / 100
+      const total = subtotal + subtotal * tax
 
       expect(savedOrder.total).to.equal(total)
     })
