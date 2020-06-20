@@ -1,4 +1,5 @@
 import React from 'react'
+import {useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Select from '@material-ui/core/Select'
@@ -79,11 +80,12 @@ export default function SingleProductView(props) {
     handleSubmit,
     handleChange,
     quantity,
-    cartItem,
     updateQty
   } = props
 
-  // console.log("cartItem from single render", cartItem)
+  const cartItem = useSelector(state =>
+    state.cart.filter(cartProduct => cartProduct.productId === product.id)
+  )[0]
 
   return product.name ? (
     <div className="single-product">

@@ -21,8 +21,6 @@ export class SingleProduct extends React.Component {
     await this.props.getUser()
     await this.props.getCart()
 
-    // console.log("getCart from single product", this.props)
-
     if (this.props.cartProduct)
       this.setState({quantity: this.props.cartProduct.quantity})
   }
@@ -41,7 +39,6 @@ export class SingleProduct extends React.Component {
     return (
       <SingleProductRender
         product={this.props.product}
-        cartItem={this.props.cartProduct}
         addItem={this.props.addItem}
         updateQty={this.props.updateQty}
         quantity={this.state.quantity}
@@ -54,11 +51,7 @@ export class SingleProduct extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    product: state.product,
-    cartProduct: state.cart.filter(
-      product => product.productId === state.product.id
-    )[0],
-    cart: state.cart
+    product: state.product
   }
 }
 

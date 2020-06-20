@@ -43,7 +43,12 @@ export const addItem = (product, quantity) => {
         })
       }
       const newItem = {
-        ...product,
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        imageUrl: product.imageUrl,
+        inventory: product.inventory,
         orderId: orderDetail.orderId || null,
         quantity,
         subtotal: quantity * product.price
