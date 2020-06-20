@@ -4,22 +4,29 @@ import Typography from '@material-ui/core/Typography'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import Grid from '@material-ui/core/Grid'
-import Select from '@material-ui/core/Select'
-import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
+import IconButton from '@material-ui/core/IconButton'
+import RemoveCircle from '@material-ui/icons/RemoveCircle'
+import AddIcon from '@material-ui/icons/Add'
+import RemoveIcon from '@material-ui/icons/Remove'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
+import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
+import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   listItem: {
-    padding: theme.spacing(1, 1)
-    // border: "1px solid black",
+    padding: theme.spacing(1, 1),
+    // border: '2px solid black',
+    borderRadius: 5,
+    marginBottom: 20
   },
   total: {
     fontWeight: 700
   },
   title: {
-    marginTop: theme.spacing(2),
-    textAlign: 'center'
+    marginTop: theme.spacing(6),
+    textAlign: 'center',
+    fontWeight: 700
   },
   image: {
     height: 150,
@@ -27,15 +34,18 @@ const useStyles = makeStyles(theme => ({
     marginRight: 10
   },
   qty: {
-    paddingRight: 30,
-    textAlign: 'center'
+    paddingRight: 120,
+    textAlign: 'right',
+    display: 'flex',
+    flexDirection: 'row'
   },
   heading: {
     display: 'flex',
     justifyContent: 'space-between',
     alignContent: 'space-evenly',
     flexDirection: 'row',
-    marginTop: 20
+    marginTop: 20,
+    fontWeight: 700
   },
   productPrice: {
     display: 'flex',
@@ -43,60 +53,157 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-evenly'
   },
   quantity: {
-    paddingRight: 70
+    paddingRight: 150
+  },
+  productQty: {
+    paddingRight: 50
+  },
+  container: {
+    paddingRight: 100,
+    paddingLeft: 100
+  },
+  priceHead: {
+    paddingRight: 73
+  },
+  price: {
+    width: 30,
+    marginRight: 50
+  },
+  subTotal: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
+  },
+  subTotalPrice: {
+    marginRight: 10
+  },
+  subTotalQty: {
+    marginRight: 50
+  },
+  checkout: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    marginTop: 20,
+    paddingBottom: 50,
+    marginRight: 10
   }
 }))
 
 export default function CartProducts(props) {
   const classes = useStyles()
+  const {removeItem, updateQty} = props
   const products = props.cart || []
   const cartSubtotal = products.reduce((total, currentProduct) => {
     return total + currentProduct.subtotal
   }, 0)
+
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom className={classes.title}>
+      <Typography variant="h5" gutterBottom className={classes.title}>
         Shopping Cart
       </Typography>
-      <List disablePadding>
-        {products.map(product => (
-          <ListItem className={classes.listItem} key={product.name}>
-            <img src={product.imageUrl} className={classes.image} />
-            {/* <ListItemAvatar className={classes.image}>
-               <img src={product.imageUrl} />
-            </ListItemAvatar> */}
-            <ListItemText
-              primary={product.name}
-              secondary={product.description}
-            />
-            <InputLabel id="quantity">Quantity</InputLabel>
-            <div className={classes.qty}>
-              <Select labelId="quantity" id="select" value="1">
-                <MenuItem value="1">1</MenuItem>
-                <MenuItem value="22">2</MenuItem>
-              </Select>
+      <Box className={classes.container}>
+        <List>
+          <ListItem className={classes.heading}>
+            <Typography variant="h6" gutterBottom>
+              Product
+            </Typography>
+            <div className={classes.productPrice}>
+              <Typography
+                variant="h6"
+                gutterBottom
+                className={classes.quantity}
+              >
+                Quantity
+              </Typography>
+              <Typography
+                variant="h6"
+                gutterBottom
+                className={classes.priceHead}
+              >
+                Price
+              </Typography>
             </div>
-            <Typography variant="body2">{product.price}</Typography>
           </ListItem>
-        ))}
-        <ListItem className={classes.listItem}>
-          <ListItemText primary="Total" />
-          <Typography variant="h6" className={classes.total}>
-            Total
-          </Typography>
-          <Typography variant="h6" className={classes.total}>
-            {`$${cartSubtotal}.00`}
-          </Typography>
-        </ListItem>
-      </List>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} />
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            {`Total $${cartSubtotal}.00`}
-          </Typography>
-        </Grid>
-      </Grid>
+        </List>
+        <List disablePadding>
+          {products.map(product => (
+            <ListItem className={classes.listItem} key={product.name}>
+              <Link to={`/products/${product.productId}`}>
+                <img src={product.imageUrl} className={classes.image} />
+              </Link>
+              <ListItemText primary={product.name} />
+              <div className={classes.qty}>
+                <ListItemText
+                  primary={product.quantity}
+                  className={classes.productQty}
+                />
+                <ButtonGroup>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    color="secondary"
+                    onClick={() =>
+                      updateQty(
+                        product.orderId,
+                        product.productId,
+                        product.quantity - 1
+                      )
+                    }
+                  >
+                    <RemoveIcon fontSize="small" />
+                  </Button>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    color="secondary"
+                    onClick={() =>
+                      updateQty(
+                        product.orderId,
+                        product.productId,
+                        product.quantity + 1
+                      )
+                    }
+                  >
+                    <AddIcon fontSize="small" />
+                  </Button>
+                </ButtonGroup>
+              </div>
+              <Typography variant="body2" className={classes.price}>{`${
+                product.subtotal
+              }.00`}</Typography>
+              <IconButton
+                onClick={() => removeItem(product.orderId, product.productId)}
+              >
+                <RemoveCircle />
+              </IconButton>
+            </ListItem>
+          ))}
+          {/* <ListItem className={classes.listItem}> */}
+          {/* <ListItemText primary="Total" /> */}
+          <Box className={classes.subTotal}>
+            <Typography
+              variant="h6"
+              className={`${classes.total} ${classes.subTotalQty}`}
+            >
+              Total
+            </Typography>
+            <Typography
+              variant="h6"
+              className={`${classes.total} ${classes.subTotalPrice}`}
+            >
+              {`$${cartSubtotal}.00`}
+            </Typography>
+          </Box>
+          {/* </ListItem> */}
+        </List>
+        <Box className={classes.checkout}>
+          <Button variant="contained" color="primary" size="large">
+            Checkout Cart
+          </Button>
+        </Box>
+      </Box>
     </React.Fragment>
   )
 }

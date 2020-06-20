@@ -14,8 +14,8 @@ const Order = db.define('order', {
     type: Sequelize.DATE
   },
   subtotal: {
-    type: Sequelize.DECIMAL,
-    allowNull: false
+    type: Sequelize.DECIMAL
+    // allowNull: false
   },
   tax: {
     type: Sequelize.DECIMAL
@@ -84,6 +84,7 @@ Order.getCart = async function(id) {
   const cart = order.products.map(product => {
     const subtotal = product.price * product.OrderDetail.quantity
     return {
+      orderId: product.OrderDetail.orderId,
       productId: product.id,
       name: product.name,
       price: product.price,
