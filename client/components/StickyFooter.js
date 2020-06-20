@@ -35,6 +35,10 @@ const useStyles = makeStyles(theme => ({
       theme.palette.type === 'light'
         ? theme.palette.grey[200]
         : theme.palette.grey[800]
+  },
+  links: {
+    justifyContent: 'space-between',
+    overflowX: 'auto'
   }
 }))
 
@@ -45,8 +49,21 @@ export function StickyFooter() {
       <CssBaseline />
       <footer className={classes.footer}>
         <Container maxWidth="sm">
-          <Typography variant="body1" align="center">
-            shipping is most likely delayed{' '}
+          <Typography variant="body1" align="center" className={classes.links}>
+            <Link href="/about" variant="dense" color="textSecondary">
+              About Us
+            </Link>{' '}
+            <Link href="/returns" variant="dense" color="textSecondary">
+              Shipping & Returns
+            </Link>{' '}
+            <Link
+              href="/contactus"
+              variant="dense"
+              color="textSecondary"
+              align="right"
+            >
+              Contact Us
+            </Link>
           </Typography>
           <Copyright />
         </Container>
