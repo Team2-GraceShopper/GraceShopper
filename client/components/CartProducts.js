@@ -18,6 +18,11 @@ import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 
+const priceFormat = {
+  style: 'currency',
+  currency: 'USD'
+}
+
 const useStyles = makeStyles(theme => ({
   listItem: {
     padding: theme.spacing(1, 1),
@@ -99,9 +104,11 @@ export default function CartProducts(props) {
   const classes = useStyles()
   const {removeItem, updateQty} = props
   const products = props.cart || []
-  const cartSubtotal = products.reduce((total, currentProduct) => {
-    return total + parseFloat(currentProduct.subtotal)
-  }, 0)
+  const cartSubtotal = products
+    .reduce((total, currentProduct) => {
+      return total + currentProduct.subtotal
+    }, 0)
+    .toLocaleString('en-US', priceFormat)
 
   return (
     <React.Fragment>
@@ -177,7 +184,7 @@ export default function CartProducts(props) {
                 </ButtonGroup>
               </div>
               <Typography variant="body2" className={classes.price}>
-                {product.subtotal}
+                {product.subtotal.toLocaleString('en-US', priceFormat)}
               </Typography>
               <IconButton
                 onClick={() => removeItem(product.orderId, product.productId)}

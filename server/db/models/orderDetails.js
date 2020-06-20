@@ -16,7 +16,7 @@ const OrderDetail = db.define('OrderDetail', {
     },
     get() {
       const price = this.getDataValue('price')
-      return (price / 100).toFixed(2)
+      return price / 100
     }
   }
 })

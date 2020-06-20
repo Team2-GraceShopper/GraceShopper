@@ -63,7 +63,6 @@ export const getCart = () => {
         window.localStorage.setItem('cart', JSON.stringify(data))
         //set to local storage
         // and pass to dispatch
-        console.log(data)
         dispatch(setCart(data))
       } else {
         const data = window.localStorage.getItem('cart')

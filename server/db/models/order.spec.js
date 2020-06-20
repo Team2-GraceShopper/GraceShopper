@@ -2,13 +2,12 @@ const {expect} = require('chai')
 const db = require('../db')
 const Order = require('./order')
 
-describe.only('Order model', () => {
+describe('Order model', () => {
   before(() => db.sync({force: true}))
 
   const order = {
     email: 'cody@email.com',
-    orderDate: new Date(Date.now()),
-    subtotal: 12.34,
+    subtotal: 23.0,
     tax: 5
   }
 
@@ -45,40 +44,39 @@ describe.only('Order model', () => {
         },
         err => {
           expect(err.message).to.include(
-            'notNull Violation: order.email cannot be null'
+            'Validation error: Validation isEmail on email failed'
           )
         }
       )
     })
 
-    it('`total` returns subtotal plus tax as string', async () => {
-      const savedOrder = await Product.create(order)
+    it.only('`total` returns subtotal plus tax as string', async () => {
+      const savedOrder = await Order.create(order)
 
-      const subtotal = savedOrder.subtotal
-      const tax = savedOrder.tax / 100
+      const subtotal = parseFloat(savedOrder.subtotal)
+      const tax = parseFloat(savedOrder.tax / 100)
       const total = subtotal + subtotal * tax
+
+      console.log(subtotal, typeof subtotal)
 
       expect(savedOrder.total).to.equal(total)
     })
   })
 
-  // describe('class method: getCart', () => {
-  //   it('gets cart by order id', async () => {
-  //     const initialProduct = await Product.create(product)
-
-  //     const updateInfo = {
-  //       name: 'an updated name',
-  //       inventory: 9
-  //     }
-
-  //     const [statusCode, updatedProduct] = await Product.updateProduct(
-  //       initialProduct.id,
-  //       updateInfo
-  //     )
-
-  //     expect(updatedProduct.name).to.equal('an updated name')
-  //     expect(updatedProduct.inventory).to.equal(9)
-  //     expect(updatedProduct.description).to.equal('some description')
-  //   })
-  // })
+  describe('class method: getCart', () => {
+    //   it('gets cart by order id', async () => {
+    //     const initialProduct = await Product.create(product)
+    //     const updateInfo = {
+    //       name: 'an updated name',
+    //       inventory: 9
+    //     }
+    //     const [statusCode, updatedProduct] = await Product.updateProduct(
+    //       initialProduct.id,
+    //       updateInfo
+    //     )
+    //     expect(updatedProduct.name).to.equal('an updated name')
+    //     expect(updatedProduct.inventory).to.equal(9)
+    //     expect(updatedProduct.description).to.equal('some description')
+    //   })
+  })
 })

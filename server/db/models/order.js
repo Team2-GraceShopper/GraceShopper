@@ -26,7 +26,7 @@ const Order = db.define('order', {
     },
     get() {
       const subtotal = this.getDataValue('subtotal')
-      return (subtotal / 100).toFixed(2)
+      return subtotal / 100
     }
   },
   tax: {
@@ -48,7 +48,7 @@ const Order = db.define('order', {
     },
     get() {
       const total = this.getDataValue('total')
-      return (total / 100).toFixed(2)
+      return total / 100
     }
   },
   shipStreet: {
@@ -114,7 +114,7 @@ Order.getCart = async function(id) {
   })
   if (!order) return 0
   const cart = order.products.map(product => {
-    const subtotal = (product.price * product.OrderDetail.quantity).toFixed(2)
+    const subtotal = product.price * product.OrderDetail.quantity
     return {
       orderId: product.OrderDetail.orderId,
       productId: product.id,
