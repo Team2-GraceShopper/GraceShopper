@@ -18,6 +18,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const priceFormat = {
+  style: 'currency',
+  currency: 'USD'
+}
+
 export default function Review(props) {
   const {cart, user} = props
   const classes = useStyles()
@@ -31,16 +36,32 @@ export default function Review(props) {
         {cart.map(product => (
           <ListItem className={classes.listItem} key={product.productId}>
             <ListItemText
-              primary={product.name}
+              primary={
+                product.quantity > 1
+                  ? product.name +
+                    ' x ' +
+                    product.quantity +
+                    ' (' +
+                    product.price.toLocaleString('en-US', priceFormat) +
+                    ')'
+                  : product.name
+              }
               secondary={product.description}
             />
-            <Typography variant="body2">{product.price}</Typography>
+            <Typography variant="body2">
+              {(product.price * product.quantity).toLocaleString(
+                'en-US',
+                priceFormat
+              )}
+            </Typography>
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" className={classes.total}>
-            {cart.reduce((accum, product) => accum + Number(product.price), 0)}
+            {cart
+              .reduce((accum, product) => accum + Number(product.price), 0)
+              .toLocaleString('en-US', priceFormat)}
           </Typography>
         </ListItem>
       </List>
