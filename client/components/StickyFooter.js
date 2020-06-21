@@ -38,7 +38,10 @@ const useStyles = makeStyles(theme => ({
   },
   links: {
     justifyContent: 'space-between',
-    overflowX: 'auto'
+    overflowX: 'auto',
+    marginRight: theme.spacing(8),
+    marginBottom: theme.spacing(2),
+    marginLeft: theme.spacing(2)
   }
 }))
 
@@ -50,10 +53,14 @@ export function StickyFooter() {
       <footer className={classes.footer}>
         <Container maxWidth="sm">
           <Typography variant="body1" align="center" className={classes.links}>
-            <Link href="/about" variant="dense" color="textSecondary">
+            <Link href="/about" color="textSecondary" className={classes.links}>
               About Us
             </Link>{' '}
-            <Link href="/returns" variant="dense" color="textSecondary">
+            <Link
+              href="/returns"
+              color="textSecondary"
+              className={classes.links}
+            >
               Shipping & Returns
             </Link>{' '}
             <Link
@@ -61,6 +68,7 @@ export function StickyFooter() {
               variant="dense"
               color="textSecondary"
               align="right"
+              marginLeft="theme.spacing(6)"
             >
               Contact Us
             </Link>
