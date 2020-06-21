@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import ToggleHeart from './ToggleHeart'
-import Copyright from './Copyright'
 import {useSnackbar} from 'notistack'
 import {connect} from 'react-redux'
 
@@ -65,10 +64,10 @@ export function AllProductsRender(props) {
       }
     })
     if (alreadyExist) {
-      enqueueSnackbar('Item already exists in cart!')
+      enqueueSnackbar('Item already in cart!')
     } else {
       addItem(product, 1)
-      enqueueSnackbar('Item was added to cart!')
+      enqueueSnackbar('Item added to cart!')
     }
   }
 
@@ -154,22 +153,6 @@ export function AllProductsRender(props) {
           </Grid>
         </Container>
       </main>
-      {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="textSecondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
-        <Copyright />
-      </footer>
-      {/* End footer */}
     </React.Fragment>
   )
 }
