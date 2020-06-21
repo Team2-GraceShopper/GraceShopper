@@ -17,7 +17,8 @@ describe('Product routes', () => {
     for (let i = 0; i < numOfProd; i++) {
       let product = {
         name: faker.commerce.productName(),
-        price: faker.commerce.price(),
+        // price: faker.commerce.price(), // returns string
+        price: 9.99,
         description: faker.lorem.sentence(),
         imageUrl: faker.random.image(),
         inventory: faker.random.number()

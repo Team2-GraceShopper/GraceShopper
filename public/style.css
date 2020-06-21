@@ -23,7 +23,7 @@ form div {
 .single-product {
   height: 1000px;
   width: 1000px;
-  background-color: rgb(252, 232, 245);
+  background-color: white;
 }
 .pointer {
   cursor: pointer;
@@ -35,4 +35,13 @@ form div {
 
 .MuiCardActions-spacing > :last-child {
   margin-right: 8px;
+}
+
+.footer {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.footer p {
+  color: grey;
 }

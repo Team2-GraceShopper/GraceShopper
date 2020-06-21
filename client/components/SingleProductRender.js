@@ -1,13 +1,24 @@
 import React from 'react'
+import {useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Select from '@material-ui/core/Select'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
+import AddIcon from '@material-ui/icons/Add'
+import RemoveIcon from '@material-ui/icons/Remove'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
+import Box from '@material-ui/core/Box'
+
 // import CardActions from '@material-ui/core/CardActions'
 // import CardContent from '@material-ui/core/CardContent'
 // import CardMedia from '@material-ui/core/CardMedia'
+
+const priceFormat = {
+  style: 'currency',
+  currency: 'USD'
+}
 
 function Copyright() {
   return (
@@ -51,32 +62,111 @@ const useStyles = makeStyles(theme => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6)
+  },
+  quantityField: {
+    border: '1px solid black',
+    fontSize: '16px',
+    marginRight: 50,
+    padding: 10,
+    fontFamily: 'Roboto'
+  },
+  quantity: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginRight: 40
   }
 }))
 
 export default function SingleProductView(props) {
   const classes = useStyles()
-  let {product} = props
+
+  let {
+    product,
+    addItem,
+    handleSubmit,
+    handleChange,
+    quantity,
+    updateQty
+  } = props
+
+  const cartItem = useSelector(state =>
+    state.cart.filter(cartProduct => cartProduct.productId === product.id)
+  )[0]
 
   return product.name ? (
     <div className="single-product">
       <h1> {product.name}</h1>
       <img src={product.imageUrl} />
-      <h2>${product.price} </h2>
+      <h2>{product.price.toLocaleString('en-US', priceFormat)} </h2>
       <h2>Editor's Notes</h2>
       {product.description}
       <h4> Only a few left!</h4>
-      <Button variant="contained" color="primary">
-        ADD TO CART
-      </Button>
 
-      <Select variant="outlined" color="primary">
-        <Option>1</Option>
-        <Option>2</Option>
-        <Option>3</Option>
-        <Option>4</Option>
-        <Option>5</Option>
-      </Select>
+      <div className={classes.quantity}>
+        {/* <form onSubmit={handleSubmit}> */}
+        {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" shrink="true" value="1" className={classes.quantityField}/> */}
+        <Box className={classes.quantity}>
+          <div className={classes.quantityField}>{quantity}</div>
+          <ButtonGroup>
+            <Button
+              variant="contained"
+              size="small"
+              color="secondary"
+              onClick={() =>
+                handleChange({target: {name: 'quantity', value: quantity - 1}})
+              }
+            >
+              <RemoveIcon fontSize="small" />
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              color="secondary"
+              onClick={() =>
+                handleChange({target: {name: 'quantity', value: quantity + 1}})
+              }
+            >
+              <AddIcon fontSize="small" />
+            </Button>
+          </ButtonGroup>
+        </Box>
+
+        {/* <select
+          variant="outlined"
+          name="quantity"
+          color="primary"
+          onChange={handleChange}
+          value={quantity}
+        >
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select> */}
+
+        {/* </form> */}
+        {cartItem ? (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() =>
+              updateQty(cartItem.orderId, cartItem.productId, quantity)
+            }
+          >
+            UPDATE QUANTITY
+          </Button>
+        ) : (
+          <Button
+            // type="submit"
+            variant="contained"
+            color="primary"
+            onClick={() => addItem(product, quantity)}
+          >
+            ADD TO CART
+          </Button>
+        )}
+      </div>
     </div>
   ) : (
     ''

@@ -2,6 +2,7 @@ import axios from 'axios'
 
 //action types
 export const SET_SINGLE_PRODUCT = 'SET_SINGLE_PRODUCT'
+
 //action creators
 export const setSingleProduct = product => ({type: SET_SINGLE_PRODUCT, product})
 
