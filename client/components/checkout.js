@@ -3,6 +3,7 @@ import CheckoutRender from './checkout-render'
 import {connect} from 'react-redux'
 import {me, updateUser} from '../store/user'
 import {getCart} from '../store/cart'
+import {updateInventory} from '../store/products'
 
 export class Checkout extends React.Component {
   constructor() {
@@ -31,6 +32,7 @@ export class Checkout extends React.Component {
     this.setState(this.props.user)
     // console.log('in checkout', this.state)
     await this.props.getCart()
+    console.log('cart', this.props.cart)
   }
 
   handleClick(evt) {
@@ -44,12 +46,25 @@ export class Checkout extends React.Component {
     this.setState({[evt.target.name]: evt.target.value})
   }
 
-  handleSubmit(evt) {
+  handleSubmit(evt, handleNext) {
     evt.preventDefault()
-    //pass new data into thunk creator to update models
-    console.log('button', evt)
-    if (this.state.saveAddress || this.state.saveBilling)
-      updateUser(this.state.user)
+    handleNext(evt)
+    this.props.updateInventory(this.props.cart)
+    if (this.state.saveAddress || this.state.saveBilling) {
+      let newData = {}
+      if (this.state.saveAddress) {
+        newData.shipStreet = this.state.shipStreet
+        newData.shipCity = this.state.shipCity
+        newData.shipState = this.state.shipState
+        newData.shipZip = this.state.shipZip
+      }
+      if (this.state.saveBilling) {
+        newData.cardNumber = this.state.cardNumber
+        newData.cardExpiration = this.state.cardExpiration
+        newData.cvvCode = this.state.cvvCode
+      }
+      this.props.updateUser(newData)
+    }
     console.log('state on submit', this.state)
   }
 
@@ -61,6 +76,7 @@ export class Checkout extends React.Component {
         handleSubmit={this.handleSubmit}
         cart={this.props.cart}
         user={this.state}
+        // updateUser={updateUser}
       />
     )
   }
@@ -74,7 +90,8 @@ const mapDispatch = dispatch => {
   return {
     getUser: () => dispatch(me()),
     updateUser: user => dispatch(updateUser(user)),
-    getCart: () => dispatch(getCart())
+    getCart: () => dispatch(getCart()),
+    updateInventory: cart => dispatch(updateInventory(cart))
   }
 }
 

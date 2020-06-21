@@ -91,19 +91,39 @@ function getStepContent(step, handleClick, handleChange, cart, user) {
 }
 
 export default function Checkout(props) {
-  const {handleSubmit, handleClick, handleChange, cart, user} = props
+  const {
+    handleSubmit,
+    handleClick,
+    handleChange,
+    cart,
+    user,
+    updateUser
+  } = props
   //   console.log('handleClick in checkout-render', handleClick)
   //   console.log(user)
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
 
-  const handleNext = () => {
+  const handleNext = evt => {
+    evt.preventDefault()
     setActiveStep(activeStep + 1)
+    // evt.persist()
+    // console.log('button', evt)
+    // if (activeStep === steps.length - 1)
+    // if (user.saveAddress || user.saveBilling)
+    //   updateUser(user)
+    // console.log('state on submit', user)
   }
 
   const handleBack = () => {
     setActiveStep(activeStep - 1)
   }
+
+  //   const buttonType = (step) => {
+  //     let type = 'button'
+  //     if (step === steps.length - 1) type = 'submit'
+  //     return  type
+  //   }
 
   return (
     <React.Fragment>
@@ -135,7 +155,7 @@ export default function Checkout(props) {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={evt => handleSubmit(evt, handleNext)}>
                   {getStepContent(
                     activeStep,
                     handleClick,
@@ -149,37 +169,28 @@ export default function Checkout(props) {
                         Back
                       </Button>
                     )}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      type={activeStep === 3 ? 'submit' : 'button'}
-                      className={classes.button}
-                    >
-                      {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                    </Button>
-                    <p>{activeStep}</p>
-                    {/* {activeStep  === steps.length - 1 ? 
-                    (<Button
-                      type='submit'
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      className={classes.button}
-                      onSubmit={handleSubmit}
-                    >
-                      Place Order
-                    </Button>) :
-                    (<Button
-                      type='button'
-                      variant="contained"
-                      color="primary"
-                      onClick={handleNext}
-                      className={classes.button}
-                    >
-                      Next
-                    </Button>)
-                    } */}
+                    {activeStep !== steps.length - 1 ? (
+                      <Button
+                        type="button"
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        className={classes.button}
+                      >
+                        Next
+                      </Button>
+                    ) : (
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        //   onClick={handleNext}
+                        className={classes.button}
+                      >
+                        Place Order
+                      </Button>
+                    )}
+                    {/* <p>{activeStep}</p> */}
                   </div>
                 </form>
               </React.Fragment>
