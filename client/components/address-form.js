@@ -95,7 +95,7 @@ export default function AddressForm(props) {
             label="Zip / Postal code"
             fullWidth
             autoComplete="shipping postal-code"
-            // value={user.shipZip ? props.user.shipZip : ''}
+            value={user.shipZip ? props.user.shipZip : ''}
             onChange={handleChange}
           />
         </Grid>

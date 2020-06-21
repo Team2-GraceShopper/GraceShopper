@@ -7,7 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 
 export default function PaymentForm(props) {
   const {handleChange, handleClick, user} = props
-  console.log('in payment-form', user.saveAddress)
+  console.log('in payment-form', user.saveBilling)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -56,7 +56,7 @@ export default function PaymentForm(props) {
             control={
               <Checkbox
                 color="secondary"
-                name="saveAddress"
+                name="saveBilling"
                 value={user.saveBilling}
                 onChange={handleClick}
               />
