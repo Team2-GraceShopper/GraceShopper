@@ -7,7 +7,7 @@ router.put('/user', async (req, res, next) => {
   try {
     let updatedUser
     let userToUpdate = await User.findByPk(req.user.id)
-    console.log('user in api', req.body.user)
+    console.log('req.body in user api', req.body)
     const {
       shipStreet,
       shipCity,
@@ -59,14 +59,10 @@ router.put('/user', async (req, res, next) => {
 router.put('/product', async (req, res, next) => {
   try {
     let thisProduct
-    for (let i = 0; i < req.body.products.length; i++) {
-      thisProduct = await Product.findById(req.body.products[i].productId)
-      Product.update(
-        {inventory: thisProduct.inventory - req.body.products[i].quantity},
-        {
-          where: {id: req.body.products[i].productId}
-        }
-      )
+    const {cart} = req.body
+    for (let i = 0; i < cart.length; i++) {
+      thisProduct = await Product.findByPk(cart[i].productId)
+      thisProduct.update({inventory: thisProduct.inventory - cart[i].quantity})
     }
     const products = await Product.findAll()
     res.json(products)

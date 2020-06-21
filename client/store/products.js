@@ -17,17 +17,12 @@ export const getProducts = () => async dispatch => {
 
 //updateProducts thunk creator (inventory)
 export const updateInventory = cart => {
-  console.log('inside updateInventory')
+  console.log('inside updateInventory', cart)
   return async dispatch => {
-    try {
-      console.log('inside thunk return')
-      const updatedProducts = await axios.put('/api/checkout/product', {
-        cart: cart
-      })
-      dispatch(gotProducts(updatedProducts))
-    } catch (error) {
-      console.log('error', error)
-    }
+    const updatedProducts = await axios.put('/api/checkout/product', {
+      cart: cart
+    })
+    dispatch(gotProducts(updatedProducts))
   }
 }
 
