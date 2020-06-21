@@ -13,6 +13,11 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import {Link} from 'react-router-dom'
 
+const priceFormat = {
+  style: 'currency',
+  currency: 'USD'
+}
+
 const useStyles = makeStyles(theme => ({
   listItem: {
     padding: theme.spacing(1, 1),
@@ -94,9 +99,12 @@ export default function CartProducts(props) {
   const classes = useStyles()
   const {removeItem, updateQty} = props
   const products = props.cart || []
-  const cartSubtotal = products.reduce((total, currentProduct) => {
-    return total + currentProduct.subtotal
-  }, 0)
+  const cartSubtotal = products
+    .reduce((total, currentProduct) => {
+      return total + currentProduct.subtotal
+    }, 0)
+    .toLocaleString('en-US', priceFormat)
+
 
   return (
     <React.Fragment>
@@ -170,9 +178,9 @@ export default function CartProducts(props) {
                   </Button>
                 </ButtonGroup>
               </div>
-              <Typography variant="body2" className={classes.price}>{`${
-                product.subtotal
-              }.00`}</Typography>
+              <Typography variant="body2" className={classes.price}>
+                {product.subtotal.toLocaleString('en-US', priceFormat)}
+              </Typography>
               <IconButton
                 onClick={() => removeItem(product.orderId, product.productId)}
               >
@@ -193,7 +201,7 @@ export default function CartProducts(props) {
               variant="h6"
               className={`${classes.total} ${classes.subTotalPrice}`}
             >
-              {`$${cartSubtotal}.00`}
+              {cartSubtotal}
             </Typography>
           </Box>
           {/* </ListItem> */}

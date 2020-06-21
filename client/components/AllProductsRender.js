@@ -12,6 +12,11 @@ import Container from '@material-ui/core/Container'
 import ToggleHeart from './ToggleHeart'
 import Copyright from './Copyright'
 
+const priceFormat = {
+  style: 'currency',
+  currency: 'USD'
+}
+
 const useStyles = makeStyles(theme => ({
   icon: {
     marginRight: theme.spacing(2)
@@ -104,7 +109,7 @@ export default function AllProductsRender(props) {
                       {product.name}
                     </Typography>
                     <Typography gutterBottom component="h6">
-                      ${product.price}
+                      {product.price.toLocaleString('en-US', priceFormat)}
                     </Typography>
                   </CardContent>
                   <CardActions>

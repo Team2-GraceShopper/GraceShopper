@@ -4,11 +4,24 @@ const db = require('../db')
 const Product = db.define('product', {
   name: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   price: {
-    type: Sequelize.DECIMAL,
-    allowNull: false
+    type: Sequelize.INTEGER,
+    // allowNull: false, // null will be saved as 0
+    validate: {
+      isInt: true
+    },
+    set(value) {
+      this.setDataValue('price', parseInt(value * 100, 10))
+    },
+    get() {
+      const price = this.getDataValue('price')
+      return price / 100
+    }
   },
   description: {
     type: Sequelize.TEXT,
