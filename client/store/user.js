@@ -6,6 +6,8 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const UPDATE_SHIPPING = 'UPDATE_SHIPPING'
+const UPDATE_BILLING = 'UPDATE_BILLING'
 
 /**
  * INITIAL STATE
@@ -17,6 +19,8 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
+const updateShipping = newData => ({type: UPDATE_SHIPPING, newData})
+const updateBilling = newData => ({type: UPDATE_BILLING, newData})
 
 /**
  * THUNK CREATORS
@@ -28,7 +32,8 @@ export const updateUser = user => {
   return async dispatch => {
     console.log('inside updateUser thunk creator', user)
     const {data} = await axios.put('/api/checkout/user', {user: user})
-    dispatch(getUser(data))
+    if (data.shipStreet) dispatch(updateShipping(data))
+    if (data.cardNumber) dispatch(updateBilling(data))
   }
 }
 
@@ -88,6 +93,21 @@ export default function(state = defaultUser, action) {
       return action.user
     case REMOVE_USER:
       return defaultUser
+    case UPDATE_SHIPPING:
+      return {
+        ...state,
+        shipStreet: action.newData.shipStreet,
+        shipCity: action.newData.shipCity,
+        shipState: action.newData.shipState,
+        shipZip: action.newData.shipZip
+      }
+    case UPDATE_BILLING:
+      return {
+        ...state,
+        cardNumber: action.newData.cardNumber,
+        cardExpiration: action.newData.cardExpiration,
+        cvvCode: action.newData.cvvCode
+      }
     default:
       return state
   }

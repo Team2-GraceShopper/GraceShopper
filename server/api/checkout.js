@@ -6,12 +6,9 @@ const {Order, Product, User} = require('../db/models')
 router.put('/user', async (req, res, next) => {
   try {
     let updatedUser
-    let userToUpdate = await User.findById(req.user.id)
+    let userToUpdate = await User.findByPk(req.user.id)
     console.log('user in api', req.body.user)
     const {
-      firstName,
-      lastName,
-      email,
       shipStreet,
       shipCity,
       shipState,
@@ -20,21 +17,39 @@ router.put('/user', async (req, res, next) => {
       cardExpiration,
       cvvCode
     } = req.body.user
-    updatedUser = await userToUpdate.update(
-      {
-        firstName,
-        lastName,
-        email,
-        shipStreet,
-        shipCity,
-        shipState,
-        shipZip,
-        cardNumber,
-        cardExpiration,
-        cvvCode
-      },
-      {returning: true}
-    )
+    if (shipStreet && cardNumber) {
+      updatedUser = await userToUpdate.update(
+        {
+          shipStreet,
+          shipCity,
+          shipState,
+          shipZip,
+          cardNumber,
+          cardExpiration,
+          cvvCode
+        },
+        {returning: true}
+      )
+    } else if (!cardNumber) {
+      updatedUser = await userToUpdate.update(
+        {
+          shipStreet,
+          shipCity,
+          shipState,
+          shipZip
+        },
+        {returning: true}
+      )
+    } else {
+      updatedUser = await userToUpdate.update(
+        {
+          cardNumber,
+          cardExpiration,
+          cvvCode
+        },
+        {returning: true}
+      )
+    }
     res.json(updatedUser)
   } catch (err) {
     next(err)
