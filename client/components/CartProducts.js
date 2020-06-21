@@ -4,19 +4,14 @@ import Typography from '@material-ui/core/Typography'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import Grid from '@material-ui/core/Grid'
-import Select from '@material-ui/core/Select'
-import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
-import ClearIcon from '@material-ui/icons/Clear'
 import IconButton from '@material-ui/core/IconButton'
 import RemoveCircle from '@material-ui/icons/RemoveCircle'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
-
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
+import {Link} from 'react-router-dom'
 
 const priceFormat = {
   style: 'currency',
@@ -110,6 +105,7 @@ export default function CartProducts(props) {
     }, 0)
     .toLocaleString('en-US', priceFormat)
 
+
   return (
     <React.Fragment>
       <Typography variant="h5" gutterBottom className={classes.title}>
@@ -118,7 +114,6 @@ export default function CartProducts(props) {
       <Box className={classes.container}>
         <List>
           <ListItem className={classes.heading}>
-            {/* <ListItemText primary="Product"/> */}
             <Typography variant="h6" gutterBottom>
               Product
             </Typography>
@@ -137,15 +132,15 @@ export default function CartProducts(props) {
               >
                 Price
               </Typography>
-              {/* <ListItemText primary="Quantity" className={classes.quantity} />
-              <ListItemText primary="Total" className={classes.priceHead} /> */}
             </div>
           </ListItem>
         </List>
         <List disablePadding>
           {products.map(product => (
             <ListItem className={classes.listItem} key={product.name}>
-              <img src={product.imageUrl} className={classes.image} />
+              <Link to={`/products/${product.productId}`}>
+                <img src={product.imageUrl} className={classes.image} />
+              </Link>
               <ListItemText primary={product.name} />
               <div className={classes.qty}>
                 <ListItemText

@@ -30,23 +30,33 @@ const removedItem = productId => ({
 
 // //THUNKS
 
-export const addItem = (id, quantity, price) => {
+export const addItem = (product, quantity) => {
   return async (dispatch, getState) => {
     try {
       const state = getState()
-      let product
+      let orderDetail
       if (state.user.id) {
-        const res = await axios.get(`/api/products/${id}`)
-        product = res.data
-        dispatch(addedItem(product))
-        await axios.post('/api/cart/item', {id, quantity, price})
-      } else {
-        let cart = window.localStorage.getItem('cart')
-          ? JSON.parse(window.localStorage.getItem('cart'))
-          : []
-        cart.push(product)
-        window.localStorage.setItem('cart', JSON.stringify(cart))
+        orderDetail = await axios.post('/api/cart/item', {
+          id: product.id,
+          quantity,
+          price: product.price
+        })
       }
+      const newItem = {
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        imageUrl: product.imageUrl,
+        inventory: product.inventory,
+        orderId: orderDetail.orderId || null,
+        quantity,
+        subtotal: quantity * product.price
+      }
+      dispatch(addedItem(newItem))
+
+      const newState = getState()
+      window.localStorage.setItem('cart', JSON.stringify(newState.cart))
     } catch (err) {
       console.error(err)
     }
