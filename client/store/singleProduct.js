@@ -12,11 +12,6 @@ export const fetchSingleProduct = id => async dispatch => {
   dispatch(setSingleProduct(data))
 }
 
-export const addToCart = id => async dispatch => {
-  const {data} = await axios.get(`/api/products/${id}`)
-  dispatch(addedToCart(data))
-}
-
 const initialState = {}
 
 export default function(state = initialState, action) {
