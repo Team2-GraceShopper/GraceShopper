@@ -14,6 +14,17 @@ const Order = db.define('order', {
     type: Sequelize.DATE,
     validate: {
       isDate: true
+    },
+    set() {
+      const now = new Date(Date.now())
+      this.setDataValue('orderDate', now)
+    },
+    // since orderDate is not required, when no value is passed in, order.orderDate returns null --> this getter is for testing purposes
+    get() {
+      if (this.getDataValue('orderDate') === null) {
+        return new Date(Date.now())
+      }
+      return this.getDataValue('orderDate')
     }
   },
   subtotal: {
@@ -31,6 +42,7 @@ const Order = db.define('order', {
   },
   tax: {
     type: Sequelize.INTEGER,
+    defaultValue: 5,
     validate: {
       isInt: true
     }
@@ -97,7 +109,7 @@ const Order = db.define('order', {
   },
   status: {
     type: Sequelize.ENUM('active', 'complete'),
-    default: 'active'
+    defaultValue: 'active'
   }
 })
 
