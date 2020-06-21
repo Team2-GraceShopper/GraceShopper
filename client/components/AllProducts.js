@@ -1,6 +1,7 @@
 import React from 'react'
 import AllProductsRender from './AllProductsRender'
 import {getProducts} from '../store/products'
+import {addItem} from '../store/cart'
 import {connect} from 'react-redux'
 
 export class AllProducts extends React.Component {
@@ -14,6 +15,7 @@ export class AllProducts extends React.Component {
     return (
       <AllProductsRender
         products={this.props.products ? this.props.products : []}
+        addItem={this.props.addItem}
       />
     )
   }
@@ -27,7 +29,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getProducts: () => dispatch(getProducts())
+    getProducts: () => dispatch(getProducts()),
+    addItem: (product, quantity) => dispatch(addItem(product, quantity))
   }
 }
 
