@@ -2,9 +2,8 @@ import React from 'react'
 import CheckoutRender from './checkout-render'
 import {connect} from 'react-redux'
 import {me, updateUser} from '../store/user'
-import {getCart} from '../store/cart'
+import {getCart, updateOrder} from '../store/cart'
 import {updateInventory} from '../store/products'
-import axios from 'axios'
 
 const stateTaxes = {
   AL: 13.5,
@@ -62,6 +61,7 @@ const stateTaxes = {
 
 const isValidState = state => {
   console.log('valide state?', state)
+  if (state === null) return false
   if (typeof stateTaxes[state.toUpperCase()] === 'number') return true
   else return false
 }
@@ -75,11 +75,12 @@ const getSubtotal = cart => {
 }
 
 const getTax = (subtotal, state) => {
-  console.log('state tax: ', stateTaxes[state.toUpperCase()])
-  let percent = stateTaxes[state.toUpperCase()] / 100
   let tax = 0
-  tax += subtotal * percent
-  console.log('tax', tax)
+  if (state === null) tax = 5
+  else {
+    let percent = stateTaxes[state.toUpperCase()] / 100
+    tax += subtotal * percent
+  }
   return tax
 }
 
@@ -103,15 +104,20 @@ export class Checkout extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleClick = this.handleClick.bind(this)
+    // this.nullify = this.nullify.bind(this)
   }
 
   async componentDidMount() {
     await this.props.getUser()
     this.setState(this.props.user)
-    // console.log('in checkout', this.state)
     await this.props.getCart()
     console.log('cart', this.props.cart)
   }
+
+  //    nullify(key) {
+  //        console.log('in nullify', key)
+  //     this.setState({[key]: null})
+  //    }
 
   handleClick(evt) {
     evt.persist()
@@ -122,11 +128,13 @@ export class Checkout extends React.Component {
 
   handleChange(evt) {
     this.setState({[evt.target.name]: evt.target.value})
+    console.log('in handleChange', this.state.shipZip)
   }
 
-  handleSubmit = async (evt, handleNext) => {
+  handleSubmit = (evt, handleNext) => {
     evt.preventDefault()
     handleNext(evt)
+    window.localStorage.cart = []
     this.props.updateInventory(this.props.cart)
     let updatedOrder = {
       id: this.props.cart[0].orderId,
@@ -147,8 +155,8 @@ export class Checkout extends React.Component {
       cardExpiration: this.state.cardExpiration,
       cvvCode: this.state.cvvCode
     }
-    await axios.put('/api/checkout/order', {data: updatedOrder})
     if (this.state.saveAddress || this.state.saveBilling) {
+      console.log('on line 155')
       let newData = {}
       if (this.state.saveAddress) {
         newData.shipStreet = this.state.shipStreet
@@ -163,10 +171,12 @@ export class Checkout extends React.Component {
       }
       this.props.updateUser(newData)
     }
+    this.props.updateOrder(updatedOrder)
     console.log('state on submit', this.state)
   }
 
   render() {
+    console.log('shipState in render', this.state)
     return (
       <CheckoutRender
         handleClick={this.handleClick}
@@ -186,7 +196,7 @@ export class Checkout extends React.Component {
               getTax(getSubtotal(this.props.cart), this.state.shipState)
             : getSubtotal(this.props.cart) + 5
         }
-        // updateUser={updateUser}
+        // nullify={this.nullify}
       />
     )
   }
@@ -201,7 +211,8 @@ const mapDispatch = dispatch => {
     getUser: () => dispatch(me()),
     updateUser: user => dispatch(updateUser(user)),
     getCart: () => dispatch(getCart()),
-    updateInventory: cart => dispatch(updateInventory(cart))
+    updateInventory: cart => dispatch(updateInventory(cart)),
+    updateOrder: updatedOrder => dispatch(updateOrder(updatedOrder))
   }
 }
 

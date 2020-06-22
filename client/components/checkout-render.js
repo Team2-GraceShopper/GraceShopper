@@ -117,33 +117,33 @@ export default function Checkout(props) {
     subtotal,
     tax,
     total
-    // updateUser
   } = props
-  //   console.log('handleClick in checkout-render', handleClick)
-  //   console.log(user)
+
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
 
   const handleNext = evt => {
     evt.preventDefault()
+    // let entries = Object.entries(userData)
+    // console.log('before for in', entries)
+    // for (let i = 0; i < entries.length; i++) {
+    //     if (entries[i][1] === '') nullify(entries[i][0])
+    // }
+    // for (let [key, value] in entries) {
+    //     // console.log('before if', key, value)
+    //     // if (entries.hasOwnProperty([key, value])) {
+    //         if (value === "") {
+    //             console.log('inside if')
+    //             nullify(key)
+    //             console.log('key value', key, value)
+    //         }
+    // }
     setActiveStep(activeStep + 1)
-    // evt.persist()
-    // console.log('button', evt)
-    // if (activeStep === steps.length - 1)
-    // if (user.saveAddress || user.saveBilling)
-    //   updateUser(user)
-    // console.log('state on submit', user)
   }
 
   const handleBack = () => {
     setActiveStep(activeStep - 1)
   }
-
-  //   const buttonType = (step) => {
-  //     let type = 'button'
-  //     if (step === steps.length - 1) type = 'submit'
-  //     return  type
-  //   }
 
   return (
     <React.Fragment>
@@ -168,9 +168,9 @@ export default function Checkout(props) {
                   Thank you for your order!!
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is xxxxx. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
+                  Your order number is {cart[0].orderId}. We have emailed your
+                  order confirmation to {user.email}, and will send you an
+                  update when your order has shipped.
                 </Typography>
               </React.Fragment>
             ) : (
@@ -197,7 +197,7 @@ export default function Checkout(props) {
                         type="button"
                         variant="contained"
                         color="primary"
-                        onClick={handleNext}
+                        onClick={evt => handleNext(evt, user)}
                         className={classes.button}
                       >
                         Next

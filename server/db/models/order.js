@@ -86,7 +86,7 @@ const Order = db.define('order', {
     type: Sequelize.INTEGER
   },
   cardNumber: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.BIGINT,
     validate: {
       isCreditCard: true,
       len: [16]
