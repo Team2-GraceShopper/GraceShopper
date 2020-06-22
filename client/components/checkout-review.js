@@ -57,11 +57,28 @@ export default function Review(props) {
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
-          <ListItemText primary="Total" />
+          <ListItemText primary="Subotal" />
           <Typography variant="subtitle1" className={classes.total}>
             {cart
               .reduce((accum, product) => accum + Number(product.price), 0)
               .toLocaleString('en-US', priceFormat)}
+          </Typography>
+        </ListItem>
+        <ListItem className={classes.listItem}>
+          <ListItemText primary="Tax" />
+          <Typography variant="subtitle1" className={classes.total}>
+            $5.00
+          </Typography>
+        </ListItem>
+        <ListItem className={classes.listItem}>
+          <ListItemText primary="Total" />
+          <Typography variant="subtitle1" className={classes.total}>
+            {(
+              cart.reduce(
+                (accum, product) => accum + Number(product.price),
+                0
+              ) + 5
+            ).toLocaleString('en-US', priceFormat)}
           </Typography>
         </ListItem>
       </List>
