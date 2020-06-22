@@ -10,7 +10,8 @@ import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import ToggleHeart from './ToggleHeart'
-import Copyright from './Copyright'
+import {useSnackbar} from 'notistack'
+import {connect} from 'react-redux'
 
 const priceFormat = {
   style: 'currency',
@@ -49,9 +50,26 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function AllProductsRender(props) {
-  const {products} = props
+export function AllProductsRender(props) {
+  const {products, addItem, cart} = props
   const classes = useStyles()
+
+  const {enqueueSnackbar} = useSnackbar()
+
+  const handleClick = product => {
+    let alreadyExist = false
+    cart.forEach(item => {
+      if (item.productId === product.id) {
+        alreadyExist = true
+      }
+    })
+    if (alreadyExist) {
+      enqueueSnackbar('Item already in cart!', {variant: 'warning'})
+    } else {
+      addItem(product, 1)
+      enqueueSnackbar('Item added to cart!', {variant: 'success'})
+    }
+  }
 
   return (
     <React.Fragment>
@@ -113,10 +131,18 @@ export default function AllProductsRender(props) {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button
+                      size="small"
+                      color="primary"
+                      href={`/products/${product.id}`}
+                    >
                       View
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button
+                      size="small"
+                      color="primary"
+                      onClick={() => handleClick(product)}
+                    >
                       Add To Cart
                     </Button>
                     <ToggleHeart />
@@ -127,22 +153,12 @@ export default function AllProductsRender(props) {
           </Grid>
         </Container>
       </main>
-      {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="textSecondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
-        <Copyright />
-      </footer>
-      {/* End footer */}
     </React.Fragment>
   )
 }
+
+const mapState = state => ({
+  cart: state.cart
+})
+
+export default connect(mapState)(AllProductsRender)
