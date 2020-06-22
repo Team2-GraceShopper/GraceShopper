@@ -9,6 +9,7 @@ import {
   Cart,
   AllProducts,
   SingleProduct,
+  Checkout,
   Returns,
   ContactUs,
   About
@@ -33,6 +34,7 @@ class Routes extends Component {
         <Route exact path="/" component={AllProducts} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/checkout" component={Checkout} />
         <Route path="/cart" component={Cart} />
         <Route path="/returns" component={Returns} />
         <Route path="/contactus" component={ContactUs} />
