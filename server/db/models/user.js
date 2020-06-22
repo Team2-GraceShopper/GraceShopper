@@ -6,6 +6,17 @@ const User = db.define('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
+    allowNull: false,
+    validate: {
+      isEmail: true
+    }
+  },
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  lastName: {
+    type: Sequelize.STRING,
     allowNull: false
   },
   password: {
@@ -26,6 +37,50 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
+  },
+  cardNumber: {
+    type: Sequelize.BIGINT,
+    validate: {
+      isCreditCard: true,
+      len: [16]
+    }
+  },
+  cardExpiration: {
+    type: Sequelize.DATEONLY
+  },
+  cvvCode: {
+    type: Sequelize.INTEGER,
+    validate: {
+      len: [3, 4]
+    }
+  },
+  shipStreet: {
+    type: Sequelize.STRING
+  },
+  shipCity: {
+    type: Sequelize.STRING
+  },
+  shipState: {
+    type: Sequelize.STRING
+  },
+  shipZip: {
+    type: Sequelize.INTEGER
+  },
+  billStreet: {
+    type: Sequelize.STRING
+  },
+  billCity: {
+    type: Sequelize.STRING
+  },
+  billState: {
+    type: Sequelize.STRING
+  },
+  billZip: {
+    type: Sequelize.INTEGER
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 })
 
