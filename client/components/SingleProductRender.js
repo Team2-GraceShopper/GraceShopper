@@ -15,6 +15,11 @@ import Box from '@material-ui/core/Box'
 // import CardContent from '@material-ui/core/CardContent'
 // import CardMedia from '@material-ui/core/CardMedia'
 
+const priceFormat = {
+  style: 'currency',
+  currency: 'USD'
+}
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -74,6 +79,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SingleProductView(props) {
   const classes = useStyles()
+
   let {
     product,
     addItem,
@@ -91,7 +97,7 @@ export default function SingleProductView(props) {
     <div className="single-product">
       <h1> {product.name}</h1>
       <img src={product.imageUrl} />
-      <h2>${product.price} </h2>
+      <h2>{product.price.toLocaleString('en-US', priceFormat)} </h2>
       <h2>Editor's Notes</h2>
       {product.description}
       <h4> Only a few left!</h4>

@@ -63,7 +63,7 @@ export const addItem = (product, quantity) => {
   }
 }
 
-export const getCart = user => {
+export const getCart = () => {
   return async (dispatch, getState) => {
     try {
       const state = getState()

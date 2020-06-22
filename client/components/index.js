@@ -13,3 +13,8 @@ export {default as Header} from './Header'
 export {default as AllProducts} from './AllProducts'
 export {default as SingleProduct} from './SingleProduct'
 export {default as Cart} from './Cart'
+export {default as StickyFooter} from './StickyFooter'
+export {default as Returns} from './Returns'
+export {default as About} from './About'
+export {default as ContactUs} from './ContactUs'
+

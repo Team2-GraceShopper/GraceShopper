@@ -33,7 +33,17 @@ export class SingleProduct extends React.Component {
     this.setState({[e.target.name]: e.target.value})
   }
 
+  handleSubmit(e) {
+    e.preventDefault()
+  }
+
+  handleChange(e) {
+    this.setState({[e.target.name]: e.target.value})
+  }
+
   render() {
+    console.log('cart product from single product', this.state.cart)
+
     return (
       <SingleProductRender
         product={this.props.product}

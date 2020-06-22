@@ -69,7 +69,6 @@ router.post('/', async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-
   try {
     let products = []
     req.body.cart.forEach(product => {
@@ -89,7 +88,6 @@ router.post('/', async (req, res, next) => {
 
 router.post('/item', async (req, res, next) => {
   let order, wasCreated
-
   try {
     if (req.user) {
       ;[order, wasCreated] = await Order.findOrCreate({
@@ -103,7 +101,6 @@ router.post('/item', async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-
   try {
     const newOrder = await OrderDetail.create({
       orderId: order.id,
