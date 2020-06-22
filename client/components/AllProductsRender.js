@@ -64,10 +64,10 @@ export function AllProductsRender(props) {
       }
     })
     if (alreadyExist) {
-      enqueueSnackbar('Item already in cart!')
+      enqueueSnackbar('Item already in cart!', {variant: 'warning'})
     } else {
       addItem(product, 1)
-      enqueueSnackbar('Item added to cart!')
+      enqueueSnackbar('Item added to cart!', {variant: 'success'})
     }
   }
 

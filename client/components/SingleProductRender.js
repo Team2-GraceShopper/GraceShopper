@@ -70,9 +70,9 @@ export default function SingleProductView(props) {
 
   const handleClick = type => {
     if (type === 'update') {
-      enqueueSnackbar('Cart updated!')
+      enqueueSnackbar('Cart updated!', {variant: 'success'})
     } else {
-      enqueueSnackbar('Item added to cart!')
+      enqueueSnackbar('Item added to cart!', {variant: 'success'})
     }
   }
 
