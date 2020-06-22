@@ -20,6 +20,17 @@ export const getProducts = categoryId => async dispatch => {
   }
 }
 
+//updateProducts thunk creator (inventory)
+export const updateInventory = cart => {
+  console.log('inside updateInventory', cart)
+  return async dispatch => {
+    const updatedProducts = await axios.put('/api/checkout/product', {
+      cart: cart
+    })
+    dispatch(gotProducts(updatedProducts))
+  }
+}
+
 export default function(state = defaultProducts, action) {
   switch (action.type) {
     case GET_PRODUCTS:
