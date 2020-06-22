@@ -11,7 +11,7 @@ const Order = db.define('order', {
     }
   },
   orderDate: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATEONLY,
     validate: {
       isDate: true
     },

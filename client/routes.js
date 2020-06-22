@@ -11,7 +11,8 @@ import {
   SingleProduct,
   Returns,
   ContactUs,
-  About
+  About,
+  OrderHistory
 } from './components'
 import {me} from './store'
 
@@ -37,10 +38,12 @@ class Routes extends Component {
         <Route path="/returns" component={Returns} />
         <Route path="/contactus" component={ContactUs} />
         <Route path="/about" component={About} />
+
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            <Route path="/orderHistory" component={OrderHistory} />*/}
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
