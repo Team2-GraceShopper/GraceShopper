@@ -65,10 +65,9 @@ export function StickyFooter() {
             </Link>{' '}
             <Link
               href="/contactus"
-              variant="dense"
               color="textSecondary"
               align="right"
-              marginLeft="theme.spacing(6)"
+              marginleft="theme.spacing(6)"
             >
               Contact Us
             </Link>
