@@ -9,7 +9,6 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import Badge from '@material-ui/core/Badge'
 import {Menu} from './index'
 import {connect} from 'react-redux'
-import {getCategoryProducts} from '../store/products'
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -49,35 +48,42 @@ const StyledBadge = withStyles(theme => ({
 export function Header(props) {
   const classes = useStyles()
 
-  const title = 'Website Title'
+  const title = 'Maison Corona'
   const categories = [
     {
+      id: 1,
       title: 'Loneliness',
-      url: '/category/loneliness'
+      url: '/category/1'
     },
     {
+      id: 2,
       title: 'Hunger',
-      url: '/category/hunger'
+      url: '/category/2'
     },
     {
+      id: 3,
       title: 'Staying Safe',
-      url: '/category/staysafe'
+      url: '/category/3'
     },
     {
+      id: 4,
       title: 'Learning',
-      url: '/category/learning'
+      url: '/category/4'
     },
     {
+      id: 5,
       title: 'Entertainment',
-      url: '/category/entertainment'
+      url: '/category/5'
     },
     {
-      title: 'Self Care',
-      url: '/category/selfcare'
+      id: 6,
+      title: 'Self-Care',
+      url: '/category/6'
     },
     {
+      id: 7,
       title: 'Essentials',
-      url: '/category/essentials'
+      url: '/category/7'
     }
   ]
 
@@ -123,9 +129,8 @@ export function Header(props) {
             noWrap
             key={category.title}
             variant="body2"
-            href={category.url}
             className={classes.toolbarLink}
-            onClick={() => props.handleClick(category.id)}
+            href={category.url}
           >
             {category.title}
           </Link>
@@ -139,12 +144,4 @@ const mapState = state => ({
   cart: state.cart
 })
 
-const mapDispatch = dispatch => {
-  return {
-    handleClick(id) {
-      dispatch(getCategoryProducts(id))
-    }
-  }
-}
-
-export default connect(mapState, mapDispatch)(Header)
+export default connect(mapState)(Header)
