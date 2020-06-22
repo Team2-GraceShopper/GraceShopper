@@ -13,10 +13,12 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import {Link} from 'react-router-dom'
 
+
 const priceFormat = {
   style: 'currency',
   currency: 'USD'
 }
+
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -99,6 +101,7 @@ export default function CartProducts(props) {
   const classes = useStyles()
   const {removeItem, updateQty} = props
   const products = props.cart || []
+
   const cartSubtotal = products
     .reduce((total, currentProduct) => {
       return total + currentProduct.subtotal
