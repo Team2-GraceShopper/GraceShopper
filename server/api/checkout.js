@@ -73,14 +73,24 @@ router.put('/product', async (req, res, next) => {
 
 router.put('/order', async (req, res, next) => {
   try {
-    await Order.update(
-      {
-        status: 'complete'
-      },
-      {
-        where: {id: req.body.orderId}
-      }
-    )
+    const {data} = req.body
+    await Order.upsert({
+      id: data.id,
+      email: data.email,
+      orderDate: new Date(Date.now()),
+      subTotal: data.subTotal,
+      tax: data.tax,
+      total: data.total,
+      shipStreet: data.shipStreet,
+      shipCity: data.shipCity,
+      shipState: data.shipState,
+      shipZip: data.shipZip,
+      cardNumber: data.cardNumber,
+      cardExpiration: data.cardExpiration,
+      cvvCode: data.cvvCode,
+      status: 'complete',
+      userId: req.user.id || 1
+    })
   } catch (error) {
     next(error)
   }

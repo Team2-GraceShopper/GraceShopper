@@ -65,7 +65,16 @@ const useStyles = makeStyles(theme => ({
 
 const steps = ['Shipping address', 'Payment details', 'Review your order']
 
-function getStepContent(step, handleClick, handleChange, cart, user) {
+function getStepContent(
+  step,
+  handleClick,
+  handleChange,
+  cart,
+  user,
+  subtotal,
+  tax,
+  total
+) {
   switch (step) {
     case 0:
       return (
@@ -84,7 +93,15 @@ function getStepContent(step, handleClick, handleChange, cart, user) {
         />
       )
     case 2:
-      return <Review cart={cart} user={user} />
+      return (
+        <Review
+          cart={cart}
+          user={user}
+          subtotal={subtotal}
+          tax={tax}
+          total={total}
+        />
+      )
     default:
       throw new Error('Unknown step')
   }
@@ -97,7 +114,10 @@ export default function Checkout(props) {
     handleChange,
     cart,
     user,
-    updateUser
+    subtotal,
+    tax,
+    total
+    // updateUser
   } = props
   //   console.log('handleClick in checkout-render', handleClick)
   //   console.log(user)
@@ -161,7 +181,10 @@ export default function Checkout(props) {
                     handleClick,
                     handleChange,
                     cart,
-                    user
+                    user,
+                    subtotal,
+                    tax,
+                    total
                   )}
                   <div className={classes.buttons}>
                     {activeStep !== 0 && (
