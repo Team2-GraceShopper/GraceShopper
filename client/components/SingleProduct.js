@@ -34,8 +34,6 @@ export class SingleProduct extends React.Component {
   }
 
   render() {
-    console.log('cart product from single product', this.state.cart)
-
     return (
       <SingleProductRender
         product={this.props.product}
