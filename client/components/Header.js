@@ -9,6 +9,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import Badge from '@material-ui/core/Badge'
 import {Menu} from './index'
 import {connect} from 'react-redux'
+import {getCategoryProducts} from '../store/products'
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -91,7 +92,9 @@ export function Header(props) {
           noWrap
           className={classes.toolbarTitle}
         >
-          {title}
+          <Link href="/" color="inherit" underline="none">
+            {title}
+          </Link>
         </Typography>
         <div className={classes.icons}>
           <Menu />
@@ -122,6 +125,7 @@ export function Header(props) {
             variant="body2"
             href={category.url}
             className={classes.toolbarLink}
+            onClick={() => props.handleClick(category.id)}
           >
             {category.title}
           </Link>
@@ -135,4 +139,12 @@ const mapState = state => ({
   cart: state.cart
 })
 
-export default connect(mapState)(Header)
+const mapDispatch = dispatch => {
+  return {
+    handleClick(id) {
+      dispatch(getCategoryProducts(id))
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(Header)
