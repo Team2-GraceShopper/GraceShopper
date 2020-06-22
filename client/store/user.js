@@ -51,8 +51,7 @@ export const auth = (
 
   try {
     dispatch(getUser(res.data))
-    history.push('/home')
-    // ^change it to '/', add "Hello [user]" on navbar
+    history.push('/')
 
     if (localStorage.getItem('cart')) {
       const cart = JSON.parse(window.localStorage.getItem('cart'))
