@@ -2,35 +2,15 @@ import React from 'react'
 import {useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
-import Select from '@material-ui/core/Select'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Typography from '@material-ui/core/Typography'
-import Link from '@material-ui/core/Link'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
+import {useSnackbar} from 'notistack'
 import Box from '@material-ui/core/Box'
-
-// import CardActions from '@material-ui/core/CardActions'
-// import CardContent from '@material-ui/core/CardContent'
-// import CardMedia from '@material-ui/core/CardMedia'
 
 const priceFormat = {
   style: 'currency',
   currency: 'USD'
-}
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
 }
 
 const useStyles = makeStyles(theme => ({
@@ -80,18 +60,21 @@ const useStyles = makeStyles(theme => ({
 export default function SingleProductView(props) {
   const classes = useStyles()
 
-  let {
-    product,
-    addItem,
-    handleSubmit,
-    handleChange,
-    quantity,
-    updateQty
-  } = props
+  let {product, addItem, handleChange, quantity, updateQty} = props
 
   const cartItem = useSelector(state =>
     state.cart.filter(cartProduct => cartProduct.productId === product.id)
   )[0]
+
+  const {enqueueSnackbar} = useSnackbar()
+
+  const handleClick = type => {
+    if (type === 'update') {
+      enqueueSnackbar('Cart updated!')
+    } else {
+      enqueueSnackbar('Item added to cart!')
+    }
+  }
 
   return product.name ? (
     <div className="single-product">
@@ -103,8 +86,6 @@ export default function SingleProductView(props) {
       <h4> Only a few left!</h4>
 
       <div className={classes.quantity}>
-        {/* <form onSubmit={handleSubmit}> */}
-        {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" shrink="true" value="1" className={classes.quantityField}/> */}
         <Box className={classes.quantity}>
           <div className={classes.quantityField}>{quantity}</div>
           <ButtonGroup>
@@ -130,38 +111,25 @@ export default function SingleProductView(props) {
             </Button>
           </ButtonGroup>
         </Box>
-
-        {/* <select
-          variant="outlined"
-          name="quantity"
-          color="primary"
-          onChange={handleChange}
-          value={quantity}
-        >
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select> */}
-
-        {/* </form> */}
         {cartItem ? (
           <Button
             variant="contained"
             color="primary"
-            onClick={() =>
+            onClick={() => {
               updateQty(cartItem.orderId, cartItem.productId, quantity)
-            }
+              handleClick('update')
+            }}
           >
             UPDATE QUANTITY
           </Button>
         ) : (
           <Button
-            // type="submit"
             variant="contained"
             color="primary"
-            onClick={() => addItem(product, quantity)}
+            onClick={() => {
+              addItem(product, quantity)
+              handleClick('add')
+            }}
           >
             ADD TO CART
           </Button>

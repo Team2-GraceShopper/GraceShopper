@@ -5,6 +5,7 @@ import {Router} from 'react-router-dom'
 import history from './history'
 import store from './store'
 import App from './app'
+import {SnackbarProvider} from 'notistack'
 
 // establishes socket connection
 import './socket'
@@ -12,7 +13,9 @@ import './socket'
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <App />
+      <SnackbarProvider maxSnack={3}>
+        <App />
+      </SnackbarProvider>
     </Router>
   </Provider>,
   document.getElementById('app')

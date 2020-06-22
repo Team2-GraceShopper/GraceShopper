@@ -112,7 +112,7 @@ export const updateQty = (orderId, productId, quantity) => {
     try {
       const state = getState()
       if (state.user.id) {
-        const {data} = axios.put(`/api/cart/${orderId}/${productId}`, {
+        const {data} = await axios.put(`/api/cart/${orderId}/${productId}`, {
           quantity: quantity
         })
       }

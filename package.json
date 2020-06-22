@@ -52,6 +52,7 @@
     "fs": "0.0.1-security",
     "history": "^4.10.1",
     "morgan": "^1.10.0",
+    "notistack": "^0.9.17",
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
     "pg": "^7.18.2",
