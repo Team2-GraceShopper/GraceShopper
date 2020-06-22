@@ -108,7 +108,6 @@ export default function CartProducts(props) {
     }, 0)
     .toLocaleString('en-US', priceFormat)
 
-
   return (
     <React.Fragment>
       <Typography variant="h5" gutterBottom className={classes.title}>

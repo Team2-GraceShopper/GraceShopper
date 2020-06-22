@@ -17,4 +17,3 @@ export {default as StickyFooter} from './StickyFooter'
 export {default as Returns} from './Returns'
 export {default as About} from './About'
 export {default as ContactUs} from './ContactUs'
-

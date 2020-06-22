@@ -1,20 +1,48 @@
 import React from 'react'
-// import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Container from '@material-ui/core/Container'
-import Typography from '@material-ui/core/Typography'
+import {
+  FormControl,
+  InputLabel,
+  Input,
+  Button,
+  TextField
+} from '@material-ui/core'
 
-export default function ContactUs() {
-  //   const classes = useStyles();
+class ContactUs extends React.Component {
+  render() {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          margin: 20,
+          padding: 20
+        }}
+      >
+        <form style={{width: '50%'}}>
+          <h1>Contact Us</h1>
 
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <Container maxWidth="lg">
-        <Typography variant="h6" align="left">
-          CONTACT US
-        </Typography>
-      </Container>
-    </React.Fragment>
-  )
+          <FormControl margin="normal" fullWidth>
+            <InputLabel htmlFor="name">Name</InputLabel>
+            <Input id="name" type="text" />
+          </FormControl>
+
+          <FormControl margin="normal" fullWidth>
+            <InputLabel htmlFor="email">Email</InputLabel>
+            <Input id="email" type="email" />
+          </FormControl>
+
+          <FormControl margin="normal" fullWidth>
+            <InputLabel htmlFor="email">Message</InputLabel>
+            <Input id="email" multiline rows={10} />
+          </FormControl>
+
+          <Button variant="contained" color="primary" size="medium">
+            Send
+          </Button>
+        </form>
+      </div>
+    )
+  }
 }
+
+export default ContactUs
