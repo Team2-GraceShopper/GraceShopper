@@ -35,9 +35,10 @@ export class SingleProduct extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    this.setState({
-      quantity: e.target.value
-    })
+  }
+
+  handleChange(e) {
+    this.setState({[e.target.name]: e.target.value})
   }
 
   render() {
