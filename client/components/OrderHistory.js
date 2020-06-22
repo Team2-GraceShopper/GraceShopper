@@ -11,7 +11,7 @@ export class OrderHistory extends React.Component {
   }
 
   render() {
-    return <OrderHistoryRender />
+    return <OrderHistoryRender history={this.props.history} />
   }
 }
 

@@ -21,6 +21,12 @@ const priceFormat = {
   currency: 'USD'
 }
 
+//2020-06-22
+function formatDate(date) {
+  const [year, month, day] = date.split('-')
+  return month + '/' + day + '/' + year
+}
+
 const useStyles = makeStyles(theme => ({
   listItem: {
     padding: theme.spacing(1, 1),
@@ -28,24 +34,10 @@ const useStyles = makeStyles(theme => ({
     borderRadius: 5,
     marginBottom: 20
   },
-  total: {
-    fontWeight: 700
-  },
   title: {
     marginTop: theme.spacing(6),
     textAlign: 'center',
     fontWeight: 700
-  },
-  image: {
-    height: 150,
-    width: 200,
-    marginRight: 10
-  },
-  qty: {
-    paddingRight: 120,
-    textAlign: 'right',
-    display: 'flex',
-    flexDirection: 'row'
   },
   heading: {
     display: 'flex',
@@ -55,58 +47,27 @@ const useStyles = makeStyles(theme => ({
     marginTop: 20,
     fontWeight: 700
   },
-  productPrice: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly'
-  },
-  quantity: {
-    paddingRight: 150
-  },
-  productQty: {
-    paddingRight: 50
-  },
   container: {
-    paddingRight: 100,
-    paddingLeft: 100
+    paddingRight: 200,
+    paddingLeft: 200
   },
-  priceHead: {
-    paddingRight: 73
+  priceAndView: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   price: {
-    width: 30,
-    marginRight: 50
+    marginRight: 120
   },
-  subTotal: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end'
-  },
-  subTotalPrice: {
-    marginRight: 10
-  },
-  subTotalQty: {
-    marginRight: 50
-  },
-  checkout: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    flexDirection: 'row',
-    marginTop: 20,
-    paddingBottom: 50,
-    marginRight: 10
+  total: {
+    marginRight: 230
   }
 }))
 
 export default function OrderHistoryRender(props) {
   const classes = useStyles()
-
-  // const cartSubtotal = products
-  //   .reduce((total, currentProduct) => {
-  //     return total + currentProduct.subtotal
-  //   }, 0)
-  //   .toLocaleString('en-US', priceFormat)
-
+  const {history} = props
   const orders = useSelector(state => state.orderHistory)
 
   return (
@@ -120,9 +81,9 @@ export default function OrderHistoryRender(props) {
             <Typography variant="h6" gutterBottom>
               Order Date
             </Typography>
-            <div>
+            <div className={classes.total}>
               <Typography variant="h6" gutterBottom>
-                Price
+                Total
               </Typography>
             </div>
           </ListItem>
@@ -130,10 +91,19 @@ export default function OrderHistoryRender(props) {
         <List disablePadding>
           {orders.map(order => (
             <ListItem className={classes.listItem} key={order.id}>
-              <ListItemText primary={order.orderDate} />
-              <Typography variant="body2">
-                {order.total.toLocaleString('en-US', priceFormat)}
-              </Typography>
+              <ListItemText primary={formatDate(order.orderDate)} />
+              <Box className={classes.priceAndView}>
+                <Typography variant="body2" className={classes.price}>
+                  {order.total.toLocaleString('en-US', priceFormat)}
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => history.push(`/orderHistory/${order.id}`)}
+                >
+                  View Order
+                </Button>
+              </Box>
             </ListItem>
           ))}
         </List>

@@ -34,13 +34,14 @@ export const addItem = (product, quantity) => {
   return async (dispatch, getState) => {
     try {
       const state = getState()
-      let orderDetail
+      let data
       if (state.user.id) {
-        orderDetail = await axios.post('/api/cart/item', {
+        const res = await axios.post('/api/cart/item', {
           id: product.id,
           quantity,
           price: product.price
         })
+        data = res.data
       }
       const newItem = {
         productId: product.id,
@@ -49,7 +50,7 @@ export const addItem = (product, quantity) => {
         description: product.description,
         imageUrl: product.imageUrl,
         inventory: product.inventory,
-        orderId: orderDetail.orderId || null,
+        orderId: data.orderId || null,
         quantity,
         subtotal: quantity * product.price
       }
