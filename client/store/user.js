@@ -21,6 +21,17 @@ const removeUser = () => ({type: REMOVE_USER})
 /**
  * THUNK CREATORS
  */
+
+export const updateUser = user => {
+  //if saveAddress & saveBilling, remove all unnecessary keys and pass info if one/both = true
+  // console.log('updateUser line 27', user)
+  return async dispatch => {
+    // console.log('inside updateUser thunk creator', user)
+    const {data} = await axios.put('/api/checkout/user', {user: user})
+    dispatch(getUser(data))
+  }
+}
+
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
@@ -51,8 +62,7 @@ export const auth = (
 
   try {
     dispatch(getUser(res.data))
-    history.push('/home')
-    // ^change it to '/', add "Hello [user]" on navbar
+    history.push('/')
 
     if (localStorage.getItem('cart')) {
       const cart = JSON.parse(window.localStorage.getItem('cart'))

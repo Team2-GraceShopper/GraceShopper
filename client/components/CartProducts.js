@@ -13,12 +13,10 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import {Link} from 'react-router-dom'
 
-
 const priceFormat = {
   style: 'currency',
   currency: 'USD'
 }
-
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -209,7 +207,12 @@ export default function CartProducts(props) {
           {/* </ListItem> */}
         </List>
         <Box className={classes.checkout}>
-          <Button variant="contained" color="primary" size="large">
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            href="/checkout"
+          >
             Checkout Cart
           </Button>
         </Box>

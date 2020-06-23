@@ -5,10 +5,13 @@
  */
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
+
+export {default as Checkout} from './checkout'
 // export {Login, Signup} from './auth-form'
 export {default as Login} from './Login'
 export {default as Signup} from './Signup'
 
+export {default as Menu} from './Menu'
 export {default as Header} from './Header'
 export {default as AllProducts} from './AllProducts'
 export {default as SingleProduct} from './SingleProduct'
