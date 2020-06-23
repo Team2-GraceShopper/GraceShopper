@@ -7,7 +7,6 @@ router.put('/user', async (req, res, next) => {
   try {
     let updatedUser
     let userToUpdate = await User.findByPk(req.user.id)
-    console.log('req.body in user api', req.body)
     const {
       shipStreet,
       shipCity,
