@@ -149,3 +149,5 @@ const testOrder = {
 if (module === require.main) {
   Main('gayle.ortiz@ethereal.email', testOrder)
 }
+
+module.exports = Main

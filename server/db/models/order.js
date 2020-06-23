@@ -11,7 +11,7 @@ const Order = db.define('order', {
     }
   },
   orderDate: {
-    type: Sequelize.DATEONLY,
+    type: Sequelize.DATE,
     validate: {
       isDate: true
     },
@@ -45,13 +45,6 @@ const Order = db.define('order', {
     defaultValue: 5,
     validate: {
       isInt: true
-    },
-    set(value) {
-      this.setDataValue('tax', parseInt(value * 100, 10))
-    },
-    get() {
-      const subtotal = this.getDataValue('tax')
-      return subtotal / 100
     }
   },
   total: {
@@ -59,14 +52,11 @@ const Order = db.define('order', {
     validate: {
       isInt: true
     },
-    // set() {
-    //   let subtotal = this.getDataValue('subtotal')
-    //   let tax = this.getDataValue('tax') / 100
-    //   let finaltotal = subtotal + subtotal * tax
-    //   this.setDataValue('total', finaltotal)
-    // },
-    set(value) {
-      this.setDataValue('total', parseInt(value * 100, 10))
+    set() {
+      let subtotal = this.getDataValue('subtotal')
+      let tax = this.getDataValue('tax') / 100
+      let finaltotal = subtotal + subtotal * tax
+      this.setDataValue('total', finaltotal)
     },
     get() {
       const total = this.getDataValue('total')
