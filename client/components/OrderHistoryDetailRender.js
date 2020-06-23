@@ -110,8 +110,15 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: 50,
     marginRight: 10
   },
-  detailsLabel: {
-    width: 1000
+  detailsContainer: {
+    width: 1000,
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginLeft: 250,
+    padding: 0
+  },
+  details: {
+    paddingRight: 50
   }
 }))
 
@@ -123,7 +130,7 @@ export default function OrderHistoryDetailRender(props) {
   const total = order.total || 0
   const subtotal = order.subtotal || 0
   const tax = order.tax || 0
-  const cardNumber = order.cardNumber || ''
+  const cardNumber = order.cardNumber || 'XXXX'
   const expiry = order.cardExpiration || ''
 
   function calculateSubtotalItem(price, quantity) {
@@ -214,8 +221,15 @@ export default function OrderHistoryDetailRender(props) {
           </Box>
         </List>
 
-        <Grid container spacing={2} className={classes.detailsLabel}>
-          <Grid item container direction="column" xs={12} sm={6}>
+        <Grid container spacing={2} className={classes.detailsContainer}>
+          <Grid
+            item
+            container
+            direction="column"
+            xs={12}
+            sm={6}
+            className={classes.details}
+          >
             <Typography variant="h6" gutterBottom className={classes.title}>
               Shipping & Contact
             </Typography>
