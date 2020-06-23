@@ -2,7 +2,7 @@
 const nodemailer = require('nodemailer')
 const {
   email
-} = require('/Users/sheli/Fullstack/Immersive/Senior/GraceShopper/secrets.js')
+} = require('/Users/jihyunpark/Desktop/Fullstack 2004-GH-NY/GraceShopper/secrets.js')
 const html = require('html-template-tag')
 
 const address = process.env.EMAIL || email.address
