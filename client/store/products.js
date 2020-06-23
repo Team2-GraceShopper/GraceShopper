@@ -6,12 +6,28 @@ const defaultProducts = []
 
 const gotProducts = products => ({type: GET_PRODUCTS, products})
 
-export const getProducts = () => async dispatch => {
+export const getProducts = categoryId => async dispatch => {
   try {
-    const res = await axios.get('/api/products')
+    let res
+    if (categoryId) {
+      res = await axios.get(`/api/products/category/${categoryId}`)
+    } else {
+      res = await axios.get('/api/products')
+    }
     dispatch(gotProducts(res.data || defaultProducts))
   } catch (err) {
     console.error(err)
+  }
+}
+
+//updateProducts thunk creator (inventory)
+export const updateInventory = cart => {
+  console.log('inside updateInventory', cart)
+  return async dispatch => {
+    const updatedProducts = await axios.put('/api/checkout/product', {
+      cart: cart
+    })
+    dispatch(gotProducts(updatedProducts))
   }
 }
 

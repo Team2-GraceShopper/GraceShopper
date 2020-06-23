@@ -1,14 +1,13 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import {makeStyles} from '@material-ui/core/styles'
+import {makeStyles, withStyles} from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
-import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-
-import {logout} from '../store/user'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import Badge from '@material-ui/core/Badge'
+import {Menu} from './index'
 import {connect} from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
@@ -17,8 +16,15 @@ const useStyles = makeStyles(theme => ({
   },
   toolbarTitle: {
     flex: 1,
-    alignSelf: 'center',
-    paddingLeft: '5.5rem'
+    position: 'absolute',
+    left: 0,
+    right: 0
+  },
+  icons: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end'
   },
   toolbarSecondary: {
     justifyContent: 'space-between',
@@ -30,33 +36,60 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const StyledBadge = withStyles(theme => ({
+  badge: {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px'
+  }
+}))(Badge)
+
 export function Header(props) {
   const classes = useStyles()
-  // const { sections, title } = props;
-  const title = 'Website Title'
+
+  const title = 'Maison Corona'
   const categories = [
     {
-      title: 'Category1',
-      url: 'http://www.google.com'
+      id: 1,
+      title: 'Loneliness',
+      url: '/category/1'
     },
     {
-      title: 'Category2',
-      url: 'http://www.google.com'
+      id: 2,
+      title: 'Hunger',
+      url: '/category/2'
     },
     {
-      title: 'Category3',
-      url: 'http://www.google.com'
+      id: 3,
+      title: 'Staying Safe',
+      url: '/category/3'
     },
     {
-      title: 'Category4',
-      url: 'http://www.google.com'
+      id: 4,
+      title: 'Learning',
+      url: '/category/4'
+    },
+    {
+      id: 5,
+      title: 'Entertainment',
+      url: '/category/5'
+    },
+    {
+      id: 6,
+      title: 'Self-Care',
+      url: '/category/6'
+    },
+    {
+      id: 7,
+      title: 'Essentials',
+      url: '/category/7'
     }
   ]
 
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
-        {/* <Button size="small">Subscribe</Button> */}
         <Typography
           component="h2"
           variant="h5"
@@ -65,17 +98,25 @@ export function Header(props) {
           noWrap
           className={classes.toolbarTitle}
         >
-          {title}
-        </Typography>
-        <IconButton onClick={() => props.logout()}>Logout</IconButton>
-        <IconButton>
-          <Link href="/cart">
-            <ShoppingCartIcon />
+          <Link href="/" color="inherit" underline="none">
+            {title}
           </Link>
-        </IconButton>
-        <Button variant="outlined" size="small">
-          Sign up
-        </Button>
+        </Typography>
+        <div className={classes.icons}>
+          <Menu />
+          <IconButton>
+            <Link href="/wishlist">
+              <FavoriteBorderIcon />
+            </Link>
+          </IconButton>
+          <IconButton aria-label="cart">
+            <StyledBadge color="secondary" badgeContent={props.cart.length}>
+              <Link href="/cart">
+                <ShoppingCartIcon />
+              </Link>
+            </StyledBadge>
+          </IconButton>
+        </div>
       </Toolbar>
       <Toolbar
         component="nav"
@@ -88,8 +129,8 @@ export function Header(props) {
             noWrap
             key={category.title}
             variant="body2"
-            href={`/${category.title}`}
             className={classes.toolbarLink}
+            href={category.url}
           >
             {category.title}
           </Link>
@@ -99,13 +140,8 @@ export function Header(props) {
   )
 }
 
-const mapDispatch = dispatch => ({
-  logout: () => dispatch(logout())
+const mapState = state => ({
+  cart: state.cart
 })
 
-export default connect(null, mapDispatch)(Header)
-
-// Header.propTypes = {
-//   sections: PropTypes.array,
-//   title: PropTypes.string
-// }
+export default connect(mapState)(Header)
