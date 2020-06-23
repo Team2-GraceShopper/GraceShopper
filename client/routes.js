@@ -15,6 +15,7 @@ import {
   About,
   OrderHistory,
   OrderHistoryDetail
+  UserProfile
 } from './components'
 import {me} from './store'
 
@@ -33,6 +34,7 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/products/:productId" component={SingleProduct} />
+        <Route exact path="/category/:categoryId" component={AllProducts} />
         <Route exact path="/" component={AllProducts} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
@@ -41,7 +43,7 @@ class Routes extends Component {
         <Route path="/returns" component={Returns} />
         <Route path="/contactus" component={ContactUs} />
         <Route path="/about" component={About} />
-
+        <Route path="/profile" component={UserProfile} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
