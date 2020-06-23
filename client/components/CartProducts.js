@@ -21,7 +21,6 @@ const priceFormat = {
 const useStyles = makeStyles(theme => ({
   listItem: {
     padding: theme.spacing(1, 1),
-    // border: '2px solid black',
     borderRadius: 5,
     marginBottom: 20
   },

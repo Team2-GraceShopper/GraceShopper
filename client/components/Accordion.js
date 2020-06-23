@@ -20,7 +20,6 @@ export default function Accordion(props) {
         className={`accordion${setActive}`}
         onClick={toggleAccordion}
         variant="contained"
-        color="white"
         size="small"
       >
         <p className="accordion_title">{props.title}</p>

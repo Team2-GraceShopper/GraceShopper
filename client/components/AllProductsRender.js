@@ -22,9 +22,6 @@ const priceFormat = {
 }
 
 const useStyles = makeStyles(theme => ({
-  icon: {
-    marginRight: theme.spacing(2)
-  },
   heroContent: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6)
@@ -47,10 +44,6 @@ const useStyles = makeStyles(theme => ({
   cardContent: {
     flexGrow: 1
   },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6)
-  },
   quantityField: {
     border: '1px solid black',
     padding: '3px 10px',
@@ -71,7 +64,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export function AllProductsRender(props) {
-  const {products, addItem, cart, updateQty} = props
+  const {products, addItem, cart, categoryId, updateQty} = props
   const classes = useStyles()
 
   const {enqueueSnackbar} = useSnackbar()
@@ -118,48 +111,70 @@ export function AllProductsRender(props) {
     }
   }
 
+  const categories = {
+    1: 'Feeling Lonely? Buy New Friends.',
+    2: 'Delicacies Around The World',
+    3: 'Stay Extra Safe With These Baddies',
+    4: 'Got Free Time? Learn Something Useful',
+    5: 'Strictly Entertainment Zone',
+    6: 'Reminder To Love Yourself',
+    7: 'Pandemic Essentials à la 2020'
+  }
+
   return (
     <React.Fragment>
       <CssBaseline />
       <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
+        {categoryId ? (
+          <div className={classes.heroContent}>
             <Typography
-              component="h1"
-              variant="h2"
+              component="h5"
+              variant="h4"
               align="center"
               color="textPrimary"
               gutterBottom
             >
-              Featured Item
+              {categories[categoryId]}
             </Typography>
-            <CardMedia
-              className={classes.cardMedia}
-              image="https://source.unsplash.com/random"
-              title="Image title"
-            />
-            <Typography
-              variant="h5"
-              align="center"
-              color="textSecondary"
-              paragraph
-            >
-              Featured item description
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={1} justify="center">
-                <Grid item>
-                  <Button variant="contained" color="primary">
-                    See product
-                  </Button>
+          </div>
+        ) : (
+          <div className={classes.heroContent}>
+            <Container maxWidth="sm">
+              <Typography
+                component="h1"
+                variant="h2"
+                align="center"
+                color="textPrimary"
+                gutterBottom
+              >
+                Featured Item
+              </Typography>
+              <CardMedia
+                className={classes.cardMedia}
+                image="https://source.unsplash.com/random"
+                title="Image title"
+              />
+              <Typography
+                variant="h5"
+                align="center"
+                color="textSecondary"
+                paragraph
+              >
+                Featured item description
+              </Typography>
+              <div className={classes.heroButtons}>
+                <Grid container spacing={1} justify="center">
+                  <Grid item>
+                    <Button variant="contained" color="primary">
+                      See product
+                    </Button>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </div>
-          </Container>
-        </div>
+              </div>
+            </Container>
+          </div>
+        )}
         <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
           <Grid container spacing={4}>
             {products.map(product => (
               <Grid item key={product.id} xs={12} sm={6} md={4}>
@@ -167,7 +182,7 @@ export function AllProductsRender(props) {
                   <CardMedia
                     className={classes.cardMedia}
                     image={product.imageUrl}
-                    // alt="alt description"
+                    alt={`this is a picture of ${product.imageUrl}`}
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom component="h6">

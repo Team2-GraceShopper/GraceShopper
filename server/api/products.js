@@ -21,6 +21,19 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+router.get('/category/:categoryId', async (req, res, next) => {
+  try {
+    const products = await Product.findAll({
+      where: {
+        categoryId: req.params.categoryId
+      }
+    })
+    res.json(products)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     if (req.user && isAdmin(req.user)) {
