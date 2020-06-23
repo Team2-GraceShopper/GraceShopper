@@ -7,7 +7,6 @@ import Checkbox from '@material-ui/core/Checkbox'
 
 export default function PaymentForm(props) {
   const {handleChange, handleClick, user} = props
-  console.log('in payment-form', user.saveBilling)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>

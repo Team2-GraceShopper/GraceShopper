@@ -60,7 +60,6 @@ const stateTaxes = {
 }
 
 const isValidState = state => {
-  console.log('valide state?', state)
   if (state === null) return false
   if (typeof stateTaxes[state.toUpperCase()] === 'number') return true
   else return false
@@ -110,7 +109,6 @@ export class Checkout extends React.Component {
     const loggedIn = await this.props.getUser()
     this.setState(loggedIn)
     await this.props.getCart()
-    console.log('cart', this.props.cart)
   }
 
   handleClick(evt) {
@@ -127,7 +125,7 @@ export class Checkout extends React.Component {
   handleSubmit = (evt, handleNext) => {
     evt.preventDefault()
     handleNext(evt)
-    window.localStorage.cart = []
+    window.localStorage.removeItem('cart')
     this.props.updateInventory(this.props.cart)
     let updatedOrder = {
       id: this.props.cart[0].orderId,
