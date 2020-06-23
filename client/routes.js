@@ -14,7 +14,7 @@ import {
   ContactUs,
   About,
   OrderHistory,
-  OrderHistoryDetail
+  OrderHistoryDetail,
   UserProfile
 } from './components'
 import {me} from './store'
