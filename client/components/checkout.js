@@ -131,7 +131,7 @@ export class Checkout extends React.Component {
   handleSubmit = (evt, handleNext) => {
     evt.preventDefault()
     handleNext(evt)
-    window.localStorage.cart = []
+    window.localStorage.removeItem('cart')
     this.props.updateInventory(this.props.cart)
     let updatedOrder = {
       id: this.props.cart[0].orderId,
