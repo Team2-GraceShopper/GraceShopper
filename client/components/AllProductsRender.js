@@ -101,7 +101,7 @@ export function AllProductsRender(props) {
       updateQty(cart[0].orderId, product.id, quantity + 1)
       enqueueSnackbar('Increased quantity', {variant: 'success'})
     } else {
-      enqueueSnackbar('Out of stock', {variant: 'warning'})
+      enqueueSnackbar('Low on stock', {variant: 'warning'})
     }
   }
 
