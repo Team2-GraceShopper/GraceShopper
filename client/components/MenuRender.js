@@ -30,7 +30,11 @@ export default function MenuRender(props) {
   }
 
   const handleClose = event => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+    if (
+      event &&
+      anchorRef.current &&
+      anchorRef.current.contains(event.target)
+    ) {
       return
     }
 
