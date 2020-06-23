@@ -4,13 +4,7 @@ import Typography from '@material-ui/core/Typography'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import IconButton from '@material-ui/core/IconButton'
-import RemoveCircle from '@material-ui/icons/RemoveCircle'
-import AddIcon from '@material-ui/icons/Add'
-import RemoveIcon from '@material-ui/icons/Remove'
-import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
 import {Link} from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 
@@ -18,21 +12,6 @@ const priceFormat = {
   style: 'currency',
   currency: 'USD'
 }
-
-const addresses = [
-  '1 Material-UI Drive',
-  'Reactville',
-  'Anytown',
-  '99999',
-  'USA'
-]
-
-const payments = [
-  {name: 'Card type', detail: 'Visa'},
-  {name: 'Card holder', detail: 'Mr John Smith'},
-  {name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234'},
-  {name: 'Expiry date', detail: '04/2024'}
-]
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -126,7 +105,6 @@ export default function OrderHistoryDetailRender(props) {
   const classes = useStyles()
   const products = props.order ? props.order.products : []
   const order = props.order || {}
-  console.log(order)
   const total = order.total || 0
   const subtotal = order.subtotal || 0
   const tax = order.tax || 0
@@ -308,73 +286,7 @@ export default function OrderHistoryDetailRender(props) {
             </Grid>
           </Grid>
         </Grid>
-        {/* "billCity": "Lake Derekbury",
-        "billState": "Alaska",
-        "billZip": 40789, */}
-
-        {/*
-      const priceFormat = {
-  style: 'currency',
-  currency: 'USD'
-}
-
-const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-]; */}
-
-        {/* </Grid> */}
-        {/* <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            Payment details
-          </Typography> */}
-
-        {/* <Grid container>
-            payment details
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
- */}
-
-        {/* ))} */}
-        {/* <React.Fragment>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>Email</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{order.email}</Typography>
-                </Grid>
-              </React.Fragment>
-          </Grid>
-        </Grid>
-      </Grid> */}
       </Box>
-
-      {/* <List disablePadding>
-        {products.map((product) => (
-          <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name}  />
-            <Typography variant="body2">{product.OrderDetail.price}</Typography>
-          </ListItem>
-        ))}
-        <ListItem className={classes.listItem}>
-          <ListItemText primary="totalItem" />
-          <Typography variant="subtitle1" className={classes.totalItem}>
-            {/* {order.totalItem} */}
-      {/* order totalItem
-          </Typography> */}
-      {/* </ListItem>
-      </List> */}
     </React.Fragment>
   )
 }
