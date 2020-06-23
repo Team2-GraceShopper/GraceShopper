@@ -12,6 +12,9 @@ import Container from '@material-ui/core/Container'
 import ToggleHeart from './ToggleHeart'
 import {useSnackbar} from 'notistack'
 import {connect} from 'react-redux'
+import {updateQty} from '../store/cart'
+import AddIcon from '@material-ui/icons/Add'
+import RemoveIcon from '@material-ui/icons/Remove'
 
 const priceFormat = {
   style: 'currency',
@@ -47,28 +50,58 @@ const useStyles = makeStyles(theme => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6)
+  },
+  quantityField: {
+    border: '1px solid black',
+    padding: '3px 10px',
+    fontSize: '12px',
+    fontFamily: 'Roboto'
+  },
+  qty: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '8em'
   }
 }))
 
 export function AllProductsRender(props) {
-  const {products, addItem, cart} = props
+  const {products, addItem, cart, updateQty} = props
   const classes = useStyles()
 
   const {enqueueSnackbar} = useSnackbar()
 
-  const handleClick = product => {
+  const inCart = product => {
     let alreadyExist = false
     cart.forEach(item => {
       if (item.productId === product.id) {
         alreadyExist = true
       }
     })
-    if (alreadyExist) {
-      enqueueSnackbar('Item already in cart!', {variant: 'warning'})
-    } else {
-      addItem(product, 1)
-      enqueueSnackbar('Item added to cart!', {variant: 'success'})
-    }
+    return alreadyExist
+  }
+
+  let quantity
+
+  const showQty = product => {
+    const cartItem = cart.filter(item => item.productId === product.id)
+    return cartItem[0].quantity
+  }
+
+  const handleAdd = product => {
+    addItem(product, 1)
+    enqueueSnackbar('Item added to cart!', {variant: 'success'})
+  }
+
+  const handleInc = product => {
+    quantity = showQty(product)
+    updateQty(cart[0].orderId, product.id, quantity + 1)
+    enqueueSnackbar('Increased quantity!', {variant: 'success'})
+  }
+
+  const handleDec = product => {
+    quantity = showQty(product)
+    updateQty(cart[0].orderId, product.id, quantity - 1)
+    enqueueSnackbar('Decreased quantity!', {variant: 'success'})
   }
 
   return (
@@ -129,6 +162,13 @@ export function AllProductsRender(props) {
                     <Typography gutterBottom component="h6">
                       {product.price.toLocaleString('en-US', priceFormat)}
                     </Typography>
+                    {inCart(product) && showQty(product) ? (
+                      <Typography component="h6" color="primary">
+                        In Cart
+                      </Typography>
+                    ) : (
+                      ''
+                    )}
                   </CardContent>
                   <CardActions>
                     <Button
@@ -138,13 +178,35 @@ export function AllProductsRender(props) {
                     >
                       View
                     </Button>
-                    <Button
-                      size="small"
-                      color="primary"
-                      onClick={() => handleClick(product)}
-                    >
-                      Add To Cart
-                    </Button>
+                    {inCart(product) && showQty(product) ? (
+                      <div className={classes.qty}>
+                        <RemoveIcon
+                          variant="contained"
+                          color="primary"
+                          onClick={() => {
+                            handleDec(product)
+                          }}
+                        />
+                        <div className={classes.quantityField}>
+                          {showQty(product)}
+                        </div>
+                        <AddIcon
+                          variant="contained"
+                          color="primary"
+                          onClick={() => {
+                            handleInc(product)
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <Button
+                        size="small"
+                        color="primary"
+                        onClick={() => handleAdd(product)}
+                      >
+                        Add To Cart
+                      </Button>
+                    )}
                     <ToggleHeart />
                   </CardActions>
                 </Card>
@@ -161,4 +223,9 @@ const mapState = state => ({
   cart: state.cart
 })
 
-export default connect(mapState)(AllProductsRender)
+const mapDispatch = dispatch => ({
+  updateQty: (orderId, productId, quantity) =>
+    dispatch(updateQty(orderId, productId, quantity))
+})
+
+export default connect(mapState, mapDispatch)(AllProductsRender)
