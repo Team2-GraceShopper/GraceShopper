@@ -12,7 +12,8 @@ import {
   Checkout,
   Returns,
   ContactUs,
-  About
+  About,
+  UserProfile
 } from './components'
 import {me} from './store'
 
@@ -39,6 +40,7 @@ class Routes extends Component {
         <Route path="/returns" component={Returns} />
         <Route path="/contactus" component={ContactUs} />
         <Route path="/about" component={About} />
+        <Route path="/profile" component={UserProfile} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

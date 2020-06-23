@@ -1,103 +1,91 @@
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
+import UserProfileRender from './UserProfileRender'
+import {connect} from 'react-redux'
+import {me, updateUser} from '../store/user'
 
-export default function UserProfile() {
-  return (
-    <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Shipping address
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="firstName"
-            name="firstName"
-            label="First name"
-            fullWidth
-            autoComplete="given-name"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            fullWidth
-            autoComplete="family-name"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Address line 1"
-            fullWidth
-            autoComplete="shipping address-line1"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="city"
-            name="city"
-            label="City"
-            fullWidth
-            autoComplete="shipping address-level2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            id="state"
-            name="state"
-            label="State/Province/Region"
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
-            fullWidth
-            autoComplete="shipping postal-code"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            autoComplete="shipping country"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox color="secondary" name="saveAddress" value="yes" />
-            }
-            label="Use this address for payment details"
-          />
-        </Grid>
-      </Grid>
-    </React.Fragment>
-  )
+export class UserProfile extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      shipStreet: '',
+      shipCity: '',
+      shipState: '',
+      shipZip: '',
+      cardNumber: '',
+      cardExpiration: '',
+      cvvCode: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.pullData = this.pullData.bind(this)
+  }
+
+  async componentDidMount() {
+    await this.props.getUser()
+    this.setState(this.props.user)
+  }
+
+  handleChange(evt) {
+    this.setState({[evt.target.name]: evt.target.value})
+    console.log(this.state[evt.target.name])
+  }
+
+  pullData(key) {
+    const saved = {
+      shipStreet: this.props.user.shipStreet ? this.props.user.shipStreet : '',
+      shipCity: this.props.user.shipCity ? this.props.user.shipCity : '',
+      shipState: this.props.user.shipState ? this.props.user.shipState : '',
+      shipZip: this.props.user.shipZip ? this.props.user.shipZip : '',
+      cardNumber: this.props.user.cardNumber ? this.props.user.cardNumber : '',
+      cardExpiration: this.props.user.cardExpiration
+        ? this.props.user.cardExpiration
+        : ''
+    }
+    return saved[key]
+  }
+
+  handleSubmit(evt) {
+    evt.preventDefault()
+    console.log('handleSubmit', evt.target)
+    let newData = {}
+    if (evt.target.name === 'shipping') {
+      newData.shipStreet = this.state.shipStreet
+      newData.shipCity = this.state.shipCity
+      newData.shipState = this.state.shipState
+      newData.shipZip = this.state.shipZip
+    }
+    if (evt.target.name === 'billing') {
+      newData.cardNumber = this.state.cardNumber
+      newData.cardExpiration = this.state.cardExpiration
+      newData.cvvCode = this.state.cvvCode
+    }
+    console.log('newData: ', newData)
+    this.props.updateUser(newData)
+  }
+
+  render() {
+    return (
+      <UserProfileRender
+        user={this.state}
+        handleChange={this.handleChange}
+        pullData={this.pullData}
+        handleSubmit={this.handleSubmit}
+      />
+    )
+  }
 }
+
+const mapState = state => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    getUser: () => dispatch(me()),
+    updateUser: user => dispatch(updateUser(user))
+  }
+}
+
+export default connect(mapState, mapDispatch)(UserProfile)
