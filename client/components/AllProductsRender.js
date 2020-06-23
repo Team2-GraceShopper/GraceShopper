@@ -61,6 +61,12 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     width: '8em'
+  },
+  info: {
+    display: 'flex'
+  },
+  infoChildren: {
+    marginRight: '20px'
   }
 }))
 
@@ -94,14 +100,22 @@ export function AllProductsRender(props) {
 
   const handleInc = product => {
     quantity = showQty(product)
-    updateQty(cart[0].orderId, product.id, quantity + 1)
-    enqueueSnackbar('Increased quantity!', {variant: 'success'})
+    if (product.inventory >= quantity + 1) {
+      updateQty(cart[0].orderId, product.id, quantity + 1)
+      enqueueSnackbar('Increased quantity!', {variant: 'success'})
+    } else {
+      enqueueSnackbar('Out of stock!', {variant: 'warning'})
+    }
   }
 
   const handleDec = product => {
     quantity = showQty(product)
-    updateQty(cart[0].orderId, product.id, quantity - 1)
-    enqueueSnackbar('Decreased quantity!', {variant: 'success'})
+    if (product.inventory >= quantity - 1) {
+      updateQty(cart[0].orderId, product.id, quantity - 1)
+      enqueueSnackbar('Decreased quantity!', {variant: 'success'})
+    } else {
+      enqueueSnackbar('Out of stock!', {variant: 'warning'})
+    }
   }
 
   return (
@@ -162,13 +176,30 @@ export function AllProductsRender(props) {
                     <Typography gutterBottom component="h6">
                       {product.price.toLocaleString('en-US', priceFormat)}
                     </Typography>
-                    {inCart(product) && showQty(product) ? (
-                      <Typography component="h6" color="primary">
-                        In Cart
-                      </Typography>
-                    ) : (
-                      ''
-                    )}
+                    <div className={classes.info}>
+                      {inCart(product) && showQty(product) ? (
+                        <Typography
+                          component="h6"
+                          color="primary"
+                          className={classes.infoChildren}
+                        >
+                          In Cart
+                        </Typography>
+                      ) : (
+                        ''
+                      )}
+                      {!product.inventory ? (
+                        <Typography
+                          component="h6"
+                          color="secondary"
+                          className={classes.infoChildren}
+                        >
+                          Out of Stock
+                        </Typography>
+                      ) : (
+                        ''
+                      )}
+                    </div>
                   </CardContent>
                   <CardActions>
                     <Button

@@ -124,9 +124,16 @@ export const updateQty = (orderId, productId, quantity) => {
     try {
       const state = getState()
       if (state.user.id) {
-        const {data} = await axios.put(`/api/cart/${orderId}/${productId}`, {
-          quantity: quantity
-        })
+        if (quantity) {
+          const {data} = await axios.put(`/api/cart/${orderId}/${productId}`, {
+            quantity: quantity
+          })
+        } else {
+          await axios.delete(`/api/cart/${orderId}/${productId}`, {
+            data: {userId: state.user.id}
+          })
+          dispatch(removedItem(productId))
+        }
       }
       dispatch(updatedQty(productId, quantity))
       const newState = getState()
