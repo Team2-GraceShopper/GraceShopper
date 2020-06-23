@@ -44,9 +44,6 @@ const User = db.define('user', {
       isCreditCard: true,
       len: [16]
     },
-    // set(value) {
-    //   this.setDataValue('cardNumber')
-    // },
     get() {
       const cardNumber = this.getDataValue('cardNumber')
       if (cardNumber) return '************' + cardNumber.slice(12, 16)

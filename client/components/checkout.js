@@ -88,6 +88,7 @@ export class Checkout extends React.Component {
   constructor() {
     super()
     this.state = {
+      id: '',
       firstName: '',
       lastName: '',
       email: '',
@@ -99,7 +100,8 @@ export class Checkout extends React.Component {
       cardExpiration: '',
       cvvCode: 0,
       saveAddress: false,
-      saveBilling: false
+      saveBilling: false,
+      orderId: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -107,10 +109,10 @@ export class Checkout extends React.Component {
   }
 
   async componentDidMount() {
-    const loggedIn = await this.props.getUser()
-    this.setState(loggedIn)
+    await this.props.getUser()
+    this.setState(this.props.user)
     await this.props.getCart()
-    console.log('cart', this.props.cart)
+    this.setState({orderId: this.props.cart[0].orderId})
   }
 
   handleClick(evt) {
@@ -186,7 +188,6 @@ export class Checkout extends React.Component {
               getTax(getSubtotal(this.props.cart), this.state.shipState)
             : getSubtotal(this.props.cart) + 5
         }
-        // loggedIn={loggedIn}
       />
     )
   }
