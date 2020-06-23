@@ -159,7 +159,6 @@ Order.sendConfirmation = async function(id) {
       model: Product
     }
   })
-  console.log('order', order)
   Main(order.email, order)
 }
 

@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const {Order, Product, User} = require('../db/models')
-// const Main = require('../db/email/nodemailer')
 
 //api/checkout
 
