@@ -1,6 +1,9 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
@@ -54,6 +57,36 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     marginRight: 40
+  },
+  paper: {
+    padding: theme.spacing(4),
+    paddingTop: theme.spacing(12),
+    display: 'flex',
+    flexDirection: 'row',
+    margin: 'auto',
+    maxWidth: '100%',
+    maxHeight: '100%'
+  },
+
+  image: {
+    height: '55%'
+  },
+  img: {
+    display: 'inline',
+    maxWidth: '75%',
+    // maxHeight: '50%',
+    height: '750px',
+    marginRight: 60,
+    marginLeft: 40
+  },
+  right: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  upright: {
+    height: '300px',
+    width: '300px',
+    maxHeight: '45%'
   }
 }))
 
@@ -77,64 +110,90 @@ export default function SingleProductView(props) {
   }
 
   return product.name ? (
-    <div className="single-product">
-      <h1> {product.name}</h1>
-      <img src={product.imageUrl} />
-      <h2>{product.price.toLocaleString('en-US', priceFormat)} </h2>
-      <h2>Editor's Notes</h2>
-      {product.description}
-      <h4> Only a few left!</h4>
+    <div>
+      <Paper className={classes.paper} elevation={0}>
+        <Grid item className={classes.img}>
+          <img alt="complex" src={product.imageUrl} className={classes.image} />
+        </Grid>
 
-      <div className={classes.quantity}>
-        <Box className={classes.quantity}>
-          <div className={classes.quantityField}>{quantity}</div>
-          <ButtonGroup>
-            <Button
-              variant="contained"
-              size="small"
-              color="secondary"
-              onClick={() =>
-                handleChange({target: {name: 'quantity', value: quantity - 1}})
-              }
-            >
-              <RemoveIcon fontSize="small" />
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              color="secondary"
-              onClick={() =>
-                handleChange({target: {name: 'quantity', value: quantity + 1}})
-              }
-            >
-              <AddIcon fontSize="small" />
-            </Button>
-          </ButtonGroup>
-        </Box>
-        {cartItem ? (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              updateQty(cartItem.orderId, cartItem.productId, quantity)
-              handleClick('update')
-            }}
-          >
-            UPDATE QUANTITY
-          </Button>
-        ) : (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              addItem(product, quantity)
-              handleClick('add')
-            }}
-          >
-            ADD TO CART
-          </Button>
-        )}
-      </div>
+        <Grid
+          className={classes.right}
+          direction="column"
+          spacing={2}
+          container
+        >
+          <Grid item xs className={classes.upright}>
+            <Typography gutterBottom variant="h5">
+              {product.name}
+            </Typography>
+            <Typography variant="subtitle1">
+              {product.price.toLocaleString('en-US', priceFormat)}
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              Editor's Notes
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              {product.description}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <div className={classes.quantity}>
+              <Box className={classes.quantity}>
+                <div className={classes.quantityField}>{quantity}</div>
+                <ButtonGroup>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    color="secondary"
+                    onClick={() =>
+                      handleChange({
+                        target: {name: 'quantity', value: quantity - 1}
+                      })
+                    }
+                  >
+                    <RemoveIcon fontSize="small" />
+                  </Button>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    color="secondary"
+                    onClick={() =>
+                      handleChange({
+                        target: {name: 'quantity', value: quantity + 1}
+                      })
+                    }
+                  >
+                    <AddIcon fontSize="small" />
+                  </Button>
+                </ButtonGroup>
+              </Box>
+              {cartItem ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    updateQty(cartItem.orderId, cartItem.productId, quantity)
+                    handleClick('update')
+                  }}
+                >
+                  UPDATE QUANTITY
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    addItem(product, quantity)
+                    handleClick('add')
+                  }}
+                >
+                  ADD TO CART
+                </Button>
+              )}
+            </div>
+          </Grid>
+        </Grid>
+      </Paper>
     </div>
   ) : (
     ''
