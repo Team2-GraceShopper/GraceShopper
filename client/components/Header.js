@@ -110,11 +110,11 @@ export function Header(props) {
             </Link>
           </IconButton>
           <IconButton aria-label="cart">
-            <StyledBadge color="secondary" badgeContent={props.cart.length}>
-              <Link href="/cart">
+            <Link href="/cart">
+              <StyledBadge color="secondary" badgeContent={props.cart.length}>
                 <ShoppingCartIcon />
-              </Link>
-            </StyledBadge>
+              </StyledBadge>
+            </Link>
           </IconButton>
         </div>
       </Toolbar>

@@ -4,7 +4,6 @@ const {Order, Product, OrderDetail} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
-  // console.log('user', req.user)
   try {
     if (req.user) {
       const order = await Order.getCart(req.user.id)
@@ -56,7 +55,6 @@ router.delete('/:order/:product', async (req, res, next) => {
 // POST new order and order-product details
 router.post('/', async (req, res, next) => {
   let order, wasCreated
-
   try {
     if (req.user) {
       ;[order, wasCreated] = await Order.findOrCreate({
@@ -81,6 +79,7 @@ router.post('/', async (req, res, next) => {
       })
     })
     const newOrders = await OrderDetail.bulkCreate(products)
+
     res.status(201).json(newOrders)
   } catch (err) {
     next(err)

@@ -12,6 +12,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import {Link} from 'react-router-dom'
+import {useSnackbar} from 'notistack'
 
 const priceFormat = {
   style: 'currency',
@@ -105,6 +106,24 @@ export default function CartProducts(props) {
     }, 0)
     .toLocaleString('en-US', priceFormat)
 
+  const {enqueueSnackbar} = useSnackbar()
+
+  const handleInc = product => {
+    if (product.inventory > product.quantity) {
+      updateQty(product.orderId, product.productId, product.quantity + 1)
+    } else {
+      enqueueSnackbar('No more stock left', {variant: 'warning'})
+    }
+  }
+
+  const handleDec = product => {
+    if (product.quantity > 1) {
+      updateQty(product.orderId, product.productId, product.quantity - 1)
+    } else {
+      enqueueSnackbar('To remove, click delete', {variant: 'info'})
+    }
+  }
+
   return (
     <React.Fragment>
       <Typography variant="h5" gutterBottom className={classes.title}>
@@ -151,13 +170,7 @@ export default function CartProducts(props) {
                     variant="contained"
                     size="small"
                     color="secondary"
-                    onClick={() =>
-                      updateQty(
-                        product.orderId,
-                        product.productId,
-                        product.quantity - 1
-                      )
-                    }
+                    onClick={() => handleDec(product)}
                   >
                     <RemoveIcon fontSize="small" />
                   </Button>
@@ -165,13 +178,7 @@ export default function CartProducts(props) {
                     variant="contained"
                     size="small"
                     color="secondary"
-                    onClick={() =>
-                      updateQty(
-                        product.orderId,
-                        product.productId,
-                        product.quantity + 1
-                      )
-                    }
+                    onClick={() => handleInc(product)}
                   >
                     <AddIcon fontSize="small" />
                   </Button>
@@ -187,8 +194,6 @@ export default function CartProducts(props) {
               </IconButton>
             </ListItem>
           ))}
-          {/* <ListItem className={classes.listItem}> */}
-          {/* <ListItemText primary="Total" /> */}
           <Box className={classes.subTotal}>
             <Typography
               variant="h6"
