@@ -44,9 +44,9 @@ const User = db.define('user', {
       isCreditCard: true,
       len: [16]
     },
-    set(value) {
-      this.setDataValue('cardNumber')
-    },
+    // set(value) {
+    //   this.setDataValue('cardNumber')
+    // },
     get() {
       const cardNumber = this.getDataValue('cardNumber')
       if (cardNumber) return '************' + cardNumber.slice(12, 16)
@@ -59,6 +59,10 @@ const User = db.define('user', {
     type: Sequelize.INTEGER,
     validate: {
       len: [3, 4]
+    },
+    get() {
+      const cvvCode = this.getDataValue('cvvCode')
+      if (cvvCode) return '***'
     }
   },
   shipStreet: {
