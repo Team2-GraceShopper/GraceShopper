@@ -73,7 +73,6 @@ const useStyles = makeStyles(theme => ({
   img: {
     display: 'inline',
     maxWidth: '75%',
-    // maxHeight: '50%',
     height: '750px',
     marginRight: 60,
     marginLeft: 40
@@ -137,57 +136,69 @@ export default function SingleProductView(props) {
           </Grid>
           <Grid item>
             <div className={classes.quantity}>
-              <Box className={classes.quantity}>
-                <div className={classes.quantityField}>{quantity}</div>
-                <ButtonGroup>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    color="secondary"
-                    onClick={() =>
-                      handleChange({
-                        target: {name: 'quantity', value: quantity - 1}
-                      })
-                    }
-                  >
-                    <RemoveIcon fontSize="small" />
-                  </Button>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    color="secondary"
-                    onClick={() =>
-                      handleChange({
-                        target: {name: 'quantity', value: quantity + 1}
-                      })
-                    }
-                  >
-                    <AddIcon fontSize="small" />
-                  </Button>
-                </ButtonGroup>
-              </Box>
-              {cartItem ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    updateQty(cartItem.orderId, cartItem.productId, quantity)
-                    handleClick('update')
-                  }}
-                >
-                  UPDATE QUANTITY
-                </Button>
+              {!product.inventory ? (
+                <Typography component="h6" color="secondary">
+                  Out of Stock
+                </Typography>
               ) : (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    addItem(product, quantity)
-                    handleClick('add')
-                  }}
-                >
-                  ADD TO CART
-                </Button>
+                <div>
+                  <Box className={classes.quantity}>
+                    <div className={classes.quantityField}>{quantity}</div>
+                    <ButtonGroup>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        color="secondary"
+                        onClick={() =>
+                          handleChange({
+                            target: {name: 'quantity', value: quantity - 1}
+                          })
+                        }
+                      >
+                        <RemoveIcon fontSize="small" />
+                      </Button>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        color="secondary"
+                        onClick={() =>
+                          handleChange({
+                            target: {name: 'quantity', value: quantity + 1}
+                          })
+                        }
+                      >
+                        <AddIcon fontSize="small" />
+                      </Button>
+                    </ButtonGroup>
+                  </Box>
+                  {cartItem ? (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        updateQty(
+                          cartItem.orderId,
+                          cartItem.productId,
+                          quantity
+                        )
+                        handleClick('update')
+                      }}
+                    >
+                      UPDATE QUANTITY
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        addItem(product, quantity)
+                        handleClick('add')
+                      }}
+                    >
+                      ADD TO CART
+                    </Button>
+                  )}
+                </div>
               )}
             </div>
           </Grid>

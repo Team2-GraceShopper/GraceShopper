@@ -108,6 +108,14 @@ export default function CartProducts(props) {
 
   const {enqueueSnackbar} = useSnackbar()
 
+  const handleInc = product => {
+    if (product.inventory > product.quantity) {
+      updateQty(product.orderId, product.productId, product.quantity + 1)
+    } else {
+      enqueueSnackbar('No more stock left', {variant: 'warning'})
+    }
+  }
+
   const handleDec = product => {
     if (product.quantity > 1) {
       updateQty(product.orderId, product.productId, product.quantity - 1)
@@ -170,13 +178,7 @@ export default function CartProducts(props) {
                     variant="contained"
                     size="small"
                     color="secondary"
-                    onClick={() =>
-                      updateQty(
-                        product.orderId,
-                        product.productId,
-                        product.quantity + 1
-                      )
-                    }
+                    onClick={() => handleInc(product)}
                   >
                     <AddIcon fontSize="small" />
                   </Button>
@@ -192,8 +194,6 @@ export default function CartProducts(props) {
               </IconButton>
             </ListItem>
           ))}
-          {/* <ListItem className={classes.listItem}> */}
-          {/* <ListItemText primary="Total" /> */}
           <Box className={classes.subTotal}>
             <Typography
               variant="h6"
