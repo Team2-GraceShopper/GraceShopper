@@ -12,7 +12,7 @@ import Container from '@material-ui/core/Container'
 import ToggleHeart from './ToggleHeart'
 import {useSnackbar} from 'notistack'
 import {connect} from 'react-redux'
-import {updateQty} from '../store/cart'
+import {updateQty, removeItem} from '../store/cart'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 
@@ -64,7 +64,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export function AllProductsRender(props) {
-  const {products, addItem, cart, categoryId, updateQty} = props
+  const {products, addItem, cart, categoryId, updateQty, removeItem} = props
   const classes = useStyles()
 
   const {enqueueSnackbar} = useSnackbar()
@@ -87,8 +87,12 @@ export function AllProductsRender(props) {
   }
 
   const handleAdd = product => {
-    addItem(product, 1)
-    enqueueSnackbar('Item added to cart!', {variant: 'success'})
+    if (product.inventory > 0) {
+      addItem(product, 1)
+      enqueueSnackbar('Item added to cart!', {variant: 'success'})
+    } else {
+      enqueueSnackbar('Out of stock!', {variant: 'warning'})
+    }
   }
 
   const handleInc = product => {
@@ -103,11 +107,14 @@ export function AllProductsRender(props) {
 
   const handleDec = product => {
     quantity = showQty(product)
-    if (quantity === 1) {
-      enqueueSnackbar('To remove, please go to cart', {variant: 'Info'})
-    } else if (product.inventory >= quantity - 1) {
-      updateQty(cart[0].orderId, product.id, quantity - 1)
-      enqueueSnackbar('Decreased quantity', {variant: 'success'})
+    if (product.inventory > 0) {
+      if (quantity === 1) {
+        removeItem(cart[0].orderId, product.id)
+        enqueueSnackbar('Removed from cart', {variant: 'success'})
+      } else {
+        updateQty(cart[0].orderId, product.id, quantity - 1)
+        enqueueSnackbar('Decreased quantity', {variant: 'success'})
+      }
     } else {
       enqueueSnackbar('Out of stock!', {variant: 'warning'})
     }
@@ -273,7 +280,8 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   updateQty: (orderId, productId, quantity) =>
-    dispatch(updateQty(orderId, productId, quantity))
+    dispatch(updateQty(orderId, productId, quantity)),
+  removeItem: (orderId, productId) => dispatch(removeItem(orderId, productId))
 })
 
 export default connect(mapState, mapDispatch)(AllProductsRender)
