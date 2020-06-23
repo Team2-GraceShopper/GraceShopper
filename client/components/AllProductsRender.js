@@ -89,34 +89,30 @@ export function AllProductsRender(props) {
   const handleAdd = product => {
     if (product.inventory > 0) {
       addItem(product, 1)
-      enqueueSnackbar('Item added to cart!', {variant: 'success'})
+      enqueueSnackbar('Item added to cart', {variant: 'success'})
     } else {
-      enqueueSnackbar('Out of stock!', {variant: 'warning'})
+      enqueueSnackbar('Out of stock', {variant: 'warning'})
     }
   }
 
   const handleInc = product => {
     quantity = showQty(product)
-    if (product.inventory >= quantity + 1) {
+    if (product.inventory > quantity) {
       updateQty(cart[0].orderId, product.id, quantity + 1)
       enqueueSnackbar('Increased quantity', {variant: 'success'})
     } else {
-      enqueueSnackbar('Out of stock!', {variant: 'warning'})
+      enqueueSnackbar('Low on stock', {variant: 'warning'})
     }
   }
 
   const handleDec = product => {
     quantity = showQty(product)
-    if (product.inventory > 0) {
-      if (quantity === 1) {
-        removeItem(cart[0].orderId, product.id)
-        enqueueSnackbar('Removed from cart', {variant: 'success'})
-      } else {
-        updateQty(cart[0].orderId, product.id, quantity - 1)
-        enqueueSnackbar('Decreased quantity', {variant: 'success'})
-      }
+    if (quantity === 1) {
+      removeItem(cart[0].orderId, product.id)
+      enqueueSnackbar('Removed from cart', {variant: 'success'})
     } else {
-      enqueueSnackbar('Out of stock!', {variant: 'warning'})
+      updateQty(cart[0].orderId, product.id, quantity - 1)
+      enqueueSnackbar('Decreased quantity', {variant: 'success'})
     }
   }
 
@@ -212,17 +208,6 @@ export function AllProductsRender(props) {
                       ) : (
                         ''
                       )}
-                      {!product.inventory ? (
-                        <Typography
-                          component="h6"
-                          color="secondary"
-                          className={classes.infoChildren}
-                        >
-                          Out of Stock
-                        </Typography>
-                      ) : (
-                        ''
-                      )}
                     </div>
                   </CardContent>
                   <CardActions>
@@ -233,7 +218,11 @@ export function AllProductsRender(props) {
                     >
                       View
                     </Button>
-                    {inCart(product) && showQty(product) ? (
+                    {!product.inventory ? (
+                      <Typography component="h6" color="secondary">
+                        Out of Stock
+                      </Typography>
+                    ) : inCart(product) && showQty(product) ? (
                       <div className={classes.qty}>
                         <RemoveIcon
                           variant="contained"
