@@ -5,11 +5,10 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import AddIcon from '@material-ui/icons/Add'
-import RemoveIcon from '@material-ui/icons/Remove'
-import ButtonGroup from '@material-ui/core/ButtonGroup'
 import {useSnackbar} from 'notistack'
 import Box from '@material-ui/core/Box'
+import TextField from '@material-ui/core/TextField'
+import Popover from '@material-ui/core/Popover'
 
 const priceFormat = {
   style: 'currency',
@@ -46,17 +45,11 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6)
   },
-  quantityField: {
-    border: '1px solid black',
-    fontSize: '16px',
-    marginRight: 50,
-    padding: 10,
-    fontFamily: 'Roboto'
+  quantityLabel: {
+    marginRight: '30px'
   },
   quantity: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginRight: 40
+    display: 'flex'
   },
   paper: {
     padding: theme.spacing(4),
@@ -73,7 +66,6 @@ const useStyles = makeStyles(theme => ({
   img: {
     display: 'inline',
     maxWidth: '75%',
-    // maxHeight: '50%',
     height: '750px',
     marginRight: 60,
     marginLeft: 40
@@ -86,13 +78,16 @@ const useStyles = makeStyles(theme => ({
     height: '300px',
     width: '300px',
     maxHeight: '45%'
+  },
+  typography: {
+    padding: theme.spacing(2)
   }
 }))
 
 export default function SingleProductView(props) {
   const classes = useStyles()
 
-  let {product, addItem, handleChange, quantity, updateQty} = props
+  let {product, addItem, quantity, handleChange, updateQty, removeItem} = props
 
   const cartItem = useSelector(state =>
     state.cart.filter(cartProduct => cartProduct.productId === product.id)
@@ -102,11 +97,30 @@ export default function SingleProductView(props) {
 
   const handleClick = type => {
     if (type === 'update') {
+      updateQty(cartItem.orderId, cartItem.productId, quantity)
       enqueueSnackbar('Cart updated!', {variant: 'success'})
     } else {
+      addItem(product, quantity)
       enqueueSnackbar('Item added to cart!', {variant: 'success'})
     }
   }
+
+  // Popover message
+  const [anchorEl, setAnchorEl] = React.useState(null)
+
+  const handlePopoverClick = e => {
+    e.persist()
+    if (e.target.value == 1 || e.target.value == 85) {
+      setAnchorEl(e.currentTarget)
+    }
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  const open = Boolean(anchorEl)
+  const id = open ? 'simple-popover' : undefined
 
   return product.name ? (
     <div>
@@ -134,60 +148,80 @@ export default function SingleProductView(props) {
             <Typography variant="body2" color="textSecondary">
               {product.description}
             </Typography>
+            {cartItem ? (
+              <Typography
+                component="h6"
+                color="primary"
+                className={classes.infoChildren}
+              >
+                In Cart
+              </Typography>
+            ) : (
+              ''
+            )}
           </Grid>
           <Grid item>
             <div className={classes.quantity}>
-              <Box className={classes.quantity}>
-                <div className={classes.quantityField}>{quantity}</div>
-                <ButtonGroup>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    color="secondary"
-                    onClick={() =>
-                      handleChange({
-                        target: {name: 'quantity', value: quantity - 1}
-                      })
-                    }
-                  >
-                    <RemoveIcon fontSize="small" />
-                  </Button>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    color="secondary"
-                    onClick={() =>
-                      handleChange({
-                        target: {name: 'quantity', value: quantity + 1}
-                      })
-                    }
-                  >
-                    <AddIcon fontSize="small" />
-                  </Button>
-                </ButtonGroup>
-              </Box>
-              {cartItem ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    updateQty(cartItem.orderId, cartItem.productId, quantity)
-                    handleClick('update')
-                  }}
-                >
-                  UPDATE QUANTITY
-                </Button>
+              {!product.inventory ? (
+                <Typography component="h6" color="secondary">
+                  Out of Stock
+                </Typography>
               ) : (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    addItem(product, quantity)
-                    handleClick('add')
-                  }}
-                >
-                  ADD TO CART
-                </Button>
+                <div className={classes.quantity}>
+                  <Box className={classes.quantity}>
+                    <Typography className={classes.quantityLabel}>
+                      Quantity:
+                    </Typography>
+                    <TextField
+                      type="number"
+                      InputProps={{
+                        inputProps: {min: 1, max: product.inventory}
+                      }}
+                      className={classes.quantityLabel}
+                      name="quantity"
+                      value={quantity}
+                      onChange={handleChange}
+                      onClick={handlePopoverClick}
+                    />
+                    <div>
+                      <Popover
+                        id={id}
+                        open={open}
+                        anchorEl={anchorEl}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'center'
+                        }}
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'center'
+                        }}
+                      >
+                        <Typography className={classes.typography}>
+                          Quantity must be between 1 and remaining stock
+                        </Typography>
+                      </Popover>
+                    </div>
+                  </Box>
+                  {cartItem ? (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleClick('update')}
+                    >
+                      UPDATE QUANTITY
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleClick('add')}
+                    >
+                      ADD TO CART
+                    </Button>
+                  )}
+                </div>
               )}
             </div>
           </Grid>
