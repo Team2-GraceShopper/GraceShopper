@@ -90,10 +90,12 @@ export default function UserProfileRender(props) {
             Billing Information
           </Typography>
           <Typography variant="subtitle1">
-            {'Saved credit card: ' +
-              pullData('cardNumber') +
-              ', Expiration Date: ' +
-              pullData('cardExpiration')}
+            {pullData('cardNumber')
+              ? 'Saved credit card: ' +
+                pullData('cardNumber') +
+                ', Expiration Date: ' +
+                pullData('cardExpiration')
+              : 'No saved credit card belonging to this account'}
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12}>
