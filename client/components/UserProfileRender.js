@@ -38,7 +38,6 @@ export default function UserProfileRender(props) {
                 fullWidth
                 autoComplete="shipping address-line1"
                 onChange={handleChange}
-                // value={user.shipStreet ? user.shipStreet : ''}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -50,7 +49,6 @@ export default function UserProfileRender(props) {
                 fullWidth
                 autoComplete="shipping address-level2"
                 onChange={handleChange}
-                // value={user.shipCity ? user.shipCity : ''}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -60,7 +58,6 @@ export default function UserProfileRender(props) {
                 label="State/Province/Region"
                 fullWidth
                 onChange={handleChange}
-                // value={user.shipState ? user.shipState : ''}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -72,7 +69,6 @@ export default function UserProfileRender(props) {
                 fullWidth
                 autoComplete="shipping postal-code"
                 onChange={handleChange}
-                // value={user.shipZip ? user.shipZip : ''}
               />
             </Grid>
             <Grid item xs={12}>
@@ -94,8 +90,8 @@ export default function UserProfileRender(props) {
             Billing Information
           </Typography>
           <Typography variant="subtitle1">
-            {'Saved credit card: ************' +
-              pullData('cardNumber').slice(12, 16) +
+            {'Saved credit card: ' +
+              pullData('cardNumber') +
               ', Expiration Date: ' +
               pullData('cardExpiration')}
           </Typography>
@@ -109,7 +105,6 @@ export default function UserProfileRender(props) {
                 fullWidth
                 autoComplete="cardNumber"
                 onChange={handleChange}
-                // value={user.cardNumber ? user.cardNumber : ''}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -121,7 +116,6 @@ export default function UserProfileRender(props) {
                 fullWidth
                 autoComplete="cardExpiration"
                 onChange={handleChange}
-                // value={user.cardExpiration ? user.cardExpiration : ''}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -133,7 +127,6 @@ export default function UserProfileRender(props) {
                 fullWidth
                 autoComplete="cvvCode"
                 onChange={handleChange}
-                // value={user.cvvCode ? user.cvvCode : ''}
               />
             </Grid>
             <Grid item xs={12}>

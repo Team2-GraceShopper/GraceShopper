@@ -43,6 +43,13 @@ const User = db.define('user', {
     validate: {
       isCreditCard: true,
       len: [16]
+    },
+    set(value) {
+      this.setDataValue('cardNumber')
+    },
+    get() {
+      const cardNumber = this.getDataValue('cardNumber')
+      return '************' + cardNumber.slice(12, 16)
     }
   },
   cardExpiration: {
