@@ -102,7 +102,7 @@ export function AllProductsRender(props) {
     quantity = showQty(product)
     if (product.inventory >= quantity + 1) {
       updateQty(cart[0].orderId, product.id, quantity + 1)
-      enqueueSnackbar('Increased quantity!', {variant: 'success'})
+      enqueueSnackbar('Increased quantity', {variant: 'success'})
     } else {
       enqueueSnackbar('Out of stock!', {variant: 'warning'})
     }
@@ -110,9 +110,11 @@ export function AllProductsRender(props) {
 
   const handleDec = product => {
     quantity = showQty(product)
-    if (product.inventory >= quantity - 1) {
+    if (quantity === 1) {
+      enqueueSnackbar('To remove, please go to cart', {variant: 'Info'})
+    } else if (product.inventory >= quantity - 1) {
       updateQty(cart[0].orderId, product.id, quantity - 1)
-      enqueueSnackbar('Decreased quantity!', {variant: 'success'})
+      enqueueSnackbar('Decreased quantity', {variant: 'success'})
     } else {
       enqueueSnackbar('Out of stock!', {variant: 'warning'})
     }
