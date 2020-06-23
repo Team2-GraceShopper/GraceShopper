@@ -14,7 +14,6 @@ const priceFormat = {
   currency: 'USD'
 }
 
-//2020-06-22
 function formatDate(date) {
   const [year, month, day] = date.split('-')
   return month + '/' + day + '/' + year
