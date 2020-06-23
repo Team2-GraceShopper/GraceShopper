@@ -199,7 +199,7 @@ export default function SingleProductView(props) {
                         }}
                       >
                         <Typography className={classes.typography}>
-                          Quantity at bound limit
+                          Quantity must be between 1 and remaining stock
                         </Typography>
                       </Popover>
                     </div>
