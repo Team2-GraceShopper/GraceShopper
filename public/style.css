@@ -98,3 +98,15 @@ form div {
   font-size: 18px;
   padding: 18px;
 }
+
+#profileContainer {
+  padding: 50px;
+}
+
+#profileTitle {
+  text-align: center;
+}
+
+.updateContainer {
+  padding: 50px;
+}
