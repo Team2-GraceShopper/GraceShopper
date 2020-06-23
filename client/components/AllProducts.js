@@ -4,6 +4,9 @@ import {getProducts} from '../store/products'
 import {addItem, getCart} from '../store/cart'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
+// import Backdrop from '@material-ui/core/Backdrop';
+// import CircularProgress from '@material-ui/core/CircularProgress';
+import Loader from './Loader'
 
 export class AllProducts extends React.Component {
   componentDidMount() {
@@ -14,7 +17,9 @@ export class AllProducts extends React.Component {
   }
 
   render() {
-    return (
+    return this.props.products.length ? (
+      <Loader />
+    ) : (
       <AllProductsRender
         products={this.props.products ? this.props.products : []}
         addItem={this.props.addItem}

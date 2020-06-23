@@ -49,7 +49,9 @@ const User = db.define('user', {
     },
     get() {
       const cardNumber = this.getDataValue('cardNumber')
-      return '************' + cardNumber.slice(12, 16)
+      if (cardNumber) {
+        return '************' + cardNumber.slice(12, 16)
+      }
     }
   },
   cardExpiration: {
