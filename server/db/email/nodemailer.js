@@ -9,6 +9,8 @@ const address = process.env.EMAIL || email.address
 const password = process.env.PASS || email.password
 
 function Main(to, order) {
+  console.log(order)
+
   const transporter = nodemailer.createTransport({
     // service: 'Gmail',
     host: 'smtp.gmail.com',

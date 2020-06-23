@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 const Product = require('./product')
+const Main = require('../email/nodemailer')
 
 const Order = db.define('order', {
   email: {
@@ -150,6 +151,16 @@ Order.getCart = async function(id) {
     }
   })
   return cart
+}
+
+Order.sendConfirmation = async function(id) {
+  const order = await Order.findByPk(id, {
+    include: {
+      model: Product
+    }
+  })
+  console.log('order', order)
+  Main(order.email, order)
 }
 
 module.exports = Order

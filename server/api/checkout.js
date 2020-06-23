@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const {Order, Product, User} = require('../db/models')
-const Main = require('../email/nodemailer')
+// const Main = require('../db/email/nodemailer')
 
 //api/checkout
 
@@ -94,7 +94,8 @@ router.put('/order', async (req, res, next) => {
       },
       {returning: true}
     )
-    Main(data.email, newOrder)
+
+    Order.sendConfirmation(data.id)
     res.json(newOrder)
   } catch (error) {
     next(error)
