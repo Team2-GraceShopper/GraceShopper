@@ -28,6 +28,10 @@ const removedItem = productId => ({
   productId
 })
 
+const updatedOrder = () => ({
+  type: SET_CART
+})
+
 // //THUNKS
 
 export const addItem = (product, quantity) => {
@@ -50,7 +54,7 @@ export const addItem = (product, quantity) => {
         description: product.description,
         imageUrl: product.imageUrl,
         inventory: product.inventory,
-        orderId: data.orderId || null,
+        orderId: data ? data.orderId : null,
         quantity,
         subtotal: quantity * product.price
       }
@@ -61,6 +65,13 @@ export const addItem = (product, quantity) => {
     } catch (err) {
       console.error(err)
     }
+  }
+}
+
+export const updateOrder = updated => {
+  return async dispatch => {
+    await axios.put('/api/checkout/order', {data: updated})
+    dispatch(updatedOrder())
   }
 }
 
