@@ -97,17 +97,21 @@ export default function AddressForm(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                color="secondary"
-                name="saveAddress"
-                onChange={handleClick}
-                value={user.saveAddress}
-              />
-            }
-            label="Remember shipping details for next time"
-          />
+          {user.email ? (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="secondary"
+                  name="saveAddress"
+                  onChange={handleClick}
+                  value={user.saveAddress}
+                />
+              }
+              label="Remember shipping details for next time"
+            />
+          ) : (
+            <br />
+          )}
         </Grid>
       </Grid>
     </React.Fragment>

@@ -104,20 +104,14 @@ export class Checkout extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleClick = this.handleClick.bind(this)
-    // this.nullify = this.nullify.bind(this)
   }
 
   async componentDidMount() {
-    await this.props.getUser()
-    this.setState(this.props.user)
+    const loggedIn = await this.props.getUser()
+    this.setState(loggedIn)
     await this.props.getCart()
     console.log('cart', this.props.cart)
   }
-
-  //    nullify(key) {
-  //        console.log('in nullify', key)
-  //     this.setState({[key]: null})
-  //    }
 
   handleClick(evt) {
     evt.persist()
@@ -128,14 +122,12 @@ export class Checkout extends React.Component {
 
   handleChange(evt) {
     this.setState({[evt.target.name]: evt.target.value})
-    console.log('in handleChange', this.state.shipZip)
   }
 
   handleSubmit = (evt, handleNext) => {
     evt.preventDefault()
     handleNext(evt)
     window.localStorage.cart = []
-    console.log('handle submit')
     this.props.updateInventory(this.props.cart)
     let updatedOrder = {
       id: this.props.cart[0].orderId,
@@ -157,7 +149,6 @@ export class Checkout extends React.Component {
       cvvCode: this.state.cvvCode
     }
     if (this.state.saveAddress || this.state.saveBilling) {
-      console.log('on line 155')
       let newData = {}
       if (this.state.saveAddress) {
         newData.shipStreet = this.state.shipStreet
@@ -173,11 +164,9 @@ export class Checkout extends React.Component {
       this.props.updateUser(newData)
     }
     this.props.updateOrder(updatedOrder)
-    console.log('state on submit', this.state)
   }
 
   render() {
-    console.log('shipState in render', this.state)
     return (
       <CheckoutRender
         handleClick={this.handleClick}
@@ -197,7 +186,7 @@ export class Checkout extends React.Component {
               getTax(getSubtotal(this.props.cart), this.state.shipState)
             : getSubtotal(this.props.cart) + 5
         }
-        // nullify={this.nullify}
+        // loggedIn={loggedIn}
       />
     )
   }
