@@ -51,7 +51,7 @@ export default function PaymentForm(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          {user.email ? (
+          {user.id ? (
             <FormControlLabel
               control={
                 <Checkbox
