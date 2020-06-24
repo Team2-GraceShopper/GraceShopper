@@ -18,15 +18,17 @@ export default function UserProfileRender(props) {
           <Typography variant="h6" gutterBottom>
             Shipping Information
           </Typography>
+          <Typography>Saved shipping address:</Typography>
           <Typography variant="subtitle1">
-            {'Saved shipping address: ' +
-              pullData('shipStreet') +
-              ', ' +
-              pullData('shipCity') +
-              ', ' +
-              pullData('shipState') +
-              ', ' +
-              pullData('shipZip')}
+            {pullData('shipStreet')
+              ? pullData('shipStreet') +
+                ', ' +
+                pullData('shipCity') +
+                ', ' +
+                pullData('shipState') +
+                ', ' +
+                pullData('shipZip')
+              : 'No saved shipping address belonging to this account'}
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12}>
@@ -53,6 +55,7 @@ export default function UserProfileRender(props) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                required
                 id="state"
                 name="shipState"
                 label="State/Province/Region"
@@ -89,11 +92,13 @@ export default function UserProfileRender(props) {
           <Typography variant="h6" gutterBottom>
             Billing Information
           </Typography>
+          <Typography>Saved credit card:</Typography>
           <Typography variant="subtitle1">
-            {'Saved credit card: ' +
-              pullData('cardNumber') +
-              ', Expiration Date: ' +
-              pullData('cardExpiration')}
+            {pullData('cardNumber')
+              ? pullData('cardNumber') +
+                ', Expiration Date: ' +
+                pullData('cardExpiration')
+              : 'No saved credit card belonging to this account'}
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12}>

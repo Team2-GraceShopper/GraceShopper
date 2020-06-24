@@ -7,7 +7,6 @@ import Checkbox from '@material-ui/core/Checkbox'
 
 export default function PaymentForm(props) {
   const {handleChange, handleClick, user} = props
-  console.log('in payment-form', user.saveBilling)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -52,17 +51,21 @@ export default function PaymentForm(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                color="secondary"
-                name="saveBilling"
-                value={user.saveBilling}
-                onChange={handleClick}
-              />
-            }
-            label="Remember credit card details for next time"
-          />
+          {user.email ? (
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="secondary"
+                  name="saveBilling"
+                  value={user.saveBilling}
+                  onChange={handleClick}
+                />
+              }
+              label="Remember credit card details for next time"
+            />
+          ) : (
+            <br />
+          )}
         </Grid>
       </Grid>
     </React.Fragment>
