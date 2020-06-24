@@ -12,7 +12,7 @@ const prodData = [
     imageUrl:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSwmDMOOx13_zPmrcQIZ8IuhHPSvb4rLbb3yf1pSbskqVt2dLsUJuZ9TJj5KxkX9Cx_Opjg7igD&usqp=CAc',
     price: 1.99,
-    inventory: 1000
+    inventory: 0
   },
   {
     categoryId: 7,
@@ -517,7 +517,7 @@ const prodData = [
   },
   {
     categoryId: 6,
-    name: 'Dry Shampoo (Drypoo)',
+    name: 'Dry Shampoo',
     description: 'For when shower feels like a chore',
     imageUrl:
       'https://hollyrose.eco/wp-content/uploads/2020/02/ALDER252BNEW252BYORK252B253F252BBERGAMOT252BNATURAL252BHAIR252BPOWDER.jpg',
@@ -747,7 +747,7 @@ const prodData = [
     description:
       'Wearable and Portable: The mini air purifier is only 30g with an elegent necklace included in the package',
     imageUrl:
-      'https://www.amazon.com/Portable-Wearable-Necklace-Purifier-Freshener/dp/B07ZP4MFXW',
+      'https://images-na.ssl-images-amazon.com/images/I/51i3izameZL._AC_SX466_.jpg',
     price: 59,
     inventory: 30
   },
