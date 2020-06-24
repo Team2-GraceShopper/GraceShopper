@@ -34,24 +34,6 @@ router.delete('/:order/:product', async (req, res, next) => {
   }
 })
 
-// TODO: GET past orders
-// router.get('/history', async (req, res, next) => {
-//   try {
-//     if (req.user) {
-//       const orders = await Order.findAll({
-//         where: {
-//           userId: req.user.id,
-//           status: 'complete'
-//         },
-//         include: [Product]
-//         // might have to include through: [OrderDetail]
-//       })
-//     }
-//   } catch (err) {
-//     next(err)
-//   }
-// })
-
 // POST new order and order-product details
 router.post('/', async (req, res, next) => {
   let order, wasCreated
