@@ -9,14 +9,15 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
-import Box from '@material-ui/core/Box'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import Copyright from './Copyright'
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    marginBottom: '50px'
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -40,7 +41,7 @@ export function Signup(props) {
   const classes = useStyles()
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className={classes.root}>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -126,9 +127,6 @@ export function Signup(props) {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   )
 }
