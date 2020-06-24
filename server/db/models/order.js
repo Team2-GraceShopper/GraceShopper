@@ -12,7 +12,7 @@ const Order = db.define('order', {
     }
   },
   orderDate: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATEONLY,
     validate: {
       isDate: true
     },
@@ -60,12 +60,14 @@ const Order = db.define('order', {
     validate: {
       isInt: true
     },
-    set() {
-      let subtotal = this.getDataValue('subtotal')
-      let tax = this.getDataValue('tax') / 100
-      let finaltotal = subtotal + subtotal * tax
-      console.log(subtotal, tax, finaltotal)
-      this.setDataValue('total', parseInt(finaltotal, 10))
+    // set() {
+    //   let subtotal = this.getDataValue('subtotal')
+    //   let tax = this.getDataValue('tax') / 100
+    //   let finaltotal = subtotal + subtotal * tax
+    //   this.setDataValue('total', finaltotal)
+    // },
+    set(value) {
+      this.setDataValue('total', parseInt(value * 100, 10))
     },
     get() {
       const total = this.getDataValue('total')
