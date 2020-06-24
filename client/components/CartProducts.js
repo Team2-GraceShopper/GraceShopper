@@ -65,7 +65,8 @@ const useStyles = makeStyles(theme => ({
   },
   container: {
     paddingRight: 100,
-    paddingLeft: 100
+    paddingLeft: 100,
+    marginBottom: '120px'
   },
   priceHead: {
     paddingRight: 73
@@ -129,6 +130,13 @@ export default function CartProducts(props) {
       <Typography variant="h5" gutterBottom className={classes.title}>
         Shopping Cart
       </Typography>
+      {!products.length ? (
+        <Typography component="h6" gutterBottom align="center">
+          Your shopping cart is empty
+        </Typography>
+      ) : (
+        ''
+      )}
       <Box className={classes.container}>
         <List>
           <ListItem className={classes.heading}>
