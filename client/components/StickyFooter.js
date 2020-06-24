@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
   footer: {
     padding: theme.spacing(3, 2),
-    marginTop: 'auto',
+    marginTop: '300px',
     backgroundColor:
       theme.palette.type === 'light'
         ? theme.palette.grey[200]

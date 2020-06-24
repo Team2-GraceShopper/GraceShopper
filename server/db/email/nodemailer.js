@@ -1,16 +1,12 @@
 'use strict'
 const nodemailer = require('nodemailer')
-const {
-  email
-} = require('/Users/jihyunpark/Desktop/Fullstack 2004-GH-NY/GraceShopper/secrets.js')
 const html = require('html-template-tag')
 
-const address = process.env.EMAIL || email.address
-const password = process.env.PASS || email.password
+const address = process.env.EMAIL || require('../../../secrets').email.address
+const password = process.env.PASS || require('../../../secrets').email.password
 
 function Main(to, order) {
   const transporter = nodemailer.createTransport({
-    // service: 'Gmail',
     host: 'smtp.gmail.com',
     port: 587,
     secure: false,
@@ -24,7 +20,7 @@ function Main(to, order) {
   const mailOptions = {
     from: address,
     to: to,
-    subject: 'Sending Email using Node.js',
+    subject: 'Thank you for your order from Maison Corona',
     text: 'That was easy!',
     html: generateEmail(order)
   }
@@ -128,10 +124,6 @@ const testOrder = {
       }
     }
   ]
-}
-
-if (module === require.main) {
-  Main('gayle.ortiz@ethereal.email', testOrder)
 }
 
 module.exports = Main

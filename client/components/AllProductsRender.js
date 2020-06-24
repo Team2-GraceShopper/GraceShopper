@@ -152,25 +152,29 @@ export function AllProductsRender(props) {
                 color="textPrimary"
                 gutterBottom
               >
-                Featured Item
+                Featured Item: Grumpy Cat
               </Typography>
               <CardMedia
                 className={classes.cardMedia}
-                image="https://source.unsplash.com/random"
-                title="Image title"
+                image="https://www.theatermania.com/dyn/photos/theatermania/v1finw2400x0y0w1200h1200/grumpy-cat-will-make-her-broadway-debut-in-cats-118268.jpg"
+                title="grumpy cat"
               />
               <Typography
-                variant="h5"
+                variant="h6"
                 align="center"
                 color="textSecondary"
                 paragraph
               >
-                Featured item description
+                Just in case you miss that grumpy coworker in the office
               </Typography>
               <div className={classes.heroButtons}>
                 <Grid container spacing={1} justify="center">
                   <Grid item>
-                    <Button variant="contained" color="primary">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      href="/products/103"
+                    >
                       See product
                     </Button>
                   </Grid>
