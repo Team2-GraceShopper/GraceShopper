@@ -5,7 +5,7 @@ const db = require('../db')
 const {Order, Product, User, OrderDetail} = require('.')
 const faker = require('faker')
 
-describe('Order model', () => {
+describe.only('Order model', () => {
   before(() => db.sync({force: true}))
 
   const order = {
@@ -56,8 +56,8 @@ describe('Order model', () => {
       const now = new Date(Date.now())
 
       const newOrder = await Order.create({
-        ...order,
-        orderDate: 'some date the order was created'
+        ...order
+        // orderDate: 'some date the order was created'
       })
 
       expect(newOrder.orderDate).to.closeToTime(now, 0.1)
@@ -93,7 +93,7 @@ describe('Order model', () => {
       })
 
       const subtotal = savedOrder.subtotal
-      const tax = savedOrder.tax / 100
+      const tax = savedOrder.tax
       const total = subtotal + subtotal * tax
 
       expect(savedOrder.total).to.equal(total)
@@ -109,7 +109,7 @@ describe('Order model', () => {
       })
 
       const newOrder = await Order.create({
-        email: 'go@team2.com',
+        email: 'grace@hopper.com',
         userId: user.id
       })
 
@@ -144,6 +144,19 @@ describe('Order model', () => {
 
       expect(cart).to.have.lengthOf(10)
       expect(cart[0].orderId).to.equal(newOrder.id)
+
+      const anotherUser = await User.create({
+        firstName: 'another',
+        lastName: 'person',
+        email: 'another@person.com'
+      })
+
+      const anotherOrder = await Order.create({
+        email: 'another@person.com',
+        userId: anotherUser.id
+      })
+
+      expect(cart[0].orderId).to.not.equal(anotherOrder.id)
     })
   })
 })
