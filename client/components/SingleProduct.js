@@ -5,13 +5,15 @@ import {fetchSingleProduct} from '../store/singleProduct'
 import {addItem, updateQty, removeItem, getCart} from '../store/cart'
 import {me} from '../store/user'
 import {withRouter} from 'react-router-dom'
+import Loader from './Loader'
 
 export class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
     this.state = {
-      quantity: 1
+      quantity: 1,
+      isLoaded: false
     }
   }
 
@@ -27,6 +29,7 @@ export class SingleProduct extends React.Component {
     if (cartItem) {
       this.setState({quantity: cartItem.quantity})
     }
+    this.setState({isLoaded: true})
   }
 
   handleChange(e) {
@@ -36,7 +39,9 @@ export class SingleProduct extends React.Component {
   }
 
   render() {
-    return (
+    return !this.state.isLoaded ? (
+      <Loader />
+    ) : (
       <SingleProductRender
         product={this.props.product}
         addItem={this.props.addItem}

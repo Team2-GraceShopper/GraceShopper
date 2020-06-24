@@ -5,7 +5,6 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    console.log(req.user)
     if (req.user) {
       const orders = await Order.findAll({
         where: {
