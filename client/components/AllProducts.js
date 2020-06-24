@@ -4,6 +4,7 @@ import {getProducts} from '../store/products'
 import {addItem, getCart} from '../store/cart'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
+import Loader from './Loader'
 
 export class AllProducts extends React.Component {
   componentDidMount() {
@@ -14,7 +15,9 @@ export class AllProducts extends React.Component {
   }
 
   render() {
-    return (
+    return this.props.products.length === 0 ? (
+      <Loader />
+    ) : (
       <AllProductsRender
         products={this.props.products ? this.props.products : []}
         addItem={this.props.addItem}

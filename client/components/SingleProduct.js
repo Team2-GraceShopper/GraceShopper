@@ -2,17 +2,18 @@ import React from 'react'
 import {connect} from 'react-redux'
 import SingleProductRender from './SingleProductRender'
 import {fetchSingleProduct} from '../store/singleProduct'
-import {addItem, updateQty, getCart} from '../store/cart'
+import {addItem, updateQty, removeItem, getCart} from '../store/cart'
 import {me} from '../store/user'
 import {withRouter} from 'react-router-dom'
+import Loader from './Loader'
 
 export class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.state = {
-      quantity: 1
+      quantity: 1,
+      isLoaded: false
     }
   }
 
@@ -21,34 +22,32 @@ export class SingleProduct extends React.Component {
     await this.props.getUser()
     await this.props.getCart()
 
-    if (this.props.cartProduct)
-      this.setState({quantity: this.props.cartProduct.quantity})
-  }
+    const cartItem = this.props.cart.filter(
+      items => items.productId === this.props.product.id
+    )[0]
 
-  handleSubmit(e) {
-    e.preventDefault()
-  }
-
-  handleChange(e) {
-    this.setState({[e.target.name]: e.target.value})
-  }
-
-  handleSubmit(e) {
-    e.preventDefault()
+    if (cartItem) {
+      this.setState({quantity: cartItem.quantity})
+    }
+    this.setState({isLoaded: true})
   }
 
   handleChange(e) {
-    this.setState({[e.target.name]: e.target.value})
+    if (e.target.value <= this.props.product.inventory) {
+      this.setState({[e.target.name]: e.target.value})
+    }
   }
 
   render() {
-    return (
+    return !this.state.isLoaded ? (
+      <Loader />
+    ) : (
       <SingleProductRender
         product={this.props.product}
         addItem={this.props.addItem}
+        removeItem={this.props.removeItem}
         updateQty={this.props.updateQty}
         quantity={this.state.quantity}
-        handleSubmit={this.handleSubmit}
         handleChange={this.handleChange}
       />
     )
@@ -57,7 +56,8 @@ export class SingleProduct extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    product: state.product
+    product: state.product,
+    cart: state.cart
   }
 }
 
@@ -65,6 +65,8 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchSingleProduct: id => dispatch(fetchSingleProduct(id)),
     addItem: (id, quantity, price) => dispatch(addItem(id, quantity, price)),
+    removeItem: (orderId, productId) =>
+      dispatch(removeItem(orderId, productId)),
     updateQty: (orderId, productId, quantity) =>
       dispatch(updateQty(orderId, productId, quantity)),
     getCart: () => dispatch(getCart()),
