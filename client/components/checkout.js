@@ -150,19 +150,12 @@ export class Checkout extends React.Component {
       cardExpiration: this.state.cardExpiration,
       cvvCode: this.state.cvvCode
     }
-    if (this.state.saveAddress || this.state.saveBilling) {
+    if (this.state.saveAddress) {
       let newData = {}
-      if (this.state.saveAddress) {
-        newData.shipStreet = this.state.shipStreet
-        newData.shipCity = this.state.shipCity
-        newData.shipState = this.state.shipState
-        newData.shipZip = this.state.shipZip
-      }
-      if (this.state.saveBilling) {
-        newData.cardNumber = this.state.cardNumber
-        newData.cardExpiration = this.state.cardExpiration
-        newData.cvvCode = this.state.cvvCode
-      }
+      newData.shipStreet = this.state.shipStreet
+      newData.shipCity = this.state.shipCity
+      newData.shipState = this.state.shipState
+      newData.shipZip = this.state.shipZip
       this.props.updateUser(newData)
     }
     this.props.updateOrder(updatedOrder)

@@ -4,52 +4,15 @@ import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
-// import StripeCheckout from 'react-stripe-checkout'
-// import STRIPE_PUBLISHABLE from './constants/stripe'
-// import PAYMENT_SERVER_URL from './constants/server'
-// import axios from 'axios'
-
-// const CURRENCY = 'USD';
-// const fromDollarToCent = amount => amount * 100;
-// const description = 'card payment'
-
-// const successPayment = data => {
-//   alert('Payment Successful');
-// };
-
-// const errorPayment = data => {
-//   alert('Payment Error');
-// };
-
-// const onToken = (amount, description) => token =>
-//   axios.post(PAYMENT_SERVER_URL,
-//     {
-//       description,
-//       source: token.id,
-//       currency: CURRENCY,
-//       amount: fromDollarToCent(amount)
-//     })
-//     .then(successPayment)
-//     .catch(errorPayment);
 
 export default function PaymentForm(props) {
-  const {handleChange, handleClick, user, total} = props
+  const {handleChange, handleClick, user} = props
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Payment method
       </Typography>
       <Grid container spacing={3}>
-        {/* <Grid item xs={12} >
-      <StripeCheckout
-        name={name}
-        description={description}
-        amount={fromEuroToCent(total)}
-        token={onToken(total, description)}
-        currency={CURRENCY}
-        stripeKey={STRIPE_PUBLISHABLE}
-      />
-        </Grid> */}
         <Grid item xs={12} md={6}>
           <TextField
             required

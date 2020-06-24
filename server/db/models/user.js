@@ -39,9 +39,9 @@ const User = db.define('user', {
     type: Sequelize.STRING
   },
   cardNumber: {
-    type: Sequelize.BIGINT,
+    type: Sequelize.STRING,
     validate: {
-      isCreditCard: true,
+      // isCreditCard: true,
       len: [16]
     },
     get() {

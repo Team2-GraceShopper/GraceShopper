@@ -90,7 +90,6 @@ function getStepContent(
           handleClick={handleClick}
           handleChange={handleChange}
           user={user}
-          total={total}
         />
       )
     case 2:
@@ -200,7 +199,6 @@ export default function Checkout(props) {
                         Place Order
                       </Button>
                     )}
-                    {/* <p>{activeStep}</p> */}
                   </div>
                 </form>
               </React.Fragment>

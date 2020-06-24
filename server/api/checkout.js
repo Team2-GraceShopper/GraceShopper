@@ -1,27 +1,5 @@
 const router = require('express').Router()
 const {Order, Product, User} = require('../db/models')
-// const stripe = require('stripe')('sk_test_51GxFA0HUyOa5eg00V59OGLY14Yh8LJz1VWf0LOUYyHIRlUGrgeRhv0jCXOyvmdvYnRVu5jrRAlZle78qMrxPZgSx00HTZnbZH4', {apiVersion: ''})
-
-//api/checkout
-
-// router.get('/secret', async (req, res) => {
-//   const intent = // ... Fetch or create the PaymentIntent
-//   res.json({client_secret: intent.client_secret});
-// });
-
-// router.post('v1/payment_intents', async (req, res, next) => {
-//   try {
-//     stripe.paymentIntents.create(
-//       {
-//         amount: req.body.amount,
-//         currency: 'usd',
-//         payment_method_types: ['card']
-//       }
-//     )
-//   } catch (error) {
-//     next(error)
-//   }
-// })
 
 router.put('/user', async (req, res, next) => {
   try {

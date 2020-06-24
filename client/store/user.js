@@ -26,7 +26,6 @@ export const updateUser = user => {
   //if saveAddress & saveBilling, remove all unnecessary keys and pass info if one/both = true
   // console.log('updateUser line 27', user)
   return async dispatch => {
-    // console.log('inside updateUser thunk creator', user)
     const {data} = await axios.put('/api/checkout/user', {user: user})
     dispatch(getUser(data))
   }
