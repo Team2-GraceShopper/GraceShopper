@@ -109,7 +109,9 @@ export default function Review(props) {
               <Typography gutterBottom>Card Number: </Typography>
             </Grid>
             <Grid item xs={6}>
-              <Typography gutterBottom>{user.cardNumber}</Typography>
+              <Typography gutterBottom>
+                {'************' + user.cardNumber.slice(12, 16)}
+              </Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography gutterBottom>Expiration Date: </Typography>

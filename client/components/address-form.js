@@ -97,7 +97,7 @@ export default function AddressForm(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          {user.email ? (
+          {user.id ? (
             <FormControlLabel
               control={
                 <Checkbox

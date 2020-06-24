@@ -87,6 +87,7 @@ export class Checkout extends React.Component {
   constructor() {
     super()
     this.state = {
+      id: '',
       firstName: '',
       lastName: '',
       email: '',
@@ -98,7 +99,8 @@ export class Checkout extends React.Component {
       cardExpiration: '',
       cvvCode: 0,
       saveAddress: false,
-      saveBilling: false
+      saveBilling: false,
+      orderId: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -109,6 +111,8 @@ export class Checkout extends React.Component {
     const loggedIn = await this.props.getUser()
     this.setState(loggedIn)
     await this.props.getCart()
+    this.setState({orderId: this.props.cart[0].orderId})
+
   }
 
   handleClick(evt) {
@@ -146,19 +150,12 @@ export class Checkout extends React.Component {
       cardExpiration: this.state.cardExpiration,
       cvvCode: this.state.cvvCode
     }
-    if (this.state.saveAddress || this.state.saveBilling) {
+    if (this.state.saveAddress) {
       let newData = {}
-      if (this.state.saveAddress) {
-        newData.shipStreet = this.state.shipStreet
-        newData.shipCity = this.state.shipCity
-        newData.shipState = this.state.shipState
-        newData.shipZip = this.state.shipZip
-      }
-      if (this.state.saveBilling) {
-        newData.cardNumber = this.state.cardNumber
-        newData.cardExpiration = this.state.cardExpiration
-        newData.cvvCode = this.state.cvvCode
-      }
+      newData.shipStreet = this.state.shipStreet
+      newData.shipCity = this.state.shipCity
+      newData.shipState = this.state.shipState
+      newData.shipZip = this.state.shipZip
       this.props.updateUser(newData)
     }
     this.props.updateOrder(updatedOrder)
@@ -184,7 +181,6 @@ export class Checkout extends React.Component {
               getTax(getSubtotal(this.props.cart), this.state.shipState)
             : getSubtotal(this.props.cart) + 5
         }
-        // loggedIn={loggedIn}
       />
     )
   }

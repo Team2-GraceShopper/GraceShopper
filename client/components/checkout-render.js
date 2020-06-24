@@ -124,20 +124,6 @@ export default function Checkout(props) {
 
   const handleNext = evt => {
     evt.preventDefault()
-    // let entries = Object.entries(userData)
-    // console.log('before for in', entries)
-    // for (let i = 0; i < entries.length; i++) {
-    //     if (entries[i][1] === '') nullify(entries[i][0])
-    // }
-    // for (let [key, value] in entries) {
-    //     // console.log('before if', key, value)
-    //     // if (entries.hasOwnProperty([key, value])) {
-    //         if (value === "") {
-    //             console.log('inside if')
-    //             nullify(key)
-    //             console.log('key value', key, value)
-    //         }
-    // }
     setActiveStep(activeStep + 1)
   }
 
@@ -168,7 +154,7 @@ export default function Checkout(props) {
                   Thank you for your order!!
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is {cart[0].orderId}. We have emailed your
+                  Your order number is {user.orderId}. We have emailed your
                   order confirmation to {user.email}, and will send you an
                   update when your order has shipped.
                 </Typography>
@@ -213,7 +199,6 @@ export default function Checkout(props) {
                         Place Order
                       </Button>
                     )}
-                    {/* <p>{activeStep}</p> */}
                   </div>
                 </form>
               </React.Fragment>

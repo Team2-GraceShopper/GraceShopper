@@ -1,8 +1,6 @@
 const router = require('express').Router()
 const {Order, Product, User} = require('../db/models')
 
-//api/checkout
-
 router.put('/user', async (req, res, next) => {
   try {
     let updatedUser

@@ -59,7 +59,6 @@ export class UserProfile extends React.Component {
       newData.cardExpiration = this.state.cardExpiration
       newData.cvvCode = this.state.cvvCode
     }
-    console.log('newData: ', newData)
     this.props.updateUser(newData)
   }
 
