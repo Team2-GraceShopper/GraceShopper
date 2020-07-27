@@ -10,6 +10,10 @@ import {SnackbarProvider} from 'notistack'
 // establishes socket connection
 import './socket'
 
+if (window.location.href.includes('maisoncorona.herokuapp.com')) {
+  window.location.replace('https://maisonq.herokuapp.com')
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
