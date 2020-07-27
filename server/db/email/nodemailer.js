@@ -20,7 +20,7 @@ function Main(to, order) {
   const mailOptions = {
     from: address,
     to: to,
-    subject: 'Thank you for your order from Maison Corona',
+    subject: 'Thank you for your order from Maison Q',
     text: 'That was easy!',
     html: generateEmail(order)
   }

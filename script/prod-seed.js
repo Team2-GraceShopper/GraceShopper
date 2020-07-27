@@ -755,7 +755,7 @@ const prodData = [
     categoryId: 1,
     name: 'Live Jokes',
     description:
-      'The only refundable item in Maison Corona. Explosive laughter guaranteed.',
+      'The only refundable item in Maison Q. Explosive laughter guaranteed.',
     imageUrl:
       'https://i.pinimg.com/originals/b4/f9/a7/b4f9a703222d96c5ed72ac1b94aeca4e.png',
     price: 255,
@@ -995,7 +995,7 @@ const prodData = [
   {
     categoryId: 2,
     name: 'Super Fresh Sushi Delivery',
-    description: 'Exclusively at Maison Corona',
+    description: 'Exclusively at Maison Q',
     imageUrl:
       'https://cdn.vox-cdn.com/thumbor/XhJtuR2VPF8UnGWKe2Wp9UzvEWY=/0x0:1016x813/1200x675/filters:focal(427x326:589x488)/cdn.vox-cdn.com/uploads/chorus_image/image/66664161/shunji.0.jpg',
     price: 1000,

@@ -53,12 +53,12 @@ export default function About() {
 
         <Grid className={classes.intro} spacing={2} container>
           <Typography variant="subtitle1" align="center">
-            Maison Corona has been a household name for over 3 months since
-            COVID hit the planet and has mastered the art of selling you fancy
-            stuff that you don't really need. Anything but your average
-            essentials, we continue to create chic nonsense with a modern touch.
-            From grandma's leftover to knock-off Lysol, each piece strikes the
-            perfect balance between comfort and style.
+            Maison Q has been a household name for over 3 months since COVID hit
+            the planet and has mastered the art of selling you fancy stuff that
+            you don't really need. Anything but your average essentials, we
+            continue to create chic nonsense with a modern touch. From grandma's
+            leftover to knock-off Lysol, each piece strikes the perfect balance
+            between comfort and style.
           </Typography>
         </Grid>
       </Grid>
