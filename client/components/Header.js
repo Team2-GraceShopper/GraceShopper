@@ -48,7 +48,7 @@ const StyledBadge = withStyles(theme => ({
 export function Header(props) {
   const classes = useStyles()
 
-  const title = 'Maison Corona'
+  const title = 'Maison Q'
   const categories = [
     {
       id: 1,
