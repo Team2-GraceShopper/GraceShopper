@@ -11,6 +11,10 @@ Developed with Node.js, Express, Sequelize, PostgreSQL, React, Redux, Material U
 
 Visit our web application [here](https://maisonq.herokuapp.com/).
 
+## Demo
+
+![demo gif](https://media.giphy.com/media/f6OZ9aBjtczDPqWz0B/giphy.gif)
+
 ## Contributors
 
 * [Nora Krantz](https://github.com/norakrantz) 🤔 💻 🐛
